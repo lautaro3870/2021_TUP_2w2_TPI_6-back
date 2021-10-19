@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
 
 using Microsoft.Extensions.Logging;
+using back_MSI_SuperMami.Models;
 
 namespace back_MSI_SuperMami.Controllers
 {
@@ -17,9 +18,9 @@ namespace back_MSI_SuperMami.Controllers
     [EnableCors("Prog3")]
     public class AreasController : ControllerBase
     {
-        //private readonly db_SuperMamiContext _context;
+        private readonly d4nfd5l4d933b1Context _context = new d4nfd5l4d933b1Context();
 
-        //private readonly db_SuperMamiContext db = new db_SuperMamiContext();
+        private readonly db_SuperMamiFinalContext db = new db_SuperMamiFinalContext();
 
         private readonly ILogger<AreasController> _logger;
 
@@ -31,11 +32,11 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         //GET: api/Areas
-        //[HttpGet]
-        // public async Task<ActionResult<IEnumerable<Area>>> GetAreas()
-        // {
-        //     return await _context.Areas.ToListAsync();
-        // }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Area>>> GetAreas()
+        {
+            return await _context.Areas.ToListAsync();
+        }
 
         //[HttpGet]
         //public ActionResult<ResultadosApi> Get()
@@ -48,11 +49,11 @@ namespace back_MSI_SuperMami.Controllers
         //}
 
 
-        [HttpGet]
-        public async Task<ActionResult<string>> getMensaje()
-        {
-            return "Te pudiste conectar a la db";
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<string>> getMensaje()
+        //{
+        //    return "Te pudiste conectar a la db";
+        //}
 
 
         //Holaaaa
@@ -131,6 +132,6 @@ namespace back_MSI_SuperMami.Controllers
         //    return NoContent();
         //}
 
-        
+
     }
 }
