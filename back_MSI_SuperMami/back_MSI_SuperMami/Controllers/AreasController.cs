@@ -38,6 +38,12 @@ namespace back_MSI_SuperMami.Controllers
             return await _context.Areas.ToListAsync();
         }
 
+        [HttpGet("Habilitadas")]
+        public async Task<ActionResult<IEnumerable<Area>>> GetAreasHabilitadas()
+        {
+            return await _context.Areas.Where(x => x.Estado == true).ToListAsync();
+        }
+
         //[HttpGet]
         //public ActionResult<ResultadosApi> Get()
         //{
@@ -131,6 +137,10 @@ namespace back_MSI_SuperMami.Controllers
 
         //    return NoContent();
         //}
+
+
+
+
 
 
     }
