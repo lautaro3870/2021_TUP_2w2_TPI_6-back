@@ -13,31 +13,31 @@ namespace back_MSI_SuperMami.Controllers
 {
     [ApiController]
     [EnableCors("MSI2021")]
-    public class UnidadMedidaController : ControllerBase
+    public class AreaController : ControllerBase
     {
 
         private readonly d4nfd5l4d933b1Context bd = new d4nfd5l4d933b1Context();
-        private readonly ILogger<UnidadMedidaController> _logger;
+        private readonly ILogger<AreaController> _logger;
 
-        public UnidadMedidaController(ILogger<UnidadMedidaController> logger)
+        public AreaController(ILogger<AreaController> logger)
         {
             _logger = logger;
         }
 
-        //Registrar Nueva Unidad de Medida
+        //Registrar Nueva Área
         [HttpPost]
-        [Route("[controller]/unidadesMedida")]
-        public RespuestaAPI registrarUnidadMedida([FromBody] ComandoRegistrarUnidadMedida unidadMedida)
+        [Route("[controller]/areas")]
+        public RespuestaAPI registrarArea([FromBody] ComandoRegistrarArea area)
         {
             RespuestaAPI res = new RespuestaAPI();
             
-            if (string.IsNullOrEmpty(unidadMedida.Nombre))
+            if (string.IsNullOrEmpty(area.Nombre))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el nombre";
                 return res;
             }
-            if (string.IsNullOrEmpty(unidadMedida.Descripcion))
+            if (string.IsNullOrEmpty(area.Descripcion))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la descripción";
@@ -45,18 +45,18 @@ namespace back_MSI_SuperMami.Controllers
             }
 
 
-            UnidadDeMedidum  u = new UnidadDeMedidum()
+            Area a = new Area()
             {
-                Nombre = unidadMedida.Nombre,
-                Descipcion = unidadMedida.Descripcion,
+                Nombre = area.Nombre,
+                Descripcion = area.Descripcion,
                 Estado = true
             };
 
-            bd.UnidadDeMedida.Add(u);
+            bd.Areas.Add(a);
             bd.SaveChanges();
             res.Ok = true;
 
-            res.InfoAdicional = "La Unidad de Medida se cargo correctamente";
+            res.InfoAdicional = "El área se cargo correctamente";
             return res;
         }
     }

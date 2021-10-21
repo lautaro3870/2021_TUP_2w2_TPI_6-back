@@ -13,31 +13,31 @@ namespace back_MSI_SuperMami.Controllers
 {
     [ApiController]
     [EnableCors("MSI2021")]
-    public class UnidadMedidaController : ControllerBase
+    public class CategoriaController : ControllerBase
     {
 
         private readonly d4nfd5l4d933b1Context bd = new d4nfd5l4d933b1Context();
-        private readonly ILogger<UnidadMedidaController> _logger;
+        private readonly ILogger<CategoriaController> _logger;
 
-        public UnidadMedidaController(ILogger<UnidadMedidaController> logger)
+        public CategoriaController(ILogger<CategoriaController> logger)
         {
             _logger = logger;
         }
 
-        //Registrar Nueva Unidad de Medida
+        //Registrar Nueva Categoría
         [HttpPost]
-        [Route("[controller]/unidadesMedida")]
-        public RespuestaAPI registrarUnidadMedida([FromBody] ComandoRegistrarUnidadMedida unidadMedida)
+        [Route("[controller]/categorias")]
+        public RespuestaAPI registrarCategoria([FromBody] ComandoRegistrarCategoria categoria)
         {
             RespuestaAPI res = new RespuestaAPI();
             
-            if (string.IsNullOrEmpty(unidadMedida.Nombre))
+            if (string.IsNullOrEmpty(categoria.Nombre))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el nombre";
                 return res;
             }
-            if (string.IsNullOrEmpty(unidadMedida.Descripcion))
+            if (string.IsNullOrEmpty(categoria.Descripcion))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la descripción";
@@ -45,18 +45,18 @@ namespace back_MSI_SuperMami.Controllers
             }
 
 
-            UnidadDeMedidum  u = new UnidadDeMedidum()
+            Categoria  c = new Categoria()
             {
-                Nombre = unidadMedida.Nombre,
-                Descipcion = unidadMedida.Descripcion,
+                Nombre = categoria.Nombre,
+                Descripcion = categoria.Descripcion,
                 Estado = true
             };
 
-            bd.UnidadDeMedida.Add(u);
+            bd.Categorias.Add(c);
             bd.SaveChanges();
             res.Ok = true;
 
-            res.InfoAdicional = "La Unidad de Medida se cargo correctamente";
+            res.InfoAdicional = "La categoría se cargo correctamente";
             return res;
         }
     }
