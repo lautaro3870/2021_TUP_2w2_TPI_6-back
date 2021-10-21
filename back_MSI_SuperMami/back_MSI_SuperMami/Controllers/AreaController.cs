@@ -24,6 +24,18 @@ namespace back_MSI_SuperMami.Controllers
             _logger = logger;
         }
 
+
+        [HttpGet]
+        [Route("[controller]/GetAreas")]
+        public ActionResult<RespuestaAPI> GetAreas()
+        {
+            var respusta = new RespuestaAPI();
+            respusta.Ok = true;
+            respusta.Respuesta = bd.Areas.ToList();
+            return respusta;
+
+        }
+
         //Registrar Nueva Área
         [HttpPost]
         [Route("[controller]/areas")]
