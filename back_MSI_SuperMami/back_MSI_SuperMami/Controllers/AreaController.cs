@@ -71,5 +71,52 @@ namespace back_MSI_SuperMami.Controllers
             res.InfoAdicional = "El área se cargo correctamente";
             return res;
         }
+
+        [HttpPut]
+        [Route("Area/DarDeBaja")]
+        public ActionResult<RespuestaAPI> DarDeBaja(int areaId)
+        {
+            var res = new RespuestaAPI();
+            if (areaId == 0)
+            {
+                res.Ok = false;
+                res.Error = "No se ingresó el área";
+                return res;
+            }
+            else
+            {
+                try
+                {
+                    var area = bd.Areas.Where(x => x.Idarea == areaId).FirstOrDefault();
+                    if (area != null && area.Estado == true)
+                    {
+                        area.Estado = false;
+                        res.Ok = true;
+                        res.Respuesta = area;
+                        res.Error = "Área dada de baja";
+                        bd.Areas.Update(area);
+                        bd.SaveChanges();
+
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No hay Áreas habilitadas";
+                    }
+
+                    return res;
+
+
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Error = "No hay Áreas habilitadas";
+                    return res;
+                }
+            }
+
+
+        }
     }
 }
