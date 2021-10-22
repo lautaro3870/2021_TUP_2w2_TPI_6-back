@@ -269,7 +269,7 @@ namespace back_MSI_SuperMami.Models
                     .HasColumnType("money")
                     .HasColumnName("precio");
 
-                entity.Property(e => e.Proveedores).HasColumnName("proveedores");
+                //entity.Property(e => e.Proveedores).HasColumnName("proveedores");
 
                 entity.Property(e => e.Vencimiento)
                     .HasColumnType("date")
