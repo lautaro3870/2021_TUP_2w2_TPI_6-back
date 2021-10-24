@@ -34,6 +34,50 @@ namespace back_MSI_SuperMami.Controllers
             return respusta;
         }
 
+        //dar de baja
+        [HttpPut]
+        [Route("[controller]/darDeBaja")]
+        public ActionResult<RespuestaAPI> DarDeBaja(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una forma de pago a dar de baja";
+                return res;
+            }
+            else
+            {
+                var pago = bd.FormaDePagos.Find(id);
+                try
+                {
+                    if (pago != null && pago.Estado == true)
+                    {
+                        pago.Estado = false;
+                        res.Ok = true;
+                        bd.FormaDePagos.Update(pago);
+                        bd.SaveChanges();
+                        res.Respuesta = "Forma de pago dada de baja";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No hay formas de pago habilitadas";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra la forma de pago solicitada";
+                    return res;
+                }
+
+            }
+        }
+
         //Registrar Nueva Forma de Pago
         [HttpPost]
         [Route("[controller]/formasPago")]

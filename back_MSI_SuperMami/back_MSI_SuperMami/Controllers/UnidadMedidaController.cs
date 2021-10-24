@@ -34,6 +34,50 @@ namespace back_MSI_SuperMami.Controllers
             return respusta;
         }
 
+        //dar de baja
+        [HttpPut]
+        [Route("[controller]/darDeBaja")]
+        public ActionResult<RespuestaAPI> DarDeBaja(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una unidad de medida a dar de baja";
+                return res;
+            }
+            else
+            {
+                var unidadMedida = bd.UnidadDeMedida.Find(id);
+                try
+                {
+                    if (unidadMedida != null && unidadMedida.Estado == true)
+                    {
+                        unidadMedida.Estado = false;
+                        res.Ok = true;
+                        bd.UnidadDeMedida.Update(unidadMedida);
+                        bd.SaveChanges();
+                        res.Respuesta = "Unidad de medida dada de baja";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No hay unidades de medida habilitadas";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra la unidad de medida solicitada";
+                    return res;
+                }
+
+            }
+        }
+
         //Registrar Nueva Unidad de Medida
         [HttpPost]
         [Route("[controller]/unidadesMedida")]
