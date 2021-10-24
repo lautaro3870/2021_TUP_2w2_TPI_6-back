@@ -1,27 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ECamu\\Desktop\\utn 4Semestre\\MSI 4SEMESTRE\\2021_TUP_2w2_TPI_6-back\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {}
+    "C:\\Proyectos GitHub\\Back MSI\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ECamu\\Desktop\\utn 4Semestre\\MSI 4SEMESTRE\\2021_TUP_2w2_TPI_6-back\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {
+    "C:\\Proyectos GitHub\\Back MSI\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ECamu\\Desktop\\utn 4Semestre\\MSI 4SEMESTRE\\2021_TUP_2w2_TPI_6-back\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
+        "projectUniqueName": "C:\\Proyectos GitHub\\Back MSI\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
         "projectName": "back_MSI_SuperMami",
-        "projectPath": "C:\\Users\\ECamu\\Desktop\\utn 4Semestre\\MSI 4SEMESTRE\\2021_TUP_2w2_TPI_6-back\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
-        "packagesPath": "C:\\Users\\ECamu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ECamu\\Desktop\\utn 4Semestre\\MSI 4SEMESTRE\\2021_TUP_2w2_TPI_6-back\\back_MSI_SuperMami\\back_MSI_SuperMami\\obj\\",
+        "projectPath": "C:\\Proyectos GitHub\\Back MSI\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
+        "packagesPath": "C:\\Users\\Win\\.nuget\\packages\\",
+        "outputPath": "C:\\Proyectos GitHub\\Back MSI\\back_MSI_SuperMami\\back_MSI_SuperMami\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ECamu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Win\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -98,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

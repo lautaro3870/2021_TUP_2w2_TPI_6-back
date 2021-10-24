@@ -24,6 +24,16 @@ namespace back_MSI_SuperMami.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("[controller]/Get")]
+        public ActionResult<RespuestaAPI> Get()
+        {
+            var respusta = new RespuestaAPI();
+            respusta.Ok = true;
+            respusta.Respuesta = bd.UnidadDeMedida.Where(x => x.Estado == true).ToList();
+            return respusta;
+        }
+
         //Registrar Nueva Unidad de Medida
         [HttpPost]
         [Route("[controller]/unidadesMedida")]

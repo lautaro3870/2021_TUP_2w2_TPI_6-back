@@ -24,6 +24,16 @@ namespace back_MSI_SuperMami.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("[controller]/Get")]
+        public ActionResult<RespuestaAPI> Get()
+        {
+            var respusta = new RespuestaAPI();
+            respusta.Ok = true;
+            respusta.Respuesta = bd.FormaDePagos.Where(x => x.Estado == true).ToList();
+            return respusta;
+        }
+
         //Registrar Nueva Forma de Pago
         [HttpPost]
         [Route("[controller]/formasPago")]
