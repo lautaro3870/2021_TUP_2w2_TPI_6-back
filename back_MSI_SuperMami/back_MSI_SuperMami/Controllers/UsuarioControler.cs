@@ -65,7 +65,7 @@ namespace back_MSI_SuperMami.Controllers
         public ActionResult<RespuestaAPI> Login([FromBody] ComandoUsuarioLogin comando)
         {
             var token = jwtAuthenticationManager.Authenticate(comando.email, comando.password);
-
+            
             RespuestaAPI resultado = new RespuestaAPI();
             var result = db.Usuarios.FirstOrDefault(x => x.Email == comando.email && x.Password == comando.password);
             if (string.IsNullOrEmpty(comando.email))

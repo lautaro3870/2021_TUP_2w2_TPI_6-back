@@ -30,14 +30,6 @@ namespace back_MSI_SuperMami
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: "myPolicy",
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("*");
-                                  });
-            });
 
             services.AddMvc(options =>
             {
@@ -59,13 +51,7 @@ namespace back_MSI_SuperMami
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "back_MSI_SuperMami", Version = "v1" });
             });
 
-            services.AddCors(o => o.AddPolicy("MSI2021", builder =>
-            {
-                builder.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-
-            }));
+            services.AddCors();
             services.AddRouting(r => r.SuppressCheckForUnhandledSecurityMetadata = true);
 
 
@@ -92,7 +78,11 @@ namespace back_MSI_SuperMami
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("MSI2021");
+            app.UseCors(x => x
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .SetIsOriginAllowed(origin => true)
+              .AllowCredentials());
 
             app.Use((context, next) =>
             {
