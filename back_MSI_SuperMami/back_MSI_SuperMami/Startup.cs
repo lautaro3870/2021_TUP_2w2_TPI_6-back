@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,6 +30,19 @@ namespace back_MSI_SuperMami
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(options =>
+            {
+                options.AllowEmptyInputInBodyModelBinding = true;
+                foreach (var formatter in options.InputFormatters)
+                {
+                    if (formatter.GetType() == typeof(SystemTextJsonInputFormatter))
+                        ((SystemTextJsonInputFormatter)formatter).SupportedMediaTypes.Add(
+                        Microsoft.Net.Http.Headers.MediaTypeHeaderValue.Parse("text/plain"));
+                }
+            }).AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -685,3 +685,6 @@ C:\Proyectos GitHub\Back MSI\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net
 C:\Proyectos GitHub\Back MSI\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\ref\back_MSI_SuperMami.dll
 C:\Proyectos GitHub\Back MSI\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\back_MSI_SuperMami.pdb
 C:\Proyectos GitHub\Back MSI\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\back_MSI_SuperMami.genruntimeconfig.cache
+C:\Users\ECamu\Desktop\utn 4Semestre\MSI 4SEMESTRE\2021_TUP_2w2_TPI_6-back\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\back_MSI_SuperMami.dll
+C:\Users\ECamu\Desktop\utn 4Semestre\MSI 4SEMESTRE\2021_TUP_2w2_TPI_6-back\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\ref\back_MSI_SuperMami.dll
+C:\Users\ECamu\Desktop\utn 4Semestre\MSI 4SEMESTRE\2021_TUP_2w2_TPI_6-back\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\back_MSI_SuperMami.pdb
