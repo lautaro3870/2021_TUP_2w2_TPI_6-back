@@ -25,7 +25,7 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/Get")]
+        [Route("formas-envio")]
         public ActionResult<RespuestaAPI> Get()
         {
             var respusta = new RespuestaAPI();
@@ -36,7 +36,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //dar de baja
         [HttpPut]
-        [Route("[controller]/darDeBaja")]
+        [Route("formas-envio/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
             var res = new RespuestaAPI();
@@ -80,7 +80,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //Registrar Nueva Forma de Envío
         [HttpPost]
-        [Route("[controller]/formasEnvio")]
+        [Route("formas-envio")]
         public RespuestaAPI registrarFormaEnvio([FromBody] ComandoRegistrarFormaEnvio formaEnvio)
         {
             RespuestaAPI res = new RespuestaAPI();

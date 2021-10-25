@@ -26,7 +26,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //Productos habilitados
         [HttpGet]
-        [Route("[controller]/Get")]
+        [Route("productos")]
         public ActionResult<RespuestaAPI> Get()
         {
             var respuestas = new RespuestaAPI();
@@ -37,7 +37,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //Dar de baja producto
         [HttpPut]
-        [Route("[controller]/DarDeBaja")]
+        [Route("productos/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
             var res = new RespuestaAPI();
@@ -83,7 +83,7 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpPut]
-        [Route("[controller]/Put")]
+        [Route("productos")]
         public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarProducto comando)
         {
             var res = new RespuestaAPI();

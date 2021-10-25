@@ -26,7 +26,7 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/Get")]
+        [Route("proveedores")]
         public ActionResult<RespuestaAPI> Get()
         {
             var respuesta = new RespuestaAPI();
@@ -36,7 +36,7 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpPut]
-        [Route("[controller]/darDeBaja")]
+        [Route("proveedores/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
             var respuesta = new RespuestaAPI();
@@ -80,7 +80,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //Put
         [HttpPut]
-        [Route("[controller]/Put")]
+        [Route("proveedores")]
         public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarProveedor comando)
         {
             var res = new RespuestaAPI();

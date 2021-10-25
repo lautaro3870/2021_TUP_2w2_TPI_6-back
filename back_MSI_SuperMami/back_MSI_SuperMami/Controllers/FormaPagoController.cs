@@ -25,7 +25,7 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/Get")]
+        [Route("formas-pago")]
         public ActionResult<RespuestaAPI> Get()
         {
             var respusta = new RespuestaAPI();
@@ -36,7 +36,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //dar de baja
         [HttpPut]
-        [Route("[controller]/darDeBaja")]
+        [Route("formas-pago/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
             var res = new RespuestaAPI();
@@ -80,7 +80,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //Registrar Nueva Forma de Pago
         [HttpPost]
-        [Route("[controller]/formasPago")]
+        [Route("formas-pago")]
         public RespuestaAPI registrarFormaPago([FromBody] ComandoRegistrarFormaPago formaPago)
         {
             RespuestaAPI res = new RespuestaAPI();

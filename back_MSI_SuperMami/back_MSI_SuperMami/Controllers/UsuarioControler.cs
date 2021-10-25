@@ -39,7 +39,7 @@ namespace back_MSI_SuperMami.Controllers
         //}
 
         [HttpGet]
-        [Route("Usuario/Usuarios")]
+        [Route("usuarios")]
         public ActionResult<RespuestaAPI> Get()
         {
             var resultado = new RespuestaAPI();

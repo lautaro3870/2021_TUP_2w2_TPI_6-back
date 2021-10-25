@@ -73,11 +73,11 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpDelete]
-        [Route("areas/{idArea}")]
-        public ActionResult<RespuestaAPI> DarDeBaja(int areaId)
+        [Route("areas/{id}")]
+        public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
             var res = new RespuestaAPI();
-            if (areaId == 0)
+            if (id == 0)
             {
                 res.Ok = false;
                 res.Error = "No se ingresó el área";
@@ -87,7 +87,7 @@ namespace back_MSI_SuperMami.Controllers
             {
                 try
                 {
-                    var area = bd.Areas.Where(x => x.Idarea == areaId).FirstOrDefault();
+                    var area = bd.Areas.Where(x => x.Idarea == id).FirstOrDefault();
                     if (area != null && area.Estado == true)
                     {
                         area.Estado = false;

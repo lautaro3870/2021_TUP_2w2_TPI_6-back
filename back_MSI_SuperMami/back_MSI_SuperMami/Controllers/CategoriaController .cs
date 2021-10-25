@@ -25,7 +25,7 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/Get")]
+        [Route("categorias")]
         public ActionResult<RespuestaAPI> Get()
         {
             var respusta = new RespuestaAPI();
@@ -37,7 +37,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //dar de baja
         [HttpPut]
-        [Route("[controller]/darDeBaja")]
+        [Route("categorias/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
             var res = new RespuestaAPI();
@@ -81,7 +81,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //Registrar Nueva Categoría
         [HttpPost]
-        [Route("[controller]/categorias")]
+        [Route("categorias")]
         public RespuestaAPI registrarCategoria([FromBody] ComandoRegistrarCategoria categoria)
         {
             RespuestaAPI res = new RespuestaAPI();

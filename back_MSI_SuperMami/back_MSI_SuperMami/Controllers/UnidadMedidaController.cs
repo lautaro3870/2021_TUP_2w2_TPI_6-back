@@ -25,7 +25,7 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/Get")]
+        [Route("unidad-medidas")]
         public ActionResult<RespuestaAPI> Get()
         {
             var respusta = new RespuestaAPI();
@@ -36,7 +36,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //dar de baja
         [HttpPut]
-        [Route("[controller]/darDeBaja")]
+        [Route("unidad-medidas{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
             var res = new RespuestaAPI();
@@ -80,7 +80,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //Registrar Nueva Unidad de Medida
         [HttpPost]
-        [Route("[controller]/unidadesMedida")]
+        [Route("unidad-medidas")]
         public RespuestaAPI registrarUnidadMedida([FromBody] ComandoRegistrarUnidadMedida unidadMedida)
         {
             RespuestaAPI res = new RespuestaAPI();
