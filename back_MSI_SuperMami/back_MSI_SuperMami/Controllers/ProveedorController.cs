@@ -1,4 +1,5 @@
 ﻿using back_MSI_SuperMami.Comandos;
+using back_MSI_SuperMami.Comandos.Modificar;
 using back_MSI_SuperMami.Models;
 using back_MSI_SuperMami.Respuestas;
 using Microsoft.AspNetCore.Cors;
@@ -75,6 +76,89 @@ namespace back_MSI_SuperMami.Controllers
                 }
             }
 
+        }
+
+        //Put
+        [HttpPut]
+        [Route("[controller]/Put")]
+        public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarProveedor comando)
+        {
+            var res = new RespuestaAPI();
+            try
+            {
+                if (string.IsNullOrEmpty(comando.Nombre))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso el nombre";
+                    return res;
+                }
+                if (string.IsNullOrEmpty(comando.Direccion))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso la Direccion";
+                    return res;
+                }
+                if (string.IsNullOrEmpty(comando.CUIT))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso la CUIT";
+                    return res;
+                }
+                if (string.IsNullOrEmpty(comando.Telefono))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso el telefono";
+                    return res;
+                }
+
+                if (string.IsNullOrEmpty(comando.Email))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso la Email";
+                    return res;
+                }
+                if (comando.Area == 0)
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso el area";
+                    return res;
+                }
+
+                var prov = bd.Proveedores.Where(x => x.Idproveedor == comando.Id).FirstOrDefault();
+                if (prov != null)
+                {
+                    
+                    prov.Nombre = comando.Nombre;
+                    prov.Direccion = comando.Direccion;
+                    prov.Estado = true;
+                    prov.Email = comando.Email;
+                    prov.Cuit = comando.CUIT;
+                    prov.Telefono = comando.Telefono;
+                    prov.Idarea = comando.Area;
+
+                    bd.Update(prov);
+                    bd.SaveChanges();
+
+                    res.Ok = true;
+                    res.Respuesta = "Proveedor modificado";
+                    res.Respuesta = bd.Proveedores.ToList();
+                    return res;
+
+                }
+                else
+                {
+                    res.Respuesta = "Proveedor no encontrado";
+                    res.Ok = false;
+                    return res;
+                }
+                
+            }
+            catch (Exception e)
+            {
+                res.Respuesta = "Error: " + e;
+                res.Ok = false;
+                return res;
+            }
         }
 
 
