@@ -24,6 +24,61 @@ namespace back_MSI_SuperMami.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("[controller]/Get")]
+        public ActionResult<RespuestaAPI> Get()
+        {
+            var respusta = new RespuestaAPI();
+            respusta.Ok = true;
+            respusta.Respuesta = bd.Categorias.Where(x => x.Estado == true).ToList();
+            return respusta;
+        }
+
+
+        //dar de baja
+        [HttpPut]
+        [Route("[controller]/darDeBaja")]
+        public ActionResult<RespuestaAPI> DarDeBaja(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una categoria a dar de baja";
+                return res;
+            }
+            else
+            {
+                var categoria = bd.Categorias.Find(id);
+                try
+                {
+                    if (categoria != null && categoria.Estado == true)
+                    {
+                        categoria.Estado = false;
+                        res.Ok = true;
+                        bd.Categorias.Update(categoria);
+                        bd.SaveChanges();
+                        res.Respuesta = "Categoria dada de baja";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No hay categorias habilitadas";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra la categoria solicitada";
+                    return res;
+                }
+                
+            }
+        }
+
         //Registrar Nueva Categoría
         [HttpPost]
         [Route("[controller]/categorias")]

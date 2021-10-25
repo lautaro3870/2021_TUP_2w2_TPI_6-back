@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,19 +31,27 @@ namespace back_MSI_SuperMami
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddMvc(options =>
+            {
+                options.AllowEmptyInputInBodyModelBinding = true;
+                foreach (var formatter in options.InputFormatters)
+                {
+                    if (formatter.GetType() == typeof(SystemTextJsonInputFormatter))
+                        ((SystemTextJsonInputFormatter)formatter).SupportedMediaTypes.Add(
+                        Microsoft.Net.Http.Headers.MediaTypeHeaderValue.Parse("text/plain"));
+                }
+            }).AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "back_MSI_SuperMami", Version = "v1" });
             });
 
-            services.AddCors(o => o.AddPolicy("MSI2021", builder =>
-            {
-                builder.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-
-            }));
+            services.AddCors();
             services.AddRouting(r => r.SuppressCheckForUnhandledSecurityMetadata = true);
 
 
@@ -69,7 +78,11 @@ namespace back_MSI_SuperMami
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("MSI2021");
+            app.UseCors(x => x
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .SetIsOriginAllowed(origin => true)
+              .AllowCredentials());
 
             app.Use((context, next) =>
             {

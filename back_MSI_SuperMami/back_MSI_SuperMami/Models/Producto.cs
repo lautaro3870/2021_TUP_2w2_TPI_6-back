@@ -17,7 +17,7 @@ namespace back_MSI_SuperMami.Models
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public decimal Precio { get; set; }
-        public int Proveedores { get; set; }
+        //public int Proveedores { get; set; }
         public DateTime Vencimiento { get; set; }
         public bool Estado { get; set; }
         public int Idunidadmedida { get; set; }
