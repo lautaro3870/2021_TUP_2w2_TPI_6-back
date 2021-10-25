@@ -26,7 +26,7 @@ namespace back_MSI_SuperMami.Controllers
 
 
         [HttpGet]
-        [Route("[controller]/GetAreas")]
+        [Route("areas")]
         public ActionResult<RespuestaAPI> GetAreas()
         {
             var respusta = new RespuestaAPI();
@@ -38,7 +38,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //Registrar Nueva Área
         [HttpPost]
-        [Route("[controller]/areas")]
+        [Route("areas")]
         public RespuestaAPI registrarArea([FromBody] ComandoRegistrarArea area)
         {
             RespuestaAPI res = new RespuestaAPI();
@@ -72,8 +72,8 @@ namespace back_MSI_SuperMami.Controllers
             return res;
         }
 
-        [HttpPut]
-        [Route("Area/DarDeBaja")]
+        [HttpDelete]
+        [Route("areas/{idArea}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int areaId)
         {
             var res = new RespuestaAPI();
