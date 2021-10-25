@@ -489,11 +489,11 @@ namespace back_MSI_SuperMami.Models
                 //    .HasMaxLength(100)
                 //    .HasColumnName("rol");
 
-                entity.HasOne(d => d.IdrolNavigation)
-                    .WithMany(p => p.Usuarios)
-                    .HasForeignKey(d => d.Idrol)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("idrol");
+                //entity.HasOne(d => d.Idrol)
+                //    .WithMany(p => p.Usuarios)
+                //    .HasForeignKey(d => d.Idrol)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("idrol");
             });
 
             OnModelCreatingPartial(modelBuilder);

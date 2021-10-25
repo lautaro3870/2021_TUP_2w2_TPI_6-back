@@ -1,23 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Proyectos GitHub\\Repo Back MSI\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {}
+    "D:\\Usuario\\Documents\\#TUP - FRC\\Cuarto Cuatrimestre 2021\\Metodología de sistemas\\TRABAJO INTEGRADOR\\BACKCLONE\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {}
   },
   "projects": {
-    "C:\\Proyectos GitHub\\Repo Back MSI\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {
+    "D:\\Usuario\\Documents\\#TUP - FRC\\Cuarto Cuatrimestre 2021\\Metodología de sistemas\\TRABAJO INTEGRADOR\\BACKCLONE\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Proyectos GitHub\\Repo Back MSI\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
+        "projectUniqueName": "D:\\Usuario\\Documents\\#TUP - FRC\\Cuarto Cuatrimestre 2021\\Metodología de sistemas\\TRABAJO INTEGRADOR\\BACKCLONE\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
         "projectName": "back_MSI_SuperMami",
-        "projectPath": "C:\\Proyectos GitHub\\Repo Back MSI\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
-        "packagesPath": "C:\\Users\\Win\\.nuget\\packages\\",
-        "outputPath": "C:\\Proyectos GitHub\\Repo Back MSI\\back_MSI_SuperMami\\back_MSI_SuperMami\\obj\\",
+        "projectPath": "D:\\Usuario\\Documents\\#TUP - FRC\\Cuarto Cuatrimestre 2021\\Metodología de sistemas\\TRABAJO INTEGRADOR\\BACKCLONE\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "D:\\Usuario\\Documents\\#TUP - FRC\\Cuarto Cuatrimestre 2021\\Metodología de sistemas\\TRABAJO INTEGRADOR\\BACKCLONE\\back_MSI_SuperMami\\back_MSI_SuperMami\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Win\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,6 +45,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.11, )"
+            },
             "Microsoft.AspNetCore.Cors": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -98,7 +104,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
