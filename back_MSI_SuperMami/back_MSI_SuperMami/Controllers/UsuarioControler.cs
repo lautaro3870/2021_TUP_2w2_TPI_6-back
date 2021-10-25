@@ -61,7 +61,8 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpPost]
-        [Route("Usuario/Login")]
+        [Produces("application/json")]
+        [Route("login")]
         public ActionResult<RespuestaAPI> Login([FromBody] ComandoUsuarioLogin comando)
         {
             var token = jwtAuthenticationManager.Authenticate(comando.email, comando.password);
@@ -103,9 +104,9 @@ namespace back_MSI_SuperMami.Controllers
                     
                     resultado.Ok = true;
                     resultado.InfoAdicional = "Login exitoso";
-                    string info = "userInfo: Mail: " + result.Email + " Rol: "+result.rol.Rol+ " Token: " + token;
+                    loginResponse rsp = new loginResponse(token, result.Email, result.role.Rol);
 
-                    resultado.Respuesta = info;
+                    resultado.Respuesta = rsp;
 
                     return resultado;
                     
