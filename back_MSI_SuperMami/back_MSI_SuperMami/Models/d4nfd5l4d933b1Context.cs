@@ -501,7 +501,8 @@ namespace back_MSI_SuperMami.Models
                     .HasMaxLength(100)
                     .HasColumnName("email");
 
-                entity.Property(e => e.Estado).HasColumnName("estado");
+                entity.Property(e => e.Estado).HasColumnName("estado"); 
+
 
                 entity.Property(e => e.Idrol).HasColumnName("idrol");
 

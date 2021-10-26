@@ -35,6 +35,41 @@ namespace back_MSI_SuperMami.Controllers
             return respusta;
 
         }
+        [HttpGet]
+        [Route("areas/{id}")]
+        public ActionResult<RespuestaAPI> GetAreas(int id)
+        {
+            var respusta = new RespuestaAPI();
+            if (id == 0)
+            {
+                respusta.Ok = false;
+                respusta.Respuesta = "Ingrese un área a dar de baja";
+                return respusta;
+            }
+            else
+            {
+                var area = bd.Areas.Find(id);
+                try
+                {
+                    if (area != null)
+                    {
+                        respusta.Ok = true;
+                        respusta.Respuesta = area;
+                        return respusta;
+                    }
+                    return respusta;
+
+                }
+                catch
+                {
+                    respusta.Ok = false;
+                    respusta.Respuesta = "No se encuentra el área solicitada";
+                    return respusta;
+                }
+
+            }
+
+        }
 
         //Registrar Nueva Área
         [HttpPost]

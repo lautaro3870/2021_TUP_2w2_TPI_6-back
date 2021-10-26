@@ -35,6 +35,43 @@ namespace back_MSI_SuperMami.Controllers
             return respuesta;
         }
 
+
+        [HttpGet]
+        [Route("proveedores/{id}")]
+        public ActionResult<RespuestaAPI> GetProveedores(int id)
+        {
+            var respusta = new RespuestaAPI();
+            if (id == 0)
+            {
+                respusta.Ok = false;
+                respusta.Respuesta = "Ingrese el proveedor a dar de baja";
+                return respusta;
+            }
+            else
+            {
+                var prov = bd.Proveedores.Find(id);
+                try
+                {
+                    if (prov != null)
+                    {
+                        respusta.Ok = true;
+                        respusta.Respuesta = prov;
+                        return respusta;
+                    }
+                    return respusta;
+
+                }
+                catch
+                {
+                    respusta.Ok = false;
+                    respusta.Respuesta = "No se encuentra el proveedor solicitado";
+                    return respusta;
+                }
+
+            }
+
+        }
+
         [HttpPut]
         [Route("proveedores/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)

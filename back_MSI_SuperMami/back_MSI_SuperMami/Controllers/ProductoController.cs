@@ -35,6 +35,42 @@ namespace back_MSI_SuperMami.Controllers
             return respuestas;
         }
 
+        [HttpGet]
+        [Route("productos/{id}")]
+        public ActionResult<RespuestaAPI> GetProductos(int id)
+        {
+            var respusta = new RespuestaAPI();
+            if (id == 0)
+            {
+                respusta.Ok = false;
+                respusta.Respuesta = "Ingrese el producto a dar de baja";
+                return respusta;
+            }
+            else
+            {
+                var prod = bd.Productos.Find(id);
+                try
+                {
+                    if (prod != null)
+                    {
+                        respusta.Ok = true;
+                        respusta.Respuesta = prod;
+                        return respusta;
+                    }
+                    return respusta;
+
+                }
+                catch
+                {
+                    respusta.Ok = false;
+                    respusta.Respuesta = "No se encuentra el producto solicitado";
+                    return respusta;
+                }
+
+            }
+
+        }
+
         //Dar de baja producto
         [HttpPut]
         [Route("productos/{id}")]

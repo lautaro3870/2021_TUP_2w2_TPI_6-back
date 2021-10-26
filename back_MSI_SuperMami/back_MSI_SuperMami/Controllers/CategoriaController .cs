@@ -33,6 +33,41 @@ namespace back_MSI_SuperMami.Controllers
             respusta.Respuesta = bd.Categorias.Where(x => x.Estado == true).ToList();
             return respusta;
         }
+        [HttpGet]
+        [Route("categorias/{id}")]
+        public ActionResult<RespuestaAPI> Get(int id)
+        {
+            var respusta = new RespuestaAPI();
+            if (id == 0)
+            {
+                respusta.Ok = false;
+                respusta.Respuesta = "Ingrese una categoria a dar de baja";
+                return respusta;
+            }
+            else
+            {
+                var categoria = bd.Categorias.Find(id);
+                try
+                {
+                    if (categoria != null)
+                    {
+                        respusta.Ok = true;
+                        respusta.Respuesta = categoria;
+                        return respusta;
+                    }
+                    return respusta;
+
+                }
+                catch
+                {
+                    respusta.Ok = false;
+                    respusta.Respuesta = "No se encuentra la categoria solicitada";
+                    return respusta;
+                }
+
+            }
+
+        }
 
 
         //dar de baja
@@ -75,7 +110,7 @@ namespace back_MSI_SuperMami.Controllers
                     res.Respuesta = "No se encuentra la categoria solicitada";
                     return res;
                 }
-                
+
             }
         }
 
@@ -85,7 +120,7 @@ namespace back_MSI_SuperMami.Controllers
         public RespuestaAPI registrarCategoria([FromBody] ComandoRegistrarCategoria categoria)
         {
             RespuestaAPI res = new RespuestaAPI();
-            
+
             if (string.IsNullOrEmpty(categoria.Nombre))
             {
                 res.Ok = false;
@@ -100,7 +135,7 @@ namespace back_MSI_SuperMami.Controllers
             }
 
 
-            Categoria  c = new Categoria()
+            Categoria c = new Categoria()
             {
                 Nombre = categoria.Nombre,
                 Descripcion = categoria.Descripcion,

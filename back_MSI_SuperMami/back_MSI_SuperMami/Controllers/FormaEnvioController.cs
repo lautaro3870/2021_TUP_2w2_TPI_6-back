@@ -34,6 +34,42 @@ namespace back_MSI_SuperMami.Controllers
             return respusta;
         }
 
+        [HttpGet]
+        [Route("formas-envio/{id}")]
+        public ActionResult<RespuestaAPI> GetFormasEnvio(int id)
+        {
+            var respusta = new RespuestaAPI();
+            if (id == 0)
+            {
+                respusta.Ok = false;
+                respusta.Respuesta = "Ingrese una forma de envio a dar de baja";
+                return respusta;
+            }
+            else
+            {
+                var formaEnvio = bd.FormaDeEnvios.Find(id);
+                try
+                {
+                    if (formaEnvio != null)
+                    {
+                        respusta.Ok = true;
+                        respusta.Respuesta = formaEnvio;
+                        return respusta;
+                    }
+                    return respusta;
+
+                }
+                catch
+                {
+                    respusta.Ok = false;
+                    respusta.Respuesta = "No se encuentra la forma de envio solicitada";
+                    return respusta;
+                }
+
+            }
+
+        }
+
         //dar de baja
         [HttpPut]
         [Route("formas-envio/{id}")]

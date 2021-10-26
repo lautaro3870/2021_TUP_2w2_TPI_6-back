@@ -14,6 +14,7 @@ namespace back_MSI_SuperMami.Models
         public bool Estado { get; set; }
         public int Idrol { get; set; }
 
+
         [ForeignKey("Idrol")]
         public Role rol { get; set; }
     }

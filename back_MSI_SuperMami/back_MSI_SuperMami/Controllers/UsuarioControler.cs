@@ -60,6 +60,43 @@ namespace back_MSI_SuperMami.Controllers
 
         }
 
+
+        [HttpGet]
+        [Route("usuarios/{id}")]
+        public ActionResult<RespuestaAPI> GetUsuarios(int id)
+        {
+            var respusta = new RespuestaAPI();
+            if (id == 0)
+            {
+                respusta.Ok = false;
+                respusta.Respuesta = "Ingrese el usuario a dar de baja";
+                return respusta;
+            }
+            else
+            {
+                var usu = db.Usuarios.Find(id);
+                try
+                {
+                    if (usu != null)
+                    {
+                        respusta.Ok = true;
+                        respusta.Respuesta = usu;
+                        return respusta;
+                    }
+                    return respusta;
+
+                }
+                catch
+                {
+                    respusta.Ok = false;
+                    respusta.Respuesta = "No se encuentra el usuario solicitado";
+                    return respusta;
+                }
+
+            }
+
+        }
+
         [HttpPost]
         [Route("login")]
         public ActionResult<RespuestaAPI> Login([FromBody] ComandoUsuarioLogin comando)
