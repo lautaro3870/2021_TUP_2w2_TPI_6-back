@@ -121,13 +121,13 @@ namespace back_MSI_SuperMami.Controllers
         {
             RespuestaAPI res = new RespuestaAPI();
             
-            if (string.IsNullOrEmpty(formaEnvio.Nombre))
+            if (string.IsNullOrEmpty(formaEnvio.nombre))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el nombre";
                 return res;
             }
-            if (string.IsNullOrEmpty(formaEnvio.Descripcion))
+            if (string.IsNullOrEmpty(formaEnvio.descripcion))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la descripción";
@@ -137,8 +137,8 @@ namespace back_MSI_SuperMami.Controllers
 
             FormaDeEnvio f = new FormaDeEnvio()
             {
-                Nombre = formaEnvio.Nombre,
-                Descripcion = formaEnvio.Descripcion,
+                Nombre = formaEnvio.nombre,
+                Descripcion = formaEnvio.descripcion,
                 Estado = true
             };
 

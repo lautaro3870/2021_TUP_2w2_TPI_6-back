@@ -7,14 +7,14 @@ namespace back_MSI_SuperMami.Comandos.Modificar
 {
     public class ComandoModificarProducto
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Descripcion { get; set; }
-        public decimal Precio { get; set; }
-        public int Marca { get; set; }
-        public DateTime Vencimiento { get; set; }
+        public int id { get; set; }
+        public string nombre { get; set; }
+        public string descripcion { get; set; }
+        public decimal precio { get; set; }
+        public int marca { get; set; }
+        public DateTime vencimiento { get; set; }
         public int unidadMedida { get; set; }
-        public int Categoria { get; set; }
+        public int categoria { get; set; }
         
 
     }

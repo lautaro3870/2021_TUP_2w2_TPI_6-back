@@ -121,13 +121,13 @@ namespace back_MSI_SuperMami.Controllers
         {
             RespuestaAPI res = new RespuestaAPI();
             
-            if (string.IsNullOrEmpty(formaPago.Nombre))
+            if (string.IsNullOrEmpty(formaPago.nombre))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el nombre";
                 return res;
             }
-            if (string.IsNullOrEmpty(formaPago.Descripcion))
+            if (string.IsNullOrEmpty(formaPago.descripcion))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la descripción";
@@ -137,8 +137,8 @@ namespace back_MSI_SuperMami.Controllers
 
             FormaDePago  f = new FormaDePago()
             {
-                Nombre = formaPago.Nombre,
-                Descripcion = formaPago.Descripcion,
+                Nombre = formaPago.nombre,
+                Descripcion = formaPago.descripcion,
                 Estado = true
             };
 

@@ -123,55 +123,55 @@ namespace back_MSI_SuperMami.Controllers
             var res = new RespuestaAPI();
             try
             {
-                if (string.IsNullOrEmpty(comando.Nombre))
+                if (string.IsNullOrEmpty(comando.nombre))
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso el nombre";
                     return res;
                 }
-                if (string.IsNullOrEmpty(comando.Direccion))
+                if (string.IsNullOrEmpty(comando.direccion))
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso la Direccion";
                     return res;
                 }
-                if (string.IsNullOrEmpty(comando.CUIT))
+                if (string.IsNullOrEmpty(comando.cuit))
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso la CUIT";
                     return res;
                 }
-                if (string.IsNullOrEmpty(comando.Telefono))
+                if (string.IsNullOrEmpty(comando.telefono))
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso el telefono";
                     return res;
                 }
 
-                if (string.IsNullOrEmpty(comando.Email))
+                if (string.IsNullOrEmpty(comando.email))
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso la Email";
                     return res;
                 }
-                if (comando.Area == 0)
+                if (comando.area == 0)
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso el area";
                     return res;
                 }
 
-                var prov = bd.Proveedores.Where(x => x.Idproveedor == comando.Id).FirstOrDefault();
+                var prov = bd.Proveedores.Where(x => x.Idproveedor == comando.id).FirstOrDefault();
                 if (prov != null)
                 {
                     
-                    prov.Nombre = comando.Nombre;
-                    prov.Direccion = comando.Direccion;
+                    prov.Nombre = comando.nombre;
+                    prov.Direccion = comando.direccion;
                     prov.Estado = true;
-                    prov.Email = comando.Email;
-                    prov.Cuit = comando.CUIT;
-                    prov.Telefono = comando.Telefono;
-                    prov.Idarea = comando.Area;
+                    prov.Email = comando.email;
+                    prov.Cuit = comando.cuit;
+                    prov.Telefono = comando.telefono;
+                    prov.Idarea = comando.area;
 
                     bd.Update(prov);
                     bd.SaveChanges();
@@ -205,38 +205,38 @@ namespace back_MSI_SuperMami.Controllers
         {
             var res = new RespuestaAPI();
 
-            if (string.IsNullOrEmpty(comando.Nombre))
+            if (string.IsNullOrEmpty(comando.nombre))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el nombre";
                 return res;
             }
-            if (string.IsNullOrEmpty(comando.Direccion))
+            if (string.IsNullOrEmpty(comando.direccion))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la Direccion";
                 return res;
             }
-            if (string.IsNullOrEmpty(comando.CUIT))
+            if (string.IsNullOrEmpty(comando.cuit))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la CUIT";
                 return res;
             }
-            if (string.IsNullOrEmpty(comando.Telefono))
+            if (string.IsNullOrEmpty(comando.telefono))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el telefono";
                 return res;
             }
 
-            if (string.IsNullOrEmpty(comando.Email))
+            if (string.IsNullOrEmpty(comando.email))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la Email";
                 return res;
             }
-            if (comando.Area == 0)
+            if (comando.area == 0)
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el area";
@@ -244,13 +244,13 @@ namespace back_MSI_SuperMami.Controllers
             }
 
             Proveedore prov = new Proveedore();
-            prov.Nombre = comando.Nombre;
-            prov.Direccion = comando.Direccion;
+            prov.Nombre = comando.nombre;
+            prov.Direccion = comando.direccion;
             prov.Estado = true;
-            prov.Email = comando.Email;
-            prov.Cuit = comando.CUIT;
-            prov.Telefono = comando.Telefono;
-            prov.Idarea = comando.Area;
+            prov.Email = comando.email;
+            prov.Cuit = comando.cuit;
+            prov.Telefono = comando.telefono;
+            prov.Idarea = comando.area;
 
             bd.Proveedores.Add(prov);
             bd.SaveChanges();

@@ -126,26 +126,26 @@ namespace back_MSI_SuperMami.Controllers
 
             try
             {
-                if (string.IsNullOrEmpty(comando.Nombre))
+                if (string.IsNullOrEmpty(comando.nombre))
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso el nombre";
                     return res;
                 }
-                if (string.IsNullOrEmpty(comando.Descripcion))
+                if (string.IsNullOrEmpty(comando.descripcion))
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso la descripción";
                     return res;
                 }
 
-                if (comando.Precio == 0)
+                if (comando.precio == 0)
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso el precio";
                     return res;
                 }
-                if (comando.Vencimiento.Equals(""))
+                if (comando.vencimiento.Equals(""))
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso la fecha de vencimiento";
@@ -159,31 +159,31 @@ namespace back_MSI_SuperMami.Controllers
                     return res;
                 }
 
-                if (comando.Categoria == 0)
+                if (comando.categoria == 0)
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso la categoria";
                     return res;
                 }
-                if (comando.Marca == 0)
+                if (comando.marca == 0)
                 {
                     res.Ok = false;
                     res.Error = "No se ingreso la marca";
                     return res;
                 }
 
-                var p = bd.Productos.Where(x => x.Idproducto == comando.Id).FirstOrDefault();
+                var p = bd.Productos.Where(x => x.Idproducto == comando.id).FirstOrDefault();
 
                 if (p != null)
                 {
-                    p.Nombre = comando.Nombre;
-                    p.Descripcion = comando.Descripcion;
-                    p.Precio = comando.Precio;
-                    p.Vencimiento = comando.Vencimiento;
+                    p.Nombre = comando.nombre;
+                    p.Descripcion = comando.descripcion;
+                    p.Precio = comando.precio;
+                    p.Vencimiento = comando.vencimiento;
                     p.Estado = true;
                     p.Idunidadmedida = comando.unidadMedida;
-                    p.Idcategoria = comando.Categoria;
-                    p.Idmarca = comando.Marca;
+                    p.Idcategoria = comando.categoria;
+                    p.Idmarca = comando.marca;
 
                     bd.Productos.Update(p);
                     bd.SaveChanges();
@@ -216,26 +216,26 @@ namespace back_MSI_SuperMami.Controllers
         {
             RespuestaAPI res = new RespuestaAPI();
 
-            if (string.IsNullOrEmpty(comando.Nombre))
+            if (string.IsNullOrEmpty(comando.nombre))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el nombre";
                 return res;
             }
-            if (string.IsNullOrEmpty(comando.Descripcion))
+            if (string.IsNullOrEmpty(comando.descripcion))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la descripción";
                 return res;
             }
 
-            if (comando.Precio == 0)
+            if (comando.precio == 0)
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el precio";
                 return res;
             }
-            if (comando.Vencimiento.Equals(""))
+            if (comando.vencimiento.Equals(""))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la fecha de vencimiento";
@@ -249,13 +249,13 @@ namespace back_MSI_SuperMami.Controllers
                 return res;
             }
 
-            if (comando.Categoria == 0)
+            if (comando.categoria == 0)
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la categoria";
                 return res;
             }
-            if (comando.Marca == 0)
+            if (comando.marca == 0)
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la marca";
@@ -265,14 +265,14 @@ namespace back_MSI_SuperMami.Controllers
             Producto p = new Producto();
 
 
-            p.Nombre = comando.Nombre;
-            p.Descripcion = comando.Descripcion;
-            p.Precio = comando.Precio;
-            p.Vencimiento = comando.Vencimiento;
+            p.Nombre = comando.nombre;
+            p.Descripcion = comando.descripcion;
+            p.Precio = comando.precio;
+            p.Vencimiento = comando.vencimiento;
             p.Estado = true;
             p.Idunidadmedida = comando.unidadMedida;
-            p.Idcategoria = comando.Categoria;
-            p.Idmarca = comando.Marca;
+            p.Idcategoria = comando.categoria;
+            p.Idmarca = comando.marca;
             
             bd.Productos.Add(p);
             bd.SaveChanges();

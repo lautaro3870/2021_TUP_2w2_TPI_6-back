@@ -121,13 +121,13 @@ namespace back_MSI_SuperMami.Controllers
         {
             RespuestaAPI res = new RespuestaAPI();
 
-            if (string.IsNullOrEmpty(categoria.Nombre))
+            if (string.IsNullOrEmpty(categoria.nombre))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el nombre";
                 return res;
             }
-            if (string.IsNullOrEmpty(categoria.Descripcion))
+            if (string.IsNullOrEmpty(categoria.descripcion))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la descripción";
@@ -137,8 +137,8 @@ namespace back_MSI_SuperMami.Controllers
 
             Categoria c = new Categoria()
             {
-                Nombre = categoria.Nombre,
-                Descripcion = categoria.Descripcion,
+                Nombre = categoria.nombre,
+                Descripcion = categoria.descripcion,
                 Estado = true
             };
 

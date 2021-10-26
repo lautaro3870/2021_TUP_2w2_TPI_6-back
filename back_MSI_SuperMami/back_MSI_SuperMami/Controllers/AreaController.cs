@@ -78,13 +78,13 @@ namespace back_MSI_SuperMami.Controllers
         {
             RespuestaAPI res = new RespuestaAPI();
             
-            if (string.IsNullOrEmpty(area.Nombre))
+            if (string.IsNullOrEmpty(area.nombre))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el nombre";
                 return res;
             }
-            if (string.IsNullOrEmpty(area.Descripcion))
+            if (string.IsNullOrEmpty(area.descripcion))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la descripción";
@@ -94,8 +94,8 @@ namespace back_MSI_SuperMami.Controllers
 
             Area a = new Area()
             {
-                Nombre = area.Nombre,
-                Descripcion = area.Descripcion,
+                Nombre = area.nombre,
+                Descripcion = area.descripcion,
                 Estado = true
             };
 

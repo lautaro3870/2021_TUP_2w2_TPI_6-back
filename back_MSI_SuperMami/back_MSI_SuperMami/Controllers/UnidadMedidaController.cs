@@ -121,13 +121,13 @@ namespace back_MSI_SuperMami.Controllers
         {
             RespuestaAPI res = new RespuestaAPI();
             
-            if (string.IsNullOrEmpty(unidadMedida.Nombre))
+            if (string.IsNullOrEmpty(unidadMedida.nombre))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el nombre";
                 return res;
             }
-            if (string.IsNullOrEmpty(unidadMedida.Descripcion))
+            if (string.IsNullOrEmpty(unidadMedida.descripcion))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la descripción";
@@ -137,8 +137,8 @@ namespace back_MSI_SuperMami.Controllers
 
             UnidadDeMedidum  u = new UnidadDeMedidum()
             {
-                Nombre = unidadMedida.Nombre,
-                Descipcion = unidadMedida.Descripcion,
+                Nombre = unidadMedida.nombre,
+                Descipcion = unidadMedida.descripcion,
                 Estado = true
             };
 

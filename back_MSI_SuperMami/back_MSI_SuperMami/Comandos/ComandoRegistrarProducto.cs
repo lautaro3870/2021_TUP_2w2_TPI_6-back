@@ -7,13 +7,13 @@ namespace back_MSI_SuperMami.Comandos
 {
     public class ComandoRegistrarProducto
     {
-        public string Nombre { get; set; }
-        public string Descripcion { get; set; }
-        public decimal Precio { get; set; }
-        public DateTime Vencimiento { get; set; }
+        public string nombre { get; set; }
+        public string descripcion { get; set; }
+        public decimal precio { get; set; }
+        public DateTime vencimiento { get; set; }
         public int unidadMedida { get; set; }
-        public int Categoria { get; set; }
-        public int Marca { get; set; }
+        public int categoria { get; set; }
+        public int marca { get; set; }
 
 
 
