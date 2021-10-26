@@ -295,8 +295,6 @@ namespace back_MSI_SuperMami.Models
                     .HasColumnType("money")
                     .HasColumnName("precio");
 
-                //entity.Property(e => e.Proveedores).HasColumnName("proveedores");
-
                 entity.Property(e => e.Vencimiento)
                     .HasColumnType("date")
                     .HasColumnName("vencimiento");
@@ -384,11 +382,11 @@ namespace back_MSI_SuperMami.Models
                     .HasMaxLength(50)
                     .HasColumnName("telefono");
 
-                entity.HasOne(d => d.IdareaNavigation)
-                    .WithMany(p => p.Proveedores)
-                    .HasForeignKey(d => d.Idarea)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("proveedores_areas");
+                //entity.HasOne(d => d.IdareaNavigation)
+                //    .WithMany(p => p.Proveedores)
+                //    .HasForeignKey(d => d.Idarea)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("proveedores_areas");
             });
 
             modelBuilder.Entity<Proveedoresxformadeenvio>(entity =>
@@ -501,17 +499,20 @@ namespace back_MSI_SuperMami.Models
                     .HasMaxLength(100)
                     .HasColumnName("email");
 
-                entity.Property(e => e.Estado).HasColumnName("estado"); 
-
+                entity.Property(e => e.Estado).HasColumnName("estado");
 
                 entity.Property(e => e.Idrol).HasColumnName("idrol");
+
+                entity.Property(e => e.NombreUsuario)
+                    .HasMaxLength(50)
+                    .HasColumnName("nombre_usuario");
 
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasMaxLength(100)
                     .HasColumnName("password");
 
-                //entity.HasOne(d => d.IdrolNavigation)
+                //entity.HasOne(d => d.Idrol)
                 //    .WithMany(p => p.Usuarios)
                 //    .HasForeignKey(d => d.Idrol)
                 //    .OnDelete(DeleteBehavior.ClientSetNull)

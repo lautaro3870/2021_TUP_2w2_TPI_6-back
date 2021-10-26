@@ -13,6 +13,7 @@ namespace back_MSI_SuperMami.Models
         public string Password { get; set; }
         public bool Estado { get; set; }
         public int Idrol { get; set; }
+        public string NombreUsuario { get; set; }
 
 
         [ForeignKey("Idrol")]

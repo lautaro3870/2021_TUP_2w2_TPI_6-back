@@ -140,7 +140,7 @@ namespace back_MSI_SuperMami.Controllers
                     
                     resultado.Ok = true;
                     resultado.InfoAdicional = "Login exitoso";
-                    login lg = new login(result.Email, token, result.rol.Rol);
+                    login lg = new login(result.NombreUsuario ,result.Email, token, result.rol.Rol);
 
                     resultado.Respuesta = lg;
 
