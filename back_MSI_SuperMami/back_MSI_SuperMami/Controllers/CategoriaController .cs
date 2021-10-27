@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 namespace back_MSI_SuperMami.Controllers
 {
     [ApiController]
-    [EnableCors("MSI2021")]
     public class CategoriaController : ControllerBase
     {
 
