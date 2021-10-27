@@ -71,55 +71,59 @@ namespace back_MSI_SuperMami.Controllers
         }
         //Modificar categoría
         [HttpPut]
-        [Route("categorias")]
-        public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarCategoria comando)
+        [Route("categorias/{id}")]
+        public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarCategoria comando)
         {
             var res = new RespuestaAPI();
-
-            try
+            if (id == 0)
             {
-                if (string.IsNullOrEmpty(comando.nombre))
+                res.Ok = false;
+                res.Respuesta = "Ingrese una categoria a dar de baja";
+                return res;
+            }
+            else
+            {
+                try
                 {
-                    res.Ok = false;
-                    res.Error = "No se ingreso el nombre";
-                    return res;
+                    if (string.IsNullOrEmpty(comando.nombre))
+                    {
+                        res.Ok = false;
+                        res.Error = "No se ingreso el nombre";
+                        return res;
+                    }
+                   
+
+
+                    var p = bd.Categorias.Where(x => x.Idcategoria == id).FirstOrDefault();
+
+                    if (p != null)
+                    {
+                        p.Nombre = comando.nombre;
+                        p.Descripcion = comando.descripcion;
+
+
+                        bd.Categorias.Update(p);
+                        bd.SaveChanges();
+
+                        res.Ok = true;
+                        res.Respuesta = "Categoría modificada";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Respuesta = "Categoría no encontrada";
+                        return res;
+                    }
                 }
-                if (string.IsNullOrEmpty(comando.descripcion))
-                {
-                    res.Ok = false;
-                    res.Error = "No se ingreso la descripción";
-                    return res;
-                }
-
-
-                var p = bd.Categorias.Where(x => x.Idcategoria == comando.id).FirstOrDefault();
-
-                if (p != null)
-                {
-                    p.Nombre = comando.nombre;
-                    p.Descripcion = comando.descripcion;
-
-
-                    bd.Categorias.Update(p);
-                    bd.SaveChanges();
-
-                    res.Ok = true;
-                    res.Respuesta = "Categoría modificada";
-                    return res;
-                }
-                else
+                catch (Exception e)
                 {
                     res.Ok = false;
                     res.Respuesta = "Categoría no encontrada";
                     return res;
                 }
             }
-            catch (Exception e)
-            {
-                res.Ok = false;
-                res.Respuesta = "Categoría no encontrada";
-                return res;
-            }
+            
 
         }
 

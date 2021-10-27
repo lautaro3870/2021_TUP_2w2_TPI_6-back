@@ -156,55 +156,59 @@ namespace back_MSI_SuperMami.Controllers
         }
         //Modificar area
         [HttpPut]
-        [Route("areas")]
-        public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarArea comando)
+        [Route("areas/{id}")]
+        public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarArea comando)
         {
             var res = new RespuestaAPI();
-
-            try
+            if (id == 0)
             {
-                if (string.IsNullOrEmpty(comando.nombre))
+                res.Ok = false;
+                res.Respuesta = "Ingrese un área a dar de baja";
+                return res;
+            }
+            else
+            {
+                try
                 {
-                    res.Ok = false;
-                    res.Error = "No se ingreso el nombre";
-                    return res;
-                }
-                if (string.IsNullOrEmpty(comando.descripcion))
-                {
-                    res.Ok = false;
-                    res.Error = "No se ingreso la descripción";
-                    return res;
-                }
-
-                
-                var p = bd.Areas.Where(x => x.Idarea == comando.id).FirstOrDefault();
-
-                if (p != null)
-                {
-                    p.Nombre = comando.nombre;
-                    p.Descripcion = comando.descripcion;
+                    if (string.IsNullOrEmpty(comando.nombre))
+                    {
+                        res.Ok = false;
+                        res.Error = "No se ingreso el nombre";
+                        return res;
+                    }
                    
 
-                    bd.Areas.Update(p);
-                    bd.SaveChanges();
 
-                    res.Ok = true;
-                    res.Respuesta = "Área modificada";
-                    return res;
+                    var p = bd.Areas.Where(x => x.Idarea == id).FirstOrDefault();
+
+                    if (p != null)
+                    {
+                        p.Nombre = comando.nombre;
+                        p.Descripcion = comando.descripcion;
+
+
+                        bd.Areas.Update(p);
+                        bd.SaveChanges();
+
+                        res.Ok = true;
+                        res.Respuesta = "Área modificada";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Respuesta = "Área no encontrada";
+                        return res;
+                    }
                 }
-                else
+                catch (Exception e)
                 {
                     res.Ok = false;
                     res.Respuesta = "Área no encontrada";
                     return res;
                 }
             }
-            catch (Exception e)
-            {
-                res.Ok = false;
-                res.Respuesta = "Área no encontrada";
-                return res;
-            }
+            
 
         }
     }

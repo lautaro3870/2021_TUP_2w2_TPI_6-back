@@ -74,55 +74,59 @@ namespace back_MSI_SuperMami.Controllers
 
         //Modificar
         [HttpPut]
-        [Route("unidad-medidas")]
-        public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarUnidadMedida comando)
+        [Route("unidad-medidas/{id}")]
+        public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarUnidadMedida comando)
         {
             var res = new RespuestaAPI();
-
-            try
+            if (id == 0)
             {
-                if (string.IsNullOrEmpty(comando.nombre))
+                res.Ok = false;
+                res.Respuesta = "Ingrese una unidad de medida a dar de baja";
+                return res;
+            }
+            else
+            {
+                try
                 {
-                    res.Ok = false;
-                    res.Error = "No se ingreso el nombre";
-                    return res;
+                    if (string.IsNullOrEmpty(comando.nombre))
+                    {
+                        res.Ok = false;
+                        res.Error = "No se ingreso el nombre";
+                        return res;
+                    }
+                    
+
+
+                    var p = bd.UnidadDeMedida.Where(x => x.Idunidadmedida == id).FirstOrDefault();
+
+                    if (p != null)
+                    {
+                        p.Nombre = comando.nombre;
+                        p.Descipcion = comando.descripcion;
+
+
+                        bd.UnidadDeMedida.Update(p);
+                        bd.SaveChanges();
+
+                        res.Ok = true;
+                        res.Respuesta = "Unidad de medida modificada";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Respuesta = "Unidad de medida no encontrada";
+                        return res;
+                    }
                 }
-                if (string.IsNullOrEmpty(comando.descripcion))
-                {
-                    res.Ok = false;
-                    res.Error = "No se ingreso la descripción";
-                    return res;
-                }
-
-
-                var p = bd.UnidadDeMedida.Where(x => x.Idunidadmedida == comando.id).FirstOrDefault();
-
-                if (p != null)
-                {
-                    p.Nombre = comando.nombre;
-                    p.Descipcion = comando.descripcion;
-
-
-                    bd.UnidadDeMedida.Update(p);
-                    bd.SaveChanges();
-
-                    res.Ok = true;
-                    res.Respuesta = "Unidad de medida modificada";
-                    return res;
-                }
-                else
+                catch (Exception e)
                 {
                     res.Ok = false;
                     res.Respuesta = "Unidad de medida no encontrada";
                     return res;
                 }
             }
-            catch (Exception e)
-            {
-                res.Ok = false;
-                res.Respuesta = "Unidad de medida no encontrada";
-                return res;
-            }
+            
 
         }
 

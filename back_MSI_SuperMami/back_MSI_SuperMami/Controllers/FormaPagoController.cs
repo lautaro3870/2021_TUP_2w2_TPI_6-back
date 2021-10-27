@@ -73,55 +73,64 @@ namespace back_MSI_SuperMami.Controllers
 
         //Modificar
         [HttpPut]
-        [Route("formas-pago")]
-        public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarFormaPago comando)
+        [Route("formas-pago/{id}")]
+        public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarFormaPago comando)
         {
             var res = new RespuestaAPI();
-
-            try
+            if (id == 0)
             {
-                if (string.IsNullOrEmpty(comando.nombre))
+                res.Ok = false;
+                res.Respuesta = "Ingrese una forma de pago a dar de baja";
+                return res;
+            }
+            else
+            {
+                try
                 {
-                    res.Ok = false;
-                    res.Error = "No se ingreso el nombre";
-                    return res;
+                    if (string.IsNullOrEmpty(comando.nombre))
+                    {
+                        res.Ok = false;
+                        res.Error = "No se ingreso el nombre";
+                        return res;
+                    }
+                    if (string.IsNullOrEmpty(comando.descripcion))
+                    {
+                        res.Ok = false;
+                        res.Error = "No se ingreso la descripción";
+                        return res;
+                    }
+
+
+                    var p = bd.FormaDePagos.Where(x => x.Idformapago == id).FirstOrDefault();
+
+                    if (p != null)
+                    {
+                        p.Nombre = comando.nombre;
+                        p.Descripcion = comando.descripcion;
+
+
+                        bd.FormaDePagos.Update(p);
+                        bd.SaveChanges();
+
+                        res.Ok = true;
+                        res.Respuesta = "Forma de pago modificada";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Respuesta = "Forma de pago no encontrada";
+                        return res;
+                    }
                 }
-                if (string.IsNullOrEmpty(comando.descripcion))
-                {
-                    res.Ok = false;
-                    res.Error = "No se ingreso la descripción";
-                    return res;
-                }
-
-
-                var p = bd.FormaDePagos.Where(x => x.Idformapago == comando.id).FirstOrDefault();
-
-                if (p != null)
-                {
-                    p.Nombre = comando.nombre;
-                    p.Descripcion = comando.descripcion;
-
-
-                    bd.FormaDePagos.Update(p);
-                    bd.SaveChanges();
-
-                    res.Ok = true;
-                    res.Respuesta = "Forma de pago modificada";
-                    return res;
-                }
-                else
+                catch (Exception e)
                 {
                     res.Ok = false;
                     res.Respuesta = "Forma de pago no encontrada";
                     return res;
                 }
             }
-            catch (Exception e)
-            {
-                res.Ok = false;
-                res.Respuesta = "Forma de pago no encontrada";
-                return res;
-            }
+            
 
         }
 

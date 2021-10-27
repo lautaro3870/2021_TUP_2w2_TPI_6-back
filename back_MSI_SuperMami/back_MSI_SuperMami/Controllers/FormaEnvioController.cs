@@ -73,11 +73,16 @@ namespace back_MSI_SuperMami.Controllers
 
         //Modificar
         [HttpPut]
-        [Route("formas-envio")]
-        public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarFormaEnvio comando)
+        [Route("formas-envio/{id}")]
+        public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarFormaEnvio comando)
         {
             var res = new RespuestaAPI();
-
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una forma de envio a dar de baja";
+                return res;
+            }
             try
             {
                 if (string.IsNullOrEmpty(comando.nombre))
@@ -86,15 +91,10 @@ namespace back_MSI_SuperMami.Controllers
                     res.Error = "No se ingreso el nombre";
                     return res;
                 }
-                if (string.IsNullOrEmpty(comando.descripcion))
-                {
-                    res.Ok = false;
-                    res.Error = "No se ingreso la descripción";
-                    return res;
-                }
+                
 
 
-                var p = bd.FormaDeEnvios.Where(x => x.Idformadeenvio == comando.id).FirstOrDefault();
+                var p = bd.FormaDeEnvios.Where(x => x.Idformadeenvio == id).FirstOrDefault();
 
                 if (p != null)
                 {
