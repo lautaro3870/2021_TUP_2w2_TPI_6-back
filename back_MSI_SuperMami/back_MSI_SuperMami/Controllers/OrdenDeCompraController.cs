@@ -25,7 +25,7 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
-        [Route("ordenesdecompra")]
+        [Route("ordenes-compra")]
         public ActionResult<RespuestaAPI> Get()
         {
             var respuesta = new RespuestaAPI();
@@ -35,7 +35,7 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
-        [Route("ordenesdecompra/{id}")]
+        [Route("ordenes-compra/{id}")]
         public ActionResult<RespuestaAPI> GetPorId(int id)
         {
             var respuesta = new RespuestaAPI();
@@ -67,54 +67,81 @@ namespace back_MSI_SuperMami.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("ordenesdecompra/{id}")]
-        public ActionResult<RespuestaAPI> Delete(int id)
+        [HttpPut]
+        [Route("ordenes-compra/{id}")]
+        public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarOrdenDeCompra comando)
         {
             var res = new RespuestaAPI();
-
             if (id == 0)
             {
                 res.Ok = false;
-                res.Respuesta = "Orden de compra no encontrado";
+                res.Respuesta = "Ingrese una orden de compra a dar de baja";
                 return res;
             }
             else
             {
                 try
                 {
-                    var orden = bd.OrdenesDeCompras.Where(x => x.Idordendecompra == id).FirstOrDefault();
-                    if (orden != null && orden.Idestado == 3)
+                    
+                    if (comando.proveedor == 0)
                     {
-                        orden.Idestado = 2;
-                        res.Ok = true;
-                        res.Respuesta = orden;
-                        res.Error = "Orden de compra dada de baja";
-                        bd.OrdenesDeCompras.Update(orden);
+                        res.Ok = false;
+                        res.Error = "No se ingreso el proveedor";
+                        return res;
+                    }
+                    if (comando.formadeenvio.Equals(""))
+                    {
+                        res.Ok = false;
+                        res.Error = "No se ingreso la forma de envio";
+                        return res;
+                    }
+
+                    if (comando.formadepago == 0)
+                    {
+                        res.Ok = false;
+                        res.Error = "No se ingreso la forma de pago";
+                        return res;
+                    }
+
+                   
+
+                    var p = bd.OrdenesDeCompras.Where(x => x.Idordendecompra == id).FirstOrDefault();
+
+                    if (p != null)
+                    {
+                        p.Idproveedor = comando.proveedor;
+                        p.Idformadeenvio = comando.formadeenvio;
+                        p.Idformapago = comando.formadepago;
+                        
+
+                        bd.OrdenesDeCompras.Update(p);
                         bd.SaveChanges();
 
+                        res.Ok = true;
+                        res.Respuesta = "Producto modificado";
+                        return res;
                     }
                     else
                     {
                         res.Ok = false;
-                        res.Respuesta = "Orden de compra no encontrado";
+                        res.Respuesta = "Producto no encontrado";
                         return res;
                     }
-                    return res;
-
                 }
                 catch (Exception e)
                 {
                     res.Ok = false;
-                    res.Error = "No hay Ordenes de compra habilitadas";
+                    res.Respuesta = "Producto no encontrado";
                     return res;
                 }
             }
+
+
         }
 
 
         [HttpPost]
-        [Route("ordenesdecompra")]
+        [Route("ordenes-compra")]
         public RespuestaAPI PostOrden([FromBody] ComandoRegistrarOrdenDeCompra comando)
         {
             RespuestaAPI res = new RespuestaAPI();
