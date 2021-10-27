@@ -1,4 +1,5 @@
 ﻿using back_MSI_SuperMami.Comandos;
+using back_MSI_SuperMami.Comandos.Modificar;
 using back_MSI_SuperMami.Models;
 using back_MSI_SuperMami.Respuestas;
 using Microsoft.AspNetCore.Cors;
@@ -68,10 +69,62 @@ namespace back_MSI_SuperMami.Controllers
             }
 
         }
+        //Modificar categoría
+        [HttpPut]
+        [Route("categorias")]
+        public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarCategoria comando)
+        {
+            var res = new RespuestaAPI();
 
+            try
+            {
+                if (string.IsNullOrEmpty(comando.nombre))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso el nombre";
+                    return res;
+                }
+                if (string.IsNullOrEmpty(comando.descripcion))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso la descripción";
+                    return res;
+                }
+
+
+                var p = bd.Categorias.Where(x => x.Idcategoria == comando.id).FirstOrDefault();
+
+                if (p != null)
+                {
+                    p.Nombre = comando.nombre;
+                    p.Descripcion = comando.descripcion;
+
+
+                    bd.Categorias.Update(p);
+                    bd.SaveChanges();
+
+                    res.Ok = true;
+                    res.Respuesta = "Categoría modificada";
+                    return res;
+                }
+                else
+                {
+                    res.Ok = false;
+                    res.Respuesta = "Categoría no encontrada";
+                    return res;
+                }
+            }
+            catch (Exception e)
+            {
+                res.Ok = false;
+                res.Respuesta = "Categoría no encontrada";
+                return res;
+            }
+
+        }
 
         //dar de baja
-        [HttpPut]
+        [HttpDelete]
         [Route("categorias/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {

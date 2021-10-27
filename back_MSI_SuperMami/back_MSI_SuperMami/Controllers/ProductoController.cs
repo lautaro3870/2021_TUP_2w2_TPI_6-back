@@ -34,7 +34,7 @@ namespace back_MSI_SuperMami.Controllers
             respuestas.Respuesta = bd.Productos.Where(x => x.Estado == true).ToList();
             return respuestas;
         }
-
+        //Get Productos por id
         [HttpGet]
         [Route("productos/{id}")]
         public ActionResult<RespuestaAPI> GetProductos(int id)
@@ -72,7 +72,7 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         //Dar de baja producto
-        [HttpPut]
+        [HttpDelete]
         [Route("productos/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
@@ -190,7 +190,6 @@ namespace back_MSI_SuperMami.Controllers
 
                     res.Ok = true;
                     res.Respuesta = "Producto modificado";
-                    res.Respuesta = bd.Productos.ToList();
                     return res;
                 }
                 else
@@ -211,7 +210,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //Insertar producto
         [HttpPost]
-        [Route("[controller]/Post")]
+        [Route("productos")]
         public RespuestaAPI PostProducto([FromBody] ComandoRegistrarProducto comando)
         {
             RespuestaAPI res = new RespuestaAPI();

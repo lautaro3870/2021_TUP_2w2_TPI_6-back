@@ -1,4 +1,5 @@
 ﻿using back_MSI_SuperMami.Comandos;
+using back_MSI_SuperMami.Comandos.Modificar;
 using back_MSI_SuperMami.Models;
 using back_MSI_SuperMami.Respuestas;
 using Microsoft.AspNetCore.Cors;
@@ -70,8 +71,62 @@ namespace back_MSI_SuperMami.Controllers
 
         }
 
-        //dar de baja
+        //Modificar
         [HttpPut]
+        [Route("formas-pago")]
+        public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarFormaPago comando)
+        {
+            var res = new RespuestaAPI();
+
+            try
+            {
+                if (string.IsNullOrEmpty(comando.nombre))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso el nombre";
+                    return res;
+                }
+                if (string.IsNullOrEmpty(comando.descripcion))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso la descripción";
+                    return res;
+                }
+
+
+                var p = bd.FormaDePagos.Where(x => x.Idformapago == comando.id).FirstOrDefault();
+
+                if (p != null)
+                {
+                    p.Nombre = comando.nombre;
+                    p.Descripcion = comando.descripcion;
+
+
+                    bd.FormaDePagos.Update(p);
+                    bd.SaveChanges();
+
+                    res.Ok = true;
+                    res.Respuesta = "Forma de pago modificada";
+                    return res;
+                }
+                else
+                {
+                    res.Ok = false;
+                    res.Respuesta = "Forma de pago no encontrada";
+                    return res;
+                }
+            }
+            catch (Exception e)
+            {
+                res.Ok = false;
+                res.Respuesta = "Forma de pago no encontrada";
+                return res;
+            }
+
+        }
+
+        //dar de baja
+        [HttpDelete]
         [Route("formas-pago/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {

@@ -1,4 +1,5 @@
 ﻿using back_MSI_SuperMami.Comandos;
+using back_MSI_SuperMami.Comandos.Modificar;
 using back_MSI_SuperMami.Models;
 using back_MSI_SuperMami.Respuestas;
 using Microsoft.AspNetCore.Cors;
@@ -70,8 +71,63 @@ namespace back_MSI_SuperMami.Controllers
 
         }
 
-        //dar de baja
+
+        //Modificar
         [HttpPut]
+        [Route("unidad-medidas")]
+        public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarUnidadMedida comando)
+        {
+            var res = new RespuestaAPI();
+
+            try
+            {
+                if (string.IsNullOrEmpty(comando.nombre))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso el nombre";
+                    return res;
+                }
+                if (string.IsNullOrEmpty(comando.descripcion))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso la descripción";
+                    return res;
+                }
+
+
+                var p = bd.UnidadDeMedida.Where(x => x.Idunidadmedida == comando.id).FirstOrDefault();
+
+                if (p != null)
+                {
+                    p.Nombre = comando.nombre;
+                    p.Descipcion = comando.descripcion;
+
+
+                    bd.UnidadDeMedida.Update(p);
+                    bd.SaveChanges();
+
+                    res.Ok = true;
+                    res.Respuesta = "Unidad de medida modificada";
+                    return res;
+                }
+                else
+                {
+                    res.Ok = false;
+                    res.Respuesta = "Unidad de medida no encontrada";
+                    return res;
+                }
+            }
+            catch (Exception e)
+            {
+                res.Ok = false;
+                res.Respuesta = "Unidad de medida no encontrada";
+                return res;
+            }
+
+        }
+
+        //dar de baja
+        [HttpDelete]
         [Route("unidad-medidas{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {

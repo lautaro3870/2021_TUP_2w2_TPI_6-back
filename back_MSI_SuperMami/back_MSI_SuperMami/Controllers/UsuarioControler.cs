@@ -31,12 +31,7 @@ namespace back_MSI_SuperMami.Controllers
         private readonly d4nfd5l4d933b1Context db = new d4nfd5l4d933b1Context();
 
 
-        //private readonly ILogger<UsuarioControler> _logger;
-
-        //public UsuarioControler(ILogger<UsuarioControler> logger)
-        //{
-        //    _logger = logger;
-        //}
+        
 
         [HttpGet]
         [Route("usuarios")]
@@ -159,19 +154,7 @@ namespace back_MSI_SuperMami.Controllers
                 }
             }
         }
-        //[AllowAnonymous]
-        //[HttpPost]
-        //[Route("Authenticate")]
-        //public IActionResult Authenticate([FromBody] ComandoUsuarioLogin user)
-        //{
-        //    var token = jwtAuthenticationManager.Authenticate(user.email, user.password);
-        //    if (token == null)
-        //    {
-        //        return Unauthorized();
-        //    }
-
-        //    return Ok(token);
-        //}
+       
 
 
 

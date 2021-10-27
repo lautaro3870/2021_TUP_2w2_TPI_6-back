@@ -72,7 +72,7 @@ namespace back_MSI_SuperMami.Controllers
 
         }
 
-        [HttpPut]
+        [HttpDelete]
         [Route("proveedores/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
@@ -178,7 +178,6 @@ namespace back_MSI_SuperMami.Controllers
 
                     res.Ok = true;
                     res.Respuesta = "Proveedor modificado";
-                    res.Respuesta = bd.Proveedores.ToList();
                     return res;
 
                 }
@@ -200,7 +199,7 @@ namespace back_MSI_SuperMami.Controllers
 
 
         [HttpPost]
-        [Route("[controller]/Post")]
+        [Route("proveedores")]
         public ActionResult<RespuestaAPI> Post([FromBody] ComandoRegistrarProveedor comando)
         {
             var res = new RespuestaAPI();

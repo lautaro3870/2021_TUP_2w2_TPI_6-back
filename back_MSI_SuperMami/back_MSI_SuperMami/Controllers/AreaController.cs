@@ -1,4 +1,5 @@
 ﻿using back_MSI_SuperMami.Comandos;
+using back_MSI_SuperMami.Comandos.Modificar;
 using back_MSI_SuperMami.Models;
 using back_MSI_SuperMami.Respuestas;
 using Microsoft.AspNetCore.Cors;
@@ -151,6 +152,59 @@ namespace back_MSI_SuperMami.Controllers
                 }
             }
 
+
+        }
+        //Modificar area
+        [HttpPut]
+        [Route("areas")]
+        public ActionResult<RespuestaAPI> Put([FromBody] ComandoModificarArea comando)
+        {
+            var res = new RespuestaAPI();
+
+            try
+            {
+                if (string.IsNullOrEmpty(comando.nombre))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso el nombre";
+                    return res;
+                }
+                if (string.IsNullOrEmpty(comando.descripcion))
+                {
+                    res.Ok = false;
+                    res.Error = "No se ingreso la descripción";
+                    return res;
+                }
+
+                
+                var p = bd.Areas.Where(x => x.Idarea == comando.id).FirstOrDefault();
+
+                if (p != null)
+                {
+                    p.Nombre = comando.nombre;
+                    p.Descripcion = comando.descripcion;
+                   
+
+                    bd.Areas.Update(p);
+                    bd.SaveChanges();
+
+                    res.Ok = true;
+                    res.Respuesta = "Área modificada";
+                    return res;
+                }
+                else
+                {
+                    res.Ok = false;
+                    res.Respuesta = "Área no encontrada";
+                    return res;
+                }
+            }
+            catch (Exception e)
+            {
+                res.Ok = false;
+                res.Respuesta = "Área no encontrada";
+                return res;
+            }
 
         }
     }
