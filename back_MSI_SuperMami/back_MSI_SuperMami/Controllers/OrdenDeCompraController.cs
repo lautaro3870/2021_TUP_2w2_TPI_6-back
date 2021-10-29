@@ -1,4 +1,5 @@
 ﻿using back_MSI_SuperMami.Comandos;
+using back_MSI_SuperMami.DTOs;
 using back_MSI_SuperMami.Models;
 using back_MSI_SuperMami.Respuestas;
 using Microsoft.AspNetCore.Cors;
@@ -31,6 +32,31 @@ namespace back_MSI_SuperMami.Controllers
             var respuesta = new RespuestaAPI();
             respuesta.Ok = true;
             respuesta.Respuesta = bd.OrdenesDeCompras.Where(x => x.Idestado == 3).ToList();
+            return respuesta;
+        }
+
+        [HttpGet]
+        [Route("ordenes-compra-dto/{id}")]
+        public ActionResult<RespuestaAPI> GetConsulta(int id)
+        {
+            var respuesta = new RespuestaAPI();
+            respuesta.Ok = true;
+            var orden = bd.OrdenesDeCompras.FirstOrDefault(x => x.Idordendecompra == id);
+            //var prov = bd.Proveedores.FirstOrDefault(x => x.Idproveedor == orden.Idproveedor);
+            var envio = bd.FormaDeEnvios.FirstOrDefault(x => x.Idformadeenvio == orden.Idformadeenvio);
+            var pago = bd.FormaDePagos.FirstOrDefault(x => x.Idformapago == orden.Idformapago);
+            var estado = bd.EstadoOrdendecompras.FirstOrDefault(x => x.Idestado == orden.Idestado);
+
+            var DTO = new DTOOrdenDeCompra
+            {
+                //Proveedor = prov.Nombre,
+                FormaDeEnvio = envio.Descripcion,
+                FormaDePago = pago.Descripcion,
+                Estado = estado.Estado
+            };
+
+            respuesta.Respuesta = DTO;
+
             return respuesta;
         }
 
