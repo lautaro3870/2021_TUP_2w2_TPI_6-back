@@ -131,7 +131,7 @@ namespace back_MSI_SuperMami.Controllers
 
         //dar de baja
         [HttpDelete]
-        [Route("unidad-medidas{id}")]
+        [Route("unidad-medidas/{id}")]
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
             var res = new RespuestaAPI();
