@@ -382,11 +382,11 @@ namespace back_MSI_SuperMami.Models
                     .HasMaxLength(50)
                     .HasColumnName("telefono");
 
-                //entity.HasOne(d => d.IdareaNavigation)
-                //    .WithMany(p => p.Proveedores)
-                //    .HasForeignKey(d => d.Idarea)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("proveedores_areas");
+                entity.HasOne(d => d.IdareaNavigation)
+                    .WithMany(p => p.Proveedores)
+                    .HasForeignKey(d => d.Idarea)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("proveedores_areas");
             });
 
             modelBuilder.Entity<Proveedoresxformadeenvio>(entity =>

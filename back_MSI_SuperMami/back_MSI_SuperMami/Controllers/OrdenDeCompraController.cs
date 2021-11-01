@@ -35,6 +35,19 @@ namespace back_MSI_SuperMami.Controllers
             return respuesta;
         }
 
+
+        [HttpGet]
+        [Route("ordenes-compra-linq/{id}")]
+        public ActionResult<RespuestaAPI> GetLinq(int id)
+        {
+            var respuesta = new RespuestaAPI();
+            respuesta.Respuesta = bd.DetalleOrdens.
+                Where(x => x.Idordendecompra == id).Sum(x => x.Precio);
+            
+            //var a = from p in bd.DetalleOrdens where p.Idordendecompra == id select p;
+            return respuesta;
+        }
+
         [HttpGet]
         [Route("ordenes-compra-dto/{id}")]
         public ActionResult<RespuestaAPI> GetConsulta(int id)
@@ -42,14 +55,15 @@ namespace back_MSI_SuperMami.Controllers
             var respuesta = new RespuestaAPI();
             respuesta.Ok = true;
             var orden = bd.OrdenesDeCompras.FirstOrDefault(x => x.Idordendecompra == id);
-            //var prov = bd.Proveedores.FirstOrDefault(x => x.Idproveedor == orden.Idproveedor);
+            var prov = bd.Proveedores.FirstOrDefault(x => x.Idproveedor == orden.Idproveedor);
             var envio = bd.FormaDeEnvios.FirstOrDefault(x => x.Idformadeenvio == orden.Idformadeenvio);
             var pago = bd.FormaDePagos.FirstOrDefault(x => x.Idformapago == orden.Idformapago);
             var estado = bd.EstadoOrdendecompras.FirstOrDefault(x => x.Idestado == orden.Idestado);
 
+            
             var DTO = new DTOOrdenDeCompra
             {
-                //Proveedor = prov.Nombre,
+                Proveedor = prov.Nombre,
                 FormaDeEnvio = envio.Descripcion,
                 FormaDePago = pago.Descripcion,
                 Estado = estado.Estado
@@ -165,6 +179,43 @@ namespace back_MSI_SuperMami.Controllers
 
         }
 
+        [HttpPost]
+        [Route("ordenes-compra-detalle")]
+        public RespuestaAPI PostOrdendetalle([FromBody] ComandoRegistrarOrdenDeCompra comando)
+        {
+            var res = new RespuestaAPI();
+            OrdenesDeCompra orden = new OrdenesDeCompra();
+            
+            orden.Idproveedor = comando.proveedor;
+            orden.Idformadeenvio = comando.formadeenvio;
+            orden.Idformapago = comando.formadepago;
+            orden.Idestado = 1;
+
+            int id = orden.Idordendecompra;
+
+            bd.OrdenesDeCompras.Add(orden);
+            bd.SaveChanges();
+
+            foreach(var detalle in comando.Detalle)
+            {
+                DetalleOrden d = new DetalleOrden();
+                d.Cantidad = detalle.cantidad;
+                d.Precio = detalle.precio;
+                d.Idproducto = detalle.producto;
+                d.Idordendecompra = orden.Idordendecompra;
+
+                bd.DetalleOrdens.Add(d);
+                bd.SaveChanges();
+
+
+            }
+
+            bd.SaveChanges();
+
+            res.Ok = true;
+            res.InfoAdicional = "Orden de compra insertada correctamente";
+            return res;
+        }
 
         [HttpPost]
         [Route("ordenes-compra")]

@@ -10,5 +10,18 @@ namespace back_MSI_SuperMami.Comandos
         public int proveedor { get; set; }
         public int formadeenvio { get; set; }
         public int formadepago { get; set; }
+
+        public List<Detalle> Detalle { get; set; }
     }
+
+    public class Detalle
+    {
+        public decimal precio { get; set; }
+        public int cantidad { get; set; }
+        public int producto { get; set; }
+    }
+
+
+
+    
 }
