@@ -18,6 +18,8 @@ namespace back_MSI_SuperMami.Models
         public int Idformapago { get; set; }
         public int Idestado { get; set; }
 
+        
+
         public virtual EstadoOrdendecompra IdestadoNavigation { get; set; }
         public virtual FormaDeEnvio IdformadeenvioNavigation { get; set; }
         public virtual FormaDePago IdformapagoNavigation { get; set; }

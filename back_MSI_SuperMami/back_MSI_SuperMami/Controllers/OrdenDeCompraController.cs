@@ -226,10 +226,11 @@ namespace back_MSI_SuperMami.Controllers
         {
             var res = new RespuestaAPI();
             OrdenesDeCompra orden = new OrdenesDeCompra();
-            
+
             orden.Idproveedor = comando.proveedor;
             orden.Idformadeenvio = comando.formadeenvio;
             orden.Idformapago = comando.formadepago;
+            //orden.fecha = DateTime.Now;
             orden.Idestado = 1;
 
             int id = orden.Idordendecompra;
@@ -248,6 +249,72 @@ namespace back_MSI_SuperMami.Controllers
                 bd.DetalleOrdens.Add(d);
                 bd.SaveChanges();
 
+            }
+
+            bd.SaveChanges();
+
+            res.Ok = true;
+            res.InfoAdicional = "Orden de compra insertada correctamente";
+            return res;
+        }
+
+        [HttpPut]
+        [Route("ordenes-compra-detalle/{id}")]
+        public RespuestaAPI PutOrdendetalle(int id, [FromBody] ComandoRegistrarOrdenDeCompra comando)
+        {
+            var res = new RespuestaAPI();
+            OrdenesDeCompra orden = new OrdenesDeCompra();
+
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una orden de compra a modificar";
+                return res;
+            }
+            else
+            {
+                try
+                {
+                    orden = bd.OrdenesDeCompras.FirstOrDefault(x => x.Idordendecompra == id);
+
+                    if(orden != null)
+                    {
+                        orden.Idproveedor = comando.proveedor;
+                        orden.Idformadeenvio = comando.formadeenvio;
+                        orden.Idformapago = comando.formadepago;
+                        //orden.Idestado = 1;
+                        id = orden.Idordendecompra;
+
+                        bd.OrdenesDeCompras.Update(orden);
+                        bd.SaveChanges();
+
+                        foreach (var detalle in comando.Detalle)
+                        {
+                            DetalleOrden d = new DetalleOrden();
+                            d.Cantidad = detalle.cantidad;
+                            d.Precio = detalle.precio;
+                            d.Idproducto = detalle.producto;
+                            d.Idordendecompra = id;
+
+                            bd.DetalleOrdens.Update(d);
+                            bd.SaveChanges();
+
+                        }
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Respuesta = "Orden de compra no encontrada";
+                        return res;
+                    }
+
+                }
+                catch
+                {
+                    res.Ok = false;
+                    res.Respuesta = "Producto no encontrado";
+                    return res;
+                }
             }
 
             bd.SaveChanges();
