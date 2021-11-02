@@ -75,6 +75,47 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
+        [Route("ordenes-compra-dto")]
+        public ActionResult<RespuestaAPI> GetConsulta2()
+        {
+            var respuesta = new RespuestaAPI();
+            respuesta.Ok = true;
+            var orden = bd.OrdenesDeCompras.ToList();
+            //var prov = bd.Proveedores.FirstOrDefault(x => x.Idproveedor == orden.Idproveedor);
+            //var envio = bd.FormaDeEnvios.FirstOrDefault(x => x.Idformadeenvio == orden.Idformadeenvio);
+            //var pago = bd.FormaDePagos.FirstOrDefault(x => x.Idformapago == orden.Idformapago);
+            //var estado = bd.EstadoOrdendecompras.FirstOrDefault(x => x.Idestado == orden.Idestado);
+
+
+            var lista = new List<DTOOrdenDeCompra>();
+
+            if(orden != null)
+            {
+                foreach(var x in orden)
+                {
+                    var formadeenvio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == x.Idformadeenvio);
+                    var formadepago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == x.Idformapago);
+                    var proveedor = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == x.Idproveedor);
+                    var estado = bd.EstadoOrdendecompras.FirstOrDefault(f => f.Idestado == x.Idestado);
+
+                    var DTO = new DTOOrdenDeCompra
+                    {
+                        Proveedor = proveedor.Nombre,
+                        FormaDeEnvio = formadeenvio.Descripcion,
+                        FormaDePago = formadepago.Descripcion,
+                        Estado = estado.Estado
+                    };
+
+                    lista.Add(DTO);
+                }
+            }
+            
+            respuesta.Respuesta = lista;
+
+            return respuesta;
+        }
+
+        [HttpGet]
         [Route("ordenes-compra/{id}")]
         public ActionResult<RespuestaAPI> GetPorId(int id)
         {
@@ -206,7 +247,6 @@ namespace back_MSI_SuperMami.Controllers
 
                 bd.DetalleOrdens.Add(d);
                 bd.SaveChanges();
-
 
             }
 

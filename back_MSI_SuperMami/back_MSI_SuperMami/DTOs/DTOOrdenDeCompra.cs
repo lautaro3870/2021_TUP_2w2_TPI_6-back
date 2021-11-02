@@ -11,5 +11,7 @@ namespace back_MSI_SuperMami.DTOs
         public string FormaDePago { get; set; }
         public string FormaDeEnvio { get; set; }
         public string Estado { get; set; }
+
+
     }
 }
