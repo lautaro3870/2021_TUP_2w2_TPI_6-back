@@ -1,4 +1,5 @@
 ﻿using back_MSI_SuperMami.Comandos;
+using back_MSI_SuperMami.DTOs;
 using back_MSI_SuperMami.Models;
 using back_MSI_SuperMami.Respuestas;
 using Microsoft.AspNetCore.Cors;
@@ -33,6 +34,76 @@ namespace back_MSI_SuperMami.Controllers
             respuestas.Respuesta = bd.Productos.Where(x => x.Estado == true).ToList();
             return respuestas;
         }
+
+        //lista de productos
+        [HttpGet]
+        [Route("productos-lista")]
+        public ActionResult<RespuestaAPI> GetProductosLista()
+        {
+            var respuestas = new RespuestaAPI();
+            respuestas.Ok = true;
+            var prod = bd.Productos.ToList();
+
+            var lista = new List<DTOProducto>();
+            if(prod != null)
+            {
+                foreach(var x in prod)
+                {
+                    var nombre = bd.Productos.FirstOrDefault(f => f.Nombre == x.Nombre);
+                    var desc = bd.Productos.FirstOrDefault(f => f.Descripcion == x.Descripcion);
+                    var precio = bd.Productos.FirstOrDefault(f => f.Precio == x.Precio);
+                    var marca = bd.Marcas.FirstOrDefault(f => f.Idmarca == x.Idmarca);
+
+                    var dto = new DTOProducto
+                    {
+                        nombre = nombre.Nombre,
+                        descripcion = desc.Descripcion,
+                        precio = precio.Precio,
+                        marca = marca.Descripcion
+                    };
+
+                    lista.Add(dto);
+
+                }
+            }
+            respuestas.Ok = true;
+            respuestas.Respuesta = lista;
+            return respuestas;
+        }
+
+        //lista de productos filtrada por nombre
+        [HttpGet]
+        [Route("productoss/{nombre}")] // puse productoss porque sino da error en la ruta de los endpoints
+        public ActionResult<RespuestaAPI> GetNombre(string nombre)
+        {
+            var respuestas = new RespuestaAPI();
+            try
+            {
+                var prod = bd.Productos.FirstOrDefault(x => x.Nombre.Equals(nombre));
+                var marca = bd.Marcas.FirstOrDefault(x => x.Idmarca == prod.Idmarca);
+
+                var dto = new DTOProducto
+                {
+                    nombre = prod.Nombre,
+                    descripcion = prod.Descripcion,
+                    precio = prod.Precio,
+                    marca = marca.Descripcion
+                };
+
+                respuestas.Ok = true;
+                respuestas.Respuesta = dto;
+                return respuestas;
+            }
+            catch
+            {
+                respuestas.Ok = false;
+                respuestas.Respuesta = "Producto no encontrado";
+                return respuestas;
+            }
+            
+        }
+
+
         //Get Productos por id
         [HttpGet]
         [Route("productos/{id}")]

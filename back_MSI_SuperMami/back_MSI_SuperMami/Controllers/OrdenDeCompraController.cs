@@ -42,7 +42,7 @@ namespace back_MSI_SuperMami.Controllers
         {
             var respuesta = new RespuestaAPI();
             respuesta.Respuesta = bd.DetalleOrdens.
-                Where(x => x.Idordendecompra == id).Sum(x => x.Precio);
+                Where(x => x.Idordendecompra == id).Sum(x => x.Precio * x.Cantidad);
             
             //var a = from p in bd.DetalleOrdens where p.Idordendecompra == id select p;
             return respuesta;
