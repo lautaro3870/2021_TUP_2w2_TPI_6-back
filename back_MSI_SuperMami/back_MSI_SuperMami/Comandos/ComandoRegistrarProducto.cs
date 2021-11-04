@@ -15,7 +15,13 @@ namespace back_MSI_SuperMami.Comandos
         public int categoria { get; set; }
         public int marca { get; set; }
 
+        public List<Proveedores> Proveedores { get; set; }
 
+    }
 
+    public class Proveedores
+    {
+        //public int producto { get; set; }
+        public int proveedor { get; set; }
     }
 }

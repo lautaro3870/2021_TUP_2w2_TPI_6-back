@@ -45,9 +45,9 @@ namespace back_MSI_SuperMami.Controllers
             var prod = bd.Productos.ToList();
 
             var lista = new List<DTOProducto>();
-            if(prod != null)
+            if (prod != null)
             {
-                foreach(var x in prod)
+                foreach (var x in prod)
                 {
                     var nombre = bd.Productos.FirstOrDefault(f => f.Nombre == x.Nombre);
                     var desc = bd.Productos.FirstOrDefault(f => f.Descripcion == x.Descripcion);
@@ -100,7 +100,7 @@ namespace back_MSI_SuperMami.Controllers
                 respuestas.Respuesta = "Producto no encontrado";
                 return respuestas;
             }
-            
+
         }
 
 
@@ -147,7 +147,7 @@ namespace back_MSI_SuperMami.Controllers
         public ActionResult<RespuestaAPI> DarDeBaja(int id)
         {
             var res = new RespuestaAPI();
-            
+
 
             if (id == 0)
             {
@@ -190,7 +190,7 @@ namespace back_MSI_SuperMami.Controllers
 
         [HttpPut]
         [Route("productos/{id}")]
-        public ActionResult<RespuestaAPI> Put(int id,[FromBody] ComandoRegistrarProducto comando)
+        public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarProducto comando)
         {
             var res = new RespuestaAPI();
             if (id == 0)
@@ -283,14 +283,13 @@ namespace back_MSI_SuperMami.Controllers
                     return res;
                 }
             }
-           
-            
+
+
         }
 
-        //Insertar producto
         [HttpPost]
         [Route("productos")]
-        public RespuestaAPI PostProducto([FromBody] ComandoRegistrarProducto comando)
+        public RespuestaAPI PostProductoProveedores([FromBody] ComandoRegistrarProducto comando)
         {
             RespuestaAPI res = new RespuestaAPI();
 
@@ -319,7 +318,7 @@ namespace back_MSI_SuperMami.Controllers
                 res.Error = "No se ingreso la fecha de vencimiento";
                 return res;
             }
-            
+
             if (comando.unidadMedida == 0)
             {
                 res.Ok = false;
@@ -351,17 +350,106 @@ namespace back_MSI_SuperMami.Controllers
             p.Idunidadmedida = comando.unidadMedida;
             p.Idcategoria = comando.categoria;
             p.Idmarca = comando.marca;
-            
+
             bd.Productos.Add(p);
             bd.SaveChanges();
 
-            res.Ok = true;
-            res.InfoAdicional = "Producto insertado correctamente";
-            return res;
+            foreach (var x in comando.Proveedores)
+            {
+                Productosxproveedore pXp = new Productosxproveedore();
+                pXp.Idproducto = p.Idproducto;
+                pXp.Idproveedor = x.proveedor;
 
+                bd.Productosxproveedores.Add(pXp);
+                bd.SaveChanges();
+            }
+
+            bd.SaveChanges();
+
+            res.Ok = true;
+            res.InfoAdicional = "Producto insertado correctamente correctamente";
+            return res;
         }
+
+        //Insertar producto
+        //[HttpPost]
+        //[Route("productos")]
+        //public RespuestaAPI PostProducto([FromBody] ComandoRegistrarProducto comando)
+        //{
+        //    RespuestaAPI res = new RespuestaAPI();
+
+        //    if (string.IsNullOrEmpty(comando.nombre))
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso el nombre";
+        //        return res;
+        //    }
+        //    if (string.IsNullOrEmpty(comando.descripcion))
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso la descripción";
+        //        return res;
+        //    }
+
+        //    if (comando.precio == 0)
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso el precio";
+        //        return res;
+        //    }
+        //    if (comando.vencimiento.Equals(""))
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso la fecha de vencimiento";
+        //        return res;
+        //    }
+
+        //    if (comando.unidadMedida == 0)
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso la unidad de medida";
+        //        return res;
+        //    }
+
+        //    if (comando.categoria == 0)
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso la categoria";
+        //        return res;
+        //    }
+        //    if (comando.marca == 0)
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso la marca";
+        //        return res;
+        //    }
+
+        //    Producto p = new Producto();
+
+
+        //    p.Nombre = comando.nombre;
+        //    p.Descripcion = comando.descripcion;
+        //    p.Precio = comando.precio;
+        //    p.Vencimiento = comando.vencimiento;
+        //    p.Estado = true;
+        //    p.Idunidadmedida = comando.unidadMedida;
+        //    p.Idcategoria = comando.categoria;
+        //    p.Idmarca = comando.marca;
+
+        //    bd.Productos.Add(p);
+        //    bd.SaveChanges();
+
+        //    res.Ok = true;
+        //    res.InfoAdicional = "Producto insertado correctamente";
+        //    return res;
+
+        //}
 
     }
 
-    
 }
+
+
+
+    
+
