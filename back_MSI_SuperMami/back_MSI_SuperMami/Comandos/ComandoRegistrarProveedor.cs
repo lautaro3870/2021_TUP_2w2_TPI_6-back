@@ -14,5 +14,18 @@ namespace back_MSI_SuperMami.Comandos
         public string email { get; set; }
         public int area { get; set; }
 
+        public List<FormaDeEnvios> FormasDeEnvio { get; set; }
+        public List<FormaDePagos> FormasDePago { get; set; }
+
+    }
+
+    public class FormaDeEnvios
+    {
+        public int envio { get; set; }
+    }
+
+    public class FormaDePagos
+    {
+        public int pago { get; set; }
     }
 }

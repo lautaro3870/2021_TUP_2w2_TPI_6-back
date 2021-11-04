@@ -207,6 +207,68 @@ namespace back_MSI_SuperMami.Controllers
         }
 
 
+        //[HttpPost]
+        //[Route("proveedores")]
+        //public ActionResult<RespuestaAPI> Post([FromBody] ComandoRegistrarProveedor comando)
+        //{
+        //    var res = new RespuestaAPI();
+
+        //    if (string.IsNullOrEmpty(comando.nombre))
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso el nombre";
+        //        return res;
+        //    }
+        //    if (string.IsNullOrEmpty(comando.direccion))
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso la Direccion";
+        //        return res;
+        //    }
+        //    if (string.IsNullOrEmpty(comando.cuit))
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso la CUIT";
+        //        return res;
+        //    }
+        //    if (string.IsNullOrEmpty(comando.telefono))
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso el telefono";
+        //        return res;
+        //    }
+
+        //    if (string.IsNullOrEmpty(comando.email))
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso la Email";
+        //        return res;
+        //    }
+        //    if (comando.area == 0)
+        //    {
+        //        res.Ok = false;
+        //        res.Error = "No se ingreso el area";
+        //        return res;
+        //    }
+
+        //    Proveedore prov = new Proveedore();
+        //    prov.Nombre = comando.nombre;
+        //    prov.Direccion = comando.direccion;
+        //    prov.Estado = true;
+        //    prov.Email = comando.email;
+        //    prov.Cuit = comando.cuit;
+        //    prov.Telefono = comando.telefono;
+        //    prov.Idarea = comando.area;
+
+        //    bd.Proveedores.Add(prov);
+        //    bd.SaveChanges();
+
+        //    res.Ok = true;
+        //    res.Respuesta = "Se ingreso el proveedor correctamente";
+        //    return res;
+           
+        //}
+
         [HttpPost]
         [Route("proveedores")]
         public ActionResult<RespuestaAPI> Post([FromBody] ComandoRegistrarProveedor comando)
@@ -263,10 +325,30 @@ namespace back_MSI_SuperMami.Controllers
             bd.Proveedores.Add(prov);
             bd.SaveChanges();
 
+            foreach(var x in comando.FormasDeEnvio)
+            {
+                Proveedoresxformadeenvio pxe = new Proveedoresxformadeenvio();
+                pxe.Idformadeenvio = x.envio;
+                pxe.Idproveedor = prov.Idproveedor;
+
+                bd.Proveedoresxformadeenvios.Add(pxe);
+                bd.SaveChanges();
+            }
+
+            foreach(var i in comando.FormasDePago)
+            {
+                Proveedoresxformasdepago pxp = new Proveedoresxformasdepago();
+                pxp.Idformapago = i.pago;
+                pxp.Idproveedor = prov.Idproveedor;
+                bd.Proveedoresxformasdepagos.Add(pxp);
+                bd.SaveChanges();
+            }
+            bd.SaveChanges();
+
             res.Ok = true;
             res.Respuesta = "Se ingreso el proveedor correctamente";
             return res;
-           
+
         }
 
     }
