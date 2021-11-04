@@ -10,6 +10,7 @@ namespace back_MSI_SuperMami.Comandos
         public int proveedor { get; set; }
         public int formadeenvio { get; set; }
         public int formadepago { get; set; }
+        public DateTime fechaRegistro { get; set; }
 
         public List<Detalle> Detalle { get; set; }
     }
