@@ -115,6 +115,97 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         //Put
+        //[HttpPut]
+        //[Route("proveedores/{id}")]
+        //public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarProveedor comando)
+        //{
+        //    var res = new RespuestaAPI();
+        //    if (id == 0)
+        //    {
+        //        res.Ok = false;
+        //        res.Respuesta = "Ingrese una forma de pago a dar de baja";
+        //        return res;
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            if (string.IsNullOrEmpty(comando.nombre))
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso el nombre";
+        //                return res;
+        //            }
+        //            if (string.IsNullOrEmpty(comando.direccion))
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso la Direccion";
+        //                return res;
+        //            }
+        //            if (string.IsNullOrEmpty(comando.cuit))
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso la CUIT";
+        //                return res;
+        //            }
+        //            if (string.IsNullOrEmpty(comando.telefono))
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso el telefono";
+        //                return res;
+        //            }
+
+        //            if (string.IsNullOrEmpty(comando.email))
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso la Email";
+        //                return res;
+        //            }
+        //            if (comando.area == 0)
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso el area";
+        //                return res;
+        //            }
+
+        //            var prov = bd.Proveedores.Where(x => x.Idproveedor == id).FirstOrDefault();
+        //            if (prov != null)
+        //            {
+
+        //                prov.Nombre = comando.nombre;
+        //                prov.Direccion = comando.direccion;
+        //                prov.Estado = true;
+        //                prov.Email = comando.email;
+        //                prov.Cuit = comando.cuit;
+        //                prov.Telefono = comando.telefono;
+        //                prov.Idarea = comando.area;
+
+        //                bd.Update(prov);
+        //                bd.SaveChanges();
+
+        //                res.Ok = true;
+        //                res.Respuesta = "Proveedor modificado";
+        //                return res;
+
+        //            }
+        //            else
+        //            {
+        //                res.Respuesta = "Proveedor no encontrado";
+        //                res.Ok = false;
+        //                return res;
+        //            }
+
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            res.Respuesta = "Error: " + e;
+        //            res.Ok = false;
+        //            return res;
+        //        }
+        //    }
+            
+        //}
+
         [HttpPut]
         [Route("proveedores/{id}")]
         public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarProveedor comando)
@@ -123,7 +214,7 @@ namespace back_MSI_SuperMami.Controllers
             if (id == 0)
             {
                 res.Ok = false;
-                res.Respuesta = "Ingrese una forma de pago a dar de baja";
+                res.Respuesta = "Ingrese un proveedor a modificar";
                 return res;
             }
             else
@@ -180,8 +271,51 @@ namespace back_MSI_SuperMami.Controllers
                         prov.Telefono = comando.telefono;
                         prov.Idarea = comando.area;
 
-                        bd.Update(prov);
+                        id = prov.Idproveedor;
+
+                        bd.Proveedores.Update(prov);
                         bd.SaveChanges();
+
+                        if (comando.FormasDeEnvio != null)
+                        {
+                            var formaDeEnvio = bd.Proveedoresxformadeenvios.Where(f => f.Idproveedor == id).ToList();
+                            foreach(var i in formaDeEnvio)
+                            {
+                                bd.Proveedoresxformadeenvios.Remove(i);
+                            }
+                            foreach (var x in comando.FormasDeEnvio)
+                            {
+                                Proveedoresxformadeenvio pxe = new Proveedoresxformadeenvio();
+                                pxe.Idformadeenvio = x.envio;
+                                //pxe.Idproveedor = prov.Idproveedor;
+                                pxe.Idproveedor = id;
+
+                                bd.Proveedoresxformadeenvios.Add(pxe);
+                                bd.SaveChanges();
+                            }
+                        }
+
+                        if (comando.FormasDePago != null)
+                        {
+                            var formaDeEnvio = bd.Proveedoresxformasdepagos.Where(f => f.Idproveedor == id).ToList();
+                            foreach (var i in formaDeEnvio)
+                            {
+                                bd.Proveedoresxformasdepagos.Remove(i);
+                            }
+                            foreach (var i in comando.FormasDePago)
+                            {
+                                Proveedoresxformasdepago pxp = new Proveedoresxformasdepago();
+                                pxp.Idformapago = i.pago;
+                                //pxp.Idproveedor = prov.Idproveedor;
+                                pxp.Idproveedor = id;
+
+                                bd.Proveedoresxformasdepagos.Add(pxp);
+                                bd.SaveChanges();
+                            }
+                            bd.SaveChanges();
+
+                        }
+
 
                         res.Ok = true;
                         res.Respuesta = "Proveedor modificado";
@@ -203,7 +337,7 @@ namespace back_MSI_SuperMami.Controllers
                     return res;
                 }
             }
-            
+
         }
 
 
@@ -266,7 +400,7 @@ namespace back_MSI_SuperMami.Controllers
         //    res.Ok = true;
         //    res.Respuesta = "Se ingreso el proveedor correctamente";
         //    return res;
-           
+
         //}
 
         [HttpPost]

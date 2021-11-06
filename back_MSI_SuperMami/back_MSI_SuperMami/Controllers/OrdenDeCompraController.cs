@@ -49,6 +49,40 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
+        [Route("ordenes-compra-repote")]
+        public ActionResult<RespuestaAPI> GetReporte()
+        {
+            var respuesta = new RespuestaAPI();
+            respuesta.Ok = true;
+            var orden = bd.OrdenesDeCompras.ToList();
+
+            var lista = new List<DTOReporteOrden>();
+
+            if (orden != null)
+            {
+                foreach (var x in orden)
+                {
+                    var detalle = bd.DetalleOrdens.FirstOrDefault(f => f.Idordendecompra == x.Idordendecompra);
+                    var prov = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == x.Idproveedor);
+                    var estado = bd.EstadoOrdendecompras.FirstOrDefault(f => f.Idestado == x.Idestado);
+                    var sum = bd.DetalleOrdens.Sum(f => f.Cantidad * f.Precio);
+
+                    var dto = new DTOReporteOrden
+                    {
+                        proveedor = prov.Nombre,
+                        suma = sum
+                    };
+                    lista.Add(dto);
+
+                }
+                
+            }
+            respuesta.Respuesta = lista;
+            return respuesta;
+
+        }
+
+        [HttpGet]
         [Route("ordenes-compra-dto/{id}")]
         public ActionResult<RespuestaAPI> GetConsulta(int id)
         {
@@ -257,7 +291,7 @@ namespace back_MSI_SuperMami.Controllers
             orden.Idformapago = comando.formadepago;
             orden.fecha_registro = comando.fechaRegistro;
             //orden.fecha = DateTime.Now;
-            orden.Idestado = 1;
+            orden.Idestado = 3;
 
             int id = orden.Idordendecompra;
 
@@ -314,18 +348,28 @@ namespace back_MSI_SuperMami.Controllers
                         bd.OrdenesDeCompras.Update(orden);
                         bd.SaveChanges();
 
-                        foreach (var detalle in comando.Detalle)
+                        if (comando.Detalle != null)
                         {
-                            DetalleOrden d = new DetalleOrden();
-                            d.Cantidad = detalle.cantidad;
-                            d.Precio = detalle.precio;
-                            d.Idproducto = detalle.producto;
-                            d.Idordendecompra = id;
+                            var detalles = bd.DetalleOrdens.Where(f => f.Idordendecompra == id).ToList();
+                            foreach(var i in detalles)
+                            {
+                                bd.DetalleOrdens.Remove(i);
+                            }
 
-                            bd.DetalleOrdens.Update(d);
-                            bd.SaveChanges();
+                            foreach (var detalle in comando.Detalle)
+                            {
+                                DetalleOrden d = new DetalleOrden();
+                                d.Cantidad = detalle.cantidad;
+                                d.Precio = detalle.precio;
+                                d.Idproducto = detalle.producto;
+                                d.Idordendecompra = id;
 
+                                bd.DetalleOrdens.Add(d);
+                                bd.SaveChanges();
+
+                            }
                         }
+
                     }
                     else
                     {
@@ -338,7 +382,7 @@ namespace back_MSI_SuperMami.Controllers
                 catch
                 {
                     res.Ok = false;
-                    res.Respuesta = "Producto no encontrado";
+                    res.Respuesta = "Orden de compra no encontrada";
                     return res;
                 }
             }
@@ -346,7 +390,7 @@ namespace back_MSI_SuperMami.Controllers
             bd.SaveChanges();
 
             res.Ok = true;
-            res.InfoAdicional = "Orden de compra insertada correctamente";
+            res.InfoAdicional = "Orden de compra modificada correctamente";
             return res;
         }
 
