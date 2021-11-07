@@ -188,6 +188,106 @@ namespace back_MSI_SuperMami.Controllers
             }
         }
 
+        //[HttpPut]
+        //[Route("productos/{id}")]
+        //public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarProducto comando)
+        //{
+        //    var res = new RespuestaAPI();
+        //    if (id == 0)
+        //    {
+        //        res.Ok = false;
+        //        res.Respuesta = "Ingrese una forma de pago a dar de baja";
+        //        return res;
+        //    }
+        //    else
+        //    {
+        //        try
+        //        {
+        //            if (string.IsNullOrEmpty(comando.nombre))
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso el nombre";
+        //                return res;
+        //            }
+        //            if (string.IsNullOrEmpty(comando.descripcion))
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso la descripción";
+        //                return res;
+        //            }
+
+        //            if (comando.precio == 0)
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso el precio";
+        //                return res;
+        //            }
+        //            if (comando.vencimiento.Equals(""))
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso la fecha de vencimiento";
+        //                return res;
+        //            }
+
+        //            if (comando.unidadMedida == 0)
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso la unidad de medida";
+        //                return res;
+        //            }
+
+        //            if (comando.categoria == 0)
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso la categoria";
+        //                return res;
+        //            }
+        //            if (comando.marca == 0)
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No se ingreso la marca";
+        //                return res;
+        //            }
+
+        //            var p = bd.Productos.Where(x => x.Idproducto == id).FirstOrDefault();
+
+        //            if (p != null)
+        //            {
+        //                p.Nombre = comando.nombre;
+        //                p.Descripcion = comando.descripcion;
+        //                p.Precio = comando.precio;
+        //                p.Vencimiento = comando.vencimiento;
+        //                p.Estado = true;
+        //                p.Idunidadmedida = comando.unidadMedida;
+        //                p.Idcategoria = comando.categoria;
+        //                p.Idmarca = comando.marca;
+
+        //                bd.Productos.Update(p);
+        //                bd.SaveChanges();
+
+        //                res.Ok = true;
+        //                res.Respuesta = "Producto modificado";
+        //                return res;
+        //            }
+        //            else
+        //            {
+        //                res.Ok = false;
+        //                res.Respuesta = "Producto no encontrado";
+        //                return res;
+        //            }
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            res.Ok = false;
+        //            res.Respuesta = "Producto no encontrado";
+        //            return res;
+        //        }
+        //    }
+
+
+        //}
+
+
         [HttpPut]
         [Route("productos/{id}")]
         public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarProducto comando)
@@ -261,9 +361,32 @@ namespace back_MSI_SuperMami.Controllers
                         p.Idunidadmedida = comando.unidadMedida;
                         p.Idcategoria = comando.categoria;
                         p.Idmarca = comando.marca;
+                        id = p.Idproducto;
 
                         bd.Productos.Update(p);
                         bd.SaveChanges();
+
+                        if(comando.Proveedores != null)
+                        {
+                            var proXprov = bd.Productosxproveedores.Where(f => f.Idproducto == id).ToList();
+
+                            foreach(var i in proXprov)
+                            {
+                                bd.Productosxproveedores.Remove(i);
+                            }
+
+                            foreach (var x in comando.Proveedores)
+                            {
+                                Productosxproveedore pXp = new Productosxproveedore();
+                                pXp.Idproducto = p.Idproducto;
+                                pXp.Idproveedor = x.proveedor;
+
+                                bd.Productosxproveedores.Add(pXp);
+                                bd.SaveChanges();
+                            }
+                            bd.SaveChanges();
+
+                        }
 
                         res.Ok = true;
                         res.Respuesta = "Producto modificado";
@@ -367,7 +490,7 @@ namespace back_MSI_SuperMami.Controllers
             bd.SaveChanges();
 
             res.Ok = true;
-            res.InfoAdicional = "Producto insertado correctamente correctamente";
+            res.InfoAdicional = "Producto insertado correctamente";
             return res;
         }
 
