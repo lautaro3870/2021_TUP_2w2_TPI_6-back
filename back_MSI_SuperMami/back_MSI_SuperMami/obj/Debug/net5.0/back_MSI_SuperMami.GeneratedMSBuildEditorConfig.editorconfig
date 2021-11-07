@@ -6,3 +6,5 @@ build_property.ProjectTypeGuids =
 build_property.PublishSingleFile = 
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
+build_property.RootNamespace = back_MSI_SuperMami
+build_property.ProjectDir = D:\Usuario\Documents\#TUP - FRC\Cuarto Cuatrimestre 2021\Metodología de sistemas\TRABAJO INTEGRADOR\BACKCLONE\back_MSI_SuperMami\back_MSI_SuperMami\

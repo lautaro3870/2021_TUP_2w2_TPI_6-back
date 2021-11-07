@@ -64,7 +64,7 @@ namespace back_MSI_SuperMami.Controllers
             if (id == 0)
             {
                 respusta.Ok = false;
-                respusta.Respuesta = "Ingrese el usuario a dar de baja";
+                respusta.Respuesta = "Ingrese un usuario";
                 return respusta;
             }
             else

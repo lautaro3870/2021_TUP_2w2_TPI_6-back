@@ -296,7 +296,7 @@ namespace back_MSI_SuperMami.Controllers
             if (id == 0)
             {
                 res.Ok = false;
-                res.Respuesta = "Ingrese una forma de pago a dar de baja";
+                res.Respuesta = "Ingrese el producto a modificar";
                 return res;
             }
             else

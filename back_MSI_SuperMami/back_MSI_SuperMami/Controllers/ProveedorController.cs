@@ -43,7 +43,7 @@ namespace back_MSI_SuperMami.Controllers
             if (id == 0)
             {
                 respusta.Ok = false;
-                respusta.Respuesta = "Ingrese el proveedor a dar de baja";
+                respusta.Respuesta = "Ingrese el proveedor";
                 return respusta;
             }
             else
@@ -78,7 +78,7 @@ namespace back_MSI_SuperMami.Controllers
             var respuesta = new RespuestaAPI();
             if (id == 0)
             {
-                respuesta.Respuesta = "Ingrese un proveedor";
+                respuesta.Respuesta = "Ingrese el proveedor a dar de baja";
                 respuesta.Ok = false;
                 return respuesta;
             }

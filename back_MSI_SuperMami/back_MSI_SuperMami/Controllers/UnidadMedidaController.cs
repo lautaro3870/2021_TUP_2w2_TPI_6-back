@@ -42,7 +42,7 @@ namespace back_MSI_SuperMami.Controllers
             if (id == 0)
             {
                 respusta.Ok = false;
-                respusta.Respuesta = "Ingrese una unidad de medida a dar de baja";
+                respusta.Respuesta = "Ingrese una unidad de medida";
                 return respusta;
             }
             else
@@ -80,7 +80,7 @@ namespace back_MSI_SuperMami.Controllers
             if (id == 0)
             {
                 res.Ok = false;
-                res.Respuesta = "Ingrese una unidad de medida a dar de baja";
+                res.Respuesta = "Ingrese una unidad de medida a modificar";
                 return res;
             }
             else
