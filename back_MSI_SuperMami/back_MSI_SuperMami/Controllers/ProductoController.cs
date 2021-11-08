@@ -25,15 +25,68 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         //Productos habilitados
+        //[HttpGet]
+        //[Route("productos")]
+        //public ActionResult<RespuestaAPI> Get()
+        //{
+        //    var respuestas = new RespuestaAPI();
+        //    respuestas.Ok = true;
+        //    respuestas.Respuesta = bd.Productos.Where(x => x.Estado == true).ToList();
+        //    return respuestas;
+        //}
+
         [HttpGet]
         [Route("productos")]
         public ActionResult<RespuestaAPI> Get()
         {
             var respuestas = new RespuestaAPI();
             respuestas.Ok = true;
+            var pro = bd.Productos.ToList();
+
+            var lista = new List<DTOListaProductos>();
+
+            if(pro != null)
+            {
+                foreach(var i in pro)
+                {
+                    var producto = bd.Productos.FirstOrDefault(f => f.Idproducto == i.Idproducto);                 
+                    var marca = bd.Marcas.FirstOrDefault(f => f.Idmarca == i.Idmarca);
+                    var categoria = bd.Categorias.FirstOrDefault(f => f.Idcategoria == i.Idcategoria);
+                    var unidadMedida = bd.UnidadDeMedida.FirstOrDefault(f => f.Idunidadmedida == i.Idunidadmedida);
+                    var proXpro = bd.Productosxproveedores.ToList();
+
+                    foreach(var p in proXpro)
+                    {
+                        var proveedor = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == p.Idproveedor);
+
+                    }
+
+                    var dto = new DTOListaProductos
+                    {
+                        producto = producto.Nombre,
+                        precio = producto.Precio,
+                        descripcion = producto.Descripcion,
+                        marca = marca.Nombre,
+                        categoria = categoria.Nombre,
+                        //proveedor = proveedor.Nombre,
+                        unidadMedida = unidadMedida.Nombre,
+                    };
+
+                    lista.Add(dto);
+
+                }
+                respuestas.Respuesta = lista;
+
+                return respuestas;
+            }
+
+
+
+
             respuestas.Respuesta = bd.Productos.Where(x => x.Estado == true).ToList();
             return respuestas;
         }
+
 
         //lista de productos
         [HttpGet]
