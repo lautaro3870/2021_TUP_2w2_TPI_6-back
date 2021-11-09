@@ -25,6 +25,17 @@ namespace back_MSI_SuperMami.Controllers
             _logger = logger;
         }
 
+        //Proveedores habilitados
+        [HttpGet]
+        [Route("proveedores")]
+        public ActionResult<RespuestaAPI> Get()
+        {
+            var respuestas = new RespuestaAPI();
+            respuestas.Ok = true;
+            respuestas.Respuesta = bd.Proveedores.Where(x => x.Estado == true).ToList();
+            return respuestas;
+        }
+
         //[HttpGet]
         //[Route("proveedores")]
         //public ActionResult<RespuestaAPI> Get()
@@ -44,7 +55,7 @@ namespace back_MSI_SuperMami.Controllers
         //            var proxPag = bd.Proveedoresxformasdepagos.Where(f => f.Idproveedor == i.Idproveedor).ToList();
         //            var proxEnv = bd.Proveedoresxformadeenvios.Where(f => f.Idproveedor == i.Idproveedor).ToList();
 
-                    
+
         //            FormaDePago pago = null;
         //            List<FormaDePago> listaPagos = new List<FormaDePago>();
         //            FormaDeEnvio envio = null;
@@ -83,7 +94,7 @@ namespace back_MSI_SuperMami.Controllers
         //                        area = proveedore.Email,
         //                        formaPago = y.Nombre,
         //                        formaEnvio = enviasos
-                                
+
 
 
         //                    };
