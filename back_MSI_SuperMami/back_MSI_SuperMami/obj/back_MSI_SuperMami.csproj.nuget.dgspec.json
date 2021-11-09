@@ -1,20 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Back Grupo 6\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {}
+    "D:\\Usuario\\Documents\\#TUP - FRC\\Cuarto Cuatrimestre 2021\\Metodología de sistemas\\TRABAJO INTEGRADOR\\BACKCLONE\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {}
   },
   "projects": {
-    "C:\\Back Grupo 6\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {
+    "D:\\Usuario\\Documents\\#TUP - FRC\\Cuarto Cuatrimestre 2021\\Metodología de sistemas\\TRABAJO INTEGRADOR\\BACKCLONE\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Back Grupo 6\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
+        "projectUniqueName": "D:\\Usuario\\Documents\\#TUP - FRC\\Cuarto Cuatrimestre 2021\\Metodología de sistemas\\TRABAJO INTEGRADOR\\BACKCLONE\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
         "projectName": "back_MSI_SuperMami",
-        "projectPath": "C:\\Back Grupo 6\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Back Grupo 6\\back_MSI_SuperMami\\back_MSI_SuperMami\\obj\\",
+        "projectPath": "D:\\Usuario\\Documents\\#TUP - FRC\\Cuarto Cuatrimestre 2021\\Metodología de sistemas\\TRABAJO INTEGRADOR\\BACKCLONE\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "D:\\Usuario\\Documents\\#TUP - FRC\\Cuarto Cuatrimestre 2021\\Metodología de sistemas\\TRABAJO INTEGRADOR\\BACKCLONE\\back_MSI_SuperMami\\back_MSI_SuperMami\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

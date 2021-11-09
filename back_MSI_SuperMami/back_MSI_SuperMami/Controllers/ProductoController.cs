@@ -70,7 +70,7 @@ namespace back_MSI_SuperMami.Controllers
                         {
                             var dto = new DTOListaProductos
                             {
-                                producto = producto.Nombre,
+                                nombre = producto.Nombre,
                                 precio = producto.Precio,
                                 descripcion = producto.Descripcion,
                                 marca = marca.Nombre,
