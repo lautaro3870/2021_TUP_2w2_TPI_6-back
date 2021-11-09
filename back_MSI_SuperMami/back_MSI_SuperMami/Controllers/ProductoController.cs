@@ -53,35 +53,35 @@ namespace back_MSI_SuperMami.Controllers
                     var marca = bd.Marcas.FirstOrDefault(f => f.Idmarca == i.Idmarca);
                     var categoria = bd.Categorias.FirstOrDefault(f => f.Idcategoria == i.Idcategoria);
                     var unidadMedida = bd.UnidadDeMedida.FirstOrDefault(f => f.Idunidadmedida == i.Idunidadmedida);
-                    var proXpro = bd.Productosxproveedores.ToList();
+                    var proXpro = bd.Productosxproveedores.Where(f => f.Idproducto == i.Idproducto).ToList();
 
-                    foreach(var p in proXpro)
+                    Proveedore proveedor = null;
+                    
+                    if (proXpro.Count != 0)
                     {
-                        var proveedor = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == p.Idproveedor);
+                        foreach (var p in proXpro)
+                        {
+                            proveedor = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == p.Idproveedor);
+                        }
 
+                        var dto = new DTOListaProductos
+                        {
+                            producto = producto.Nombre,
+                            precio = producto.Precio,
+                            descripcion = producto.Descripcion,
+                            marca = marca.Nombre,
+                            categoria = categoria.Nombre,
+                            proveedor = proveedor.Nombre,
+                            unidadMedida = unidadMedida.Nombre
+                        };
+
+                        lista.Add(dto);
                     }
-
-                    var dto = new DTOListaProductos
-                    {
-                        producto = producto.Nombre,
-                        precio = producto.Precio,
-                        descripcion = producto.Descripcion,
-                        marca = marca.Nombre,
-                        categoria = categoria.Nombre,
-                        //proveedor = proveedor.Nombre,
-                        unidadMedida = unidadMedida.Nombre,
-                    };
-
-                    lista.Add(dto);
-
                 }
                 respuestas.Respuesta = lista;
 
                 return respuestas;
             }
-
-
-
 
             respuestas.Respuesta = bd.Productos.Where(x => x.Estado == true).ToList();
             return respuestas;

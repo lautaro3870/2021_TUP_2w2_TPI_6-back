@@ -15,12 +15,7 @@ namespace back_MSI_SuperMami.DTOs
         public string proveedor { get; set; }
         public string unidadMedida { get; set; }
 
-        public List<ProductosxProveedores> prodxproveedores { get; set; }
-
+        
     }
 
-    public class ProductosxProveedores
-    {
-        public int idProveedor { get; set; }
-    }
 }
