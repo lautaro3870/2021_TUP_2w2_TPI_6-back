@@ -43,60 +43,101 @@ namespace back_MSI_SuperMami.Controllers
 
             var orden = bd.OrdenesDeCompras.ToList();
 
-            
+
             var lista = new List<DTOOrdenDeCompraListado>();
 
             if (orden != null)
             {
-                foreach(var i in orden)
+                foreach (var i in orden)
                 {
                     var o = bd.OrdenesDeCompras.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
                     var prov = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
                     var envio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
                     var pago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
                     var detalle = bd.DetalleOrdens.Where(f => f.Idordendecompra == i.Idordendecompra).ToList();
+
                     var detalle2 = bd.DetalleOrdens.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
-                    
-                    
-                        Producto producto = null;
-                        List<Producto> listaProductos = new List<Producto>();
 
-                        if (detalle.Count != 0)
+
+                    Producto producto = null;
+                    List<Producto> listaProductos = new List<Producto>();
+
+                    if (detalle.Count != 0)
+                    {
+                        foreach (var x in detalle)
                         {
-                            foreach (var x in detalle)
-                            {
-                                producto = bd.Productos.FirstOrDefault(f => f.Idproducto == x.Idproducto);
-                                listaProductos.Add(producto);
-                            }
-
-                            foreach (var y in listaProductos)
-                            {
-                                
-                                    var dto = new DTOOrdenDeCompraListado
-                                    {
-                                        proveedor = prov.Nombre,
-                                        formaPago = pago.Nombre,
-                                        formaEnvio = envio.Nombre,
-                                        producto = y.Nombre,
-                                        cantidad = detalle2.Cantidad
-                                    };
-                                    lista.Add(dto);
-                                
-                                
-                            }
+                            producto = bd.Productos.FirstOrDefault(f => f.Idproducto == x.Idproducto);
+                            listaProductos.Add(producto);
                         }
 
-                        respuesta.Respuesta = lista;
-                        return respuesta;
-                    
+                        foreach (var y in listaProductos)
+                        {
+                            if (prov.Nombre != "string")
+                            {
+                                var dto = new DTOOrdenDeCompraListado
+                                {
+                                    proveedor = prov.Nombre,
+                                    formaPago = pago.Nombre,
+                                    formaEnvio = envio.Nombre,
+                                    producto = y.Nombre,
+                                    cantidad = detalle2.Cantidad
+                                };
+                                lista.Add(dto);
+                            }
+                            
+                        }
+                    }
+
                 }
-
             }
-
-            respuesta.Ok = true;
+            respuesta.Respuesta = lista;
             
+            respuesta.Ok = true;
+
             return respuesta;
         }
+
+        //[HttpGet]
+        //[Route("ordenes-compra")]
+        //public ActionResult<RespuestaAPI> Get()
+        //{
+        //    var respuesta = new RespuestaAPI();
+        //    respuesta.Ok = true;
+
+        //    var orden = bd.OrdenesDeCompras.ToList();
+
+        //    var lista = new List<DTOOrdenDeCompraListado>();
+
+        //    if (orden != null)
+        //    {
+        //        foreach (var i in orden)
+        //        {
+        //            var o = bd.OrdenesDeCompras.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
+        //            var prov = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
+        //            var envio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
+        //            var pago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
+        //            var detalle = bd.DetalleOrdens.Where(f => f.Idordendecompra == i.Idordendecompra).ToList();
+
+        //            var detalle2 = bd.DetalleOrdens.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
+
+        //                    var dto = new DTOOrdenDeCompraListado
+        //                    {
+        //                        proveedor = prov.Nombre,
+        //                        formaPago = pago.Nombre,
+        //                        formaEnvio = envio.Nombre,
+        //                        //producto = 
+        //                        cantidad = detalle2.Cantidad
+        //                    };
+        //                    lista.Add(dto);
+
+        //        }
+
+        //    }
+        //    respuesta.Respuesta = lista;
+        //    return respuesta;
+
+
+        //}
 
 
         [HttpGet]
