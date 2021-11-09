@@ -212,5 +212,30 @@ namespace back_MSI_SuperMami.Controllers
             res.InfoAdicional = "La Forma de Pago se cargo correctamente";
             return res;
         }
+
+        //Método para obtener las formas de pago que tiene un proveedor pasado como parámetro
+
+        [HttpGet]
+        [Route("formas-pago/proveedor/{id}")]
+        public ActionResult<RespuestaAPI> GetFormasXProveedor(int id)
+        {
+            var respuestas = new RespuestaAPI();
+            respuestas.Ok = true;
+            var forXpro = bd.Proveedoresxformasdepagos.Where(f => f.Idproveedor == id).ToList();
+
+            List<FormaDePago> lista = new List<FormaDePago>();
+
+            if (forXpro.Count != 0)
+            {
+
+                foreach (var i in forXpro)
+                {
+                    var formas = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
+                    lista.Add(formas);
+                }
+                respuestas.Respuesta = lista;
+            }
+            return respuestas;
+        }
     }
 }

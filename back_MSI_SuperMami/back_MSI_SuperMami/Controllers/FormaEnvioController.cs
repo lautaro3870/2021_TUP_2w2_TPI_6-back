@@ -42,7 +42,7 @@ namespace back_MSI_SuperMami.Controllers
             if (id == 0)
             {
                 respusta.Ok = false;
-                respusta.Respuesta = "Ingrese una forma de envio a dar de baja";
+                respusta.Respuesta = "Ingrese una forma de envio";
                 return respusta;
             }
             else
@@ -79,7 +79,7 @@ namespace back_MSI_SuperMami.Controllers
             if (id == 0)
             {
                 res.Ok = false;
-                res.Respuesta = "Ingrese una forma de envio a dar de baja";
+                res.Respuesta = "Ingrese una forma de envio a modificar";
                 return res;
             }
             try
@@ -202,6 +202,31 @@ namespace back_MSI_SuperMami.Controllers
 
             res.InfoAdicional = "La forma de envío se cargo correctamente";
             return res;
+        }
+
+        //Método para obtener las formas de envío que tiene un proveedor pasado como parámetro
+
+        [HttpGet]
+        [Route("formas-envio/proveedor/{id}")]
+        public ActionResult<RespuestaAPI> GetFormasXProveedor(int id)
+        {
+            var respuestas = new RespuestaAPI();
+            respuestas.Ok = true;
+            var forXpro = bd.Proveedoresxformadeenvios.Where(f => f.Idproveedor == id).ToList();
+
+            List<FormaDeEnvio> lista = new List<FormaDeEnvio>();
+
+            if (forXpro.Count != 0)
+            {
+                
+                foreach (var i in forXpro)
+                {
+                    var formas = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
+                    lista.Add(formas);
+                }
+                respuestas.Respuesta = lista;
+            }
+            return respuestas;
         }
     }
 }
