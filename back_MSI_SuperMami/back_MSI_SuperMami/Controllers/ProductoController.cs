@@ -56,26 +56,31 @@ namespace back_MSI_SuperMami.Controllers
                     var proXpro = bd.Productosxproveedores.Where(f => f.Idproducto == i.Idproducto).ToList();
 
                     Proveedore proveedor = null;
+                    List<Proveedore> listaproveedores = new List<Proveedore>();
                     
                     if (proXpro.Count != 0)
                     {
                         foreach (var p in proXpro)
                         {
                             proveedor = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == p.Idproveedor);
+                            listaproveedores.Add(proveedor);
                         }
 
-                        var dto = new DTOListaProductos
+                        foreach(var y in listaproveedores)
                         {
-                            producto = producto.Nombre,
-                            precio = producto.Precio,
-                            descripcion = producto.Descripcion,
-                            marca = marca.Nombre,
-                            categoria = categoria.Nombre,
-                            proveedor = proveedor.Nombre,
-                            unidadMedida = unidadMedida.Nombre
-                        };
+                            var dto = new DTOListaProductos
+                            {
+                                producto = producto.Nombre,
+                                precio = producto.Precio,
+                                descripcion = producto.Descripcion,
+                                marca = marca.Nombre,
+                                categoria = categoria.Nombre,
+                                proveedor = y.Nombre,
+                                unidadMedida = unidadMedida.Nombre
+                            };
+                            lista.Add(dto);
+                        }
 
-                        lista.Add(dto);
                     }
                 }
                 respuestas.Respuesta = lista;
