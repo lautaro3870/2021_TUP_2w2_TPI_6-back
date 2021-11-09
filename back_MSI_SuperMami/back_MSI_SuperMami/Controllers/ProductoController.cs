@@ -71,7 +71,6 @@ namespace back_MSI_SuperMami.Controllers
                             var dto = new DTOListaProductos
                             {
                                 nombre = producto.Nombre,
-                                precio = producto.Precio,
                                 descripcion = producto.Descripcion,
                                 marca = marca.Nombre,
                                 categoria = categoria.Nombre,
@@ -109,14 +108,12 @@ namespace back_MSI_SuperMami.Controllers
                 {
                     var nombre = bd.Productos.FirstOrDefault(f => f.Nombre == x.Nombre);
                     var desc = bd.Productos.FirstOrDefault(f => f.Descripcion == x.Descripcion);
-                    var precio = bd.Productos.FirstOrDefault(f => f.Precio == x.Precio);
                     var marca = bd.Marcas.FirstOrDefault(f => f.Idmarca == x.Idmarca);
 
                     var dto = new DTOProducto
                     {
                         nombre = nombre.Nombre,
                         descripcion = desc.Descripcion,
-                        precio = precio.Precio,
                         marca = marca.Descripcion
                     };
 
@@ -144,7 +141,6 @@ namespace back_MSI_SuperMami.Controllers
                 {
                     nombre = prod.Nombre,
                     descripcion = prod.Descripcion,
-                    precio = prod.Precio,
                     marca = marca.Descripcion
                 };
 
@@ -374,19 +370,7 @@ namespace back_MSI_SuperMami.Controllers
                         return res;
                     }
 
-                    if (comando.precio == 0)
-                    {
-                        res.Ok = false;
-                        res.Error = "No se ingreso el precio";
-                        return res;
-                    }
-                    if (comando.vencimiento.Equals(""))
-                    {
-                        res.Ok = false;
-                        res.Error = "No se ingreso la fecha de vencimiento";
-                        return res;
-                    }
-
+                  
                     if (comando.unidadMedida == 0)
                     {
                         res.Ok = false;
@@ -413,8 +397,6 @@ namespace back_MSI_SuperMami.Controllers
                     {
                         p.Nombre = comando.nombre;
                         p.Descripcion = comando.descripcion;
-                        p.Precio = comando.precio;
-                        p.Vencimiento = comando.vencimiento;
                         p.Estado = true;
                         p.Idunidadmedida = comando.unidadMedida;
                         p.Idcategoria = comando.categoria;
@@ -487,19 +469,7 @@ namespace back_MSI_SuperMami.Controllers
                 return res;
             }
 
-            if (comando.precio == 0)
-            {
-                res.Ok = false;
-                res.Error = "No se ingreso el precio";
-                return res;
-            }
-            if (comando.vencimiento.Equals(""))
-            {
-                res.Ok = false;
-                res.Error = "No se ingreso la fecha de vencimiento";
-                return res;
-            }
-
+           
             if (comando.unidadMedida == 0)
             {
                 res.Ok = false;
@@ -525,8 +495,7 @@ namespace back_MSI_SuperMami.Controllers
 
             p.Nombre = comando.nombre;
             p.Descripcion = comando.descripcion;
-            p.Precio = comando.precio;
-            p.Vencimiento = comando.vencimiento;
+            
             p.Estado = true;
             p.Idunidadmedida = comando.unidadMedida;
             p.Idcategoria = comando.categoria;

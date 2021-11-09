@@ -17,8 +17,7 @@ namespace back_MSI_SuperMami.Models
         public int Idformadeenvio { get; set; }
         public int Idformapago { get; set; }
         public int Idestado { get; set; }
-        public DateTime fecha_registro { get; set; }
-
+        public DateTime? FechaRegistro { get; set; }
 
         public virtual EstadoOrdendecompra IdestadoNavigation { get; set; }
         public virtual FormaDeEnvio IdformadeenvioNavigation { get; set; }

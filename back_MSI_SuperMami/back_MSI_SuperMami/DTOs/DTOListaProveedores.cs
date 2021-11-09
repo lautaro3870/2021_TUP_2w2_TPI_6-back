@@ -1,4 +1,5 @@
-﻿using System;
+﻿using back_MSI_SuperMami.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,8 +16,15 @@ namespace back_MSI_SuperMami.DTOs
         public string telefono { get; set; }
         public string email { get; set; }
         public string area { get; set; }
+
         public string formaPago { get; set; }
         public string formaEnvio { get; set; }
 
+
+
+
+
     }
+
+    
 }

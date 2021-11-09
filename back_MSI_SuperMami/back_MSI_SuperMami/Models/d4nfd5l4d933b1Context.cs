@@ -38,7 +38,7 @@ namespace back_MSI_SuperMami.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseNpgsql("Server=ec2-44-198-29-193.compute-1.amazonaws.com; port=5432; user id = auilxbgtnzocdy; password = 40ffe977a9c5e826fc09e7d1f5cccbab44fe7fed9bb66c227645f91fe15f6f03; database=d4nfd5l4d933b1; pooling = true; SSL Mode=Prefer;Trust Server Certificate=true;");
             }
         }
@@ -112,9 +112,7 @@ namespace back_MSI_SuperMami.Models
 
                 entity.Property(e => e.Idproducto).HasColumnName("idproducto");
 
-                entity.Property(e => e.Precio)
-                    .HasColumnType("money")
-                    .HasColumnName("precio");
+                entity.Property(e => e.Precio).HasColumnName("precio");
 
                 entity.HasOne(d => d.IdordendecompraNavigation)
                     .WithMany(p => p.DetalleOrdens)
@@ -229,6 +227,10 @@ namespace back_MSI_SuperMami.Models
                     .HasColumnName("idordendecompra")
                     .UseIdentityAlwaysColumn();
 
+                entity.Property(e => e.FechaRegistro)
+                    .HasColumnType("date")
+                    .HasColumnName("fecha_registro");
+
                 entity.Property(e => e.Idestado).HasColumnName("idestado");
 
                 entity.Property(e => e.Idformadeenvio).HasColumnName("idformadeenvio");
@@ -291,14 +293,6 @@ namespace back_MSI_SuperMami.Models
                     .HasMaxLength(100)
                     .HasColumnName("nombre");
 
-                entity.Property(e => e.Precio)
-                    .HasColumnType("money")
-                    .HasColumnName("precio");
-
-                entity.Property(e => e.Vencimiento)
-                    .HasColumnType("date")
-                    .HasColumnName("vencimiento");
-
                 entity.HasOne(d => d.IdcategoriaNavigation)
                     .WithMany(p => p.Productos)
                     .HasForeignKey(d => d.Idcategoria)
@@ -320,14 +314,25 @@ namespace back_MSI_SuperMami.Models
 
             modelBuilder.Entity<Productosxproveedore>(entity =>
             {
-                entity.HasKey(e => new { e.Idproveedor, e.Idproducto })
-                    .HasName("productosxproveedores_pk");
+                entity.HasKey(e => e.Idproductoproveedor)
+                    .HasName("idproductoproveedor_pk");
 
                 entity.ToTable("productosxproveedores");
 
-                entity.Property(e => e.Idproveedor).HasColumnName("idproveedor");
+                entity.Property(e => e.Idproductoproveedor)
+                    .HasColumnName("idproductoproveedor")
+                    .UseIdentityAlwaysColumn()
+                    .HasIdentityOptions(null, null, null, 289566456L, null, null);
+
+                entity.Property(e => e.Estado)
+                    .HasColumnType("bit(1)")
+                    .HasColumnName("estado");
 
                 entity.Property(e => e.Idproducto).HasColumnName("idproducto");
+
+                entity.Property(e => e.Idproveedor).HasColumnName("idproveedor");
+
+                entity.Property(e => e.Precio).HasColumnName("precio");
 
                 entity.HasOne(d => d.IdproductoNavigation)
                     .WithMany(p => p.Productosxproveedores)
@@ -512,11 +517,11 @@ namespace back_MSI_SuperMami.Models
                     .HasMaxLength(100)
                     .HasColumnName("password");
 
-                //entity.HasOne(d => d.Idrol)
-                //    .WithMany(p => p.Usuarios)
-                //    .HasForeignKey(d => d.Idrol)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("usuarios_roles");
+                entity.HasOne(d => d.IdrolNavigation)
+                    .WithMany(p => p.Usuarios)
+                    .HasForeignKey(d => d.Idrol)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("usuarios_roles");
             });
 
             OnModelCreatingPartial(modelBuilder);

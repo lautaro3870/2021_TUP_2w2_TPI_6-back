@@ -25,77 +25,81 @@ namespace back_MSI_SuperMami.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        [Route("proveedores")]
-        public ActionResult<RespuestaAPI> Get()
-        {
-            var respuestas = new RespuestaAPI();
-            respuestas.Ok = true;
-            var pro = bd.Proveedores.ToList();
+        //[HttpGet]
+        //[Route("proveedores")]
+        //public ActionResult<RespuestaAPI> Get()
+        //{
+        //    var respuestas = new RespuestaAPI();
+        //    respuestas.Ok = true;
+        //    var pro = bd.Proveedores.ToList();
 
-            var lista = new List<DTOListaProveedores>();
+        //    var lista = new List<DTOListaProveedores>();
 
-            if (pro != null)
-            {
-                foreach (var i in pro)
-                {
-                    var proveedore = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
-                    var area = bd.Areas.FirstOrDefault(f => f.Idarea == i.Idarea);
-                    var proxPag = bd.Proveedoresxformasdepagos.Where(f => f.Idproveedor == i.Idproveedor).ToList();
-                    var proxEnv = bd.Proveedoresxformadeenvios.Where(f => f.Idproveedor == i.Idproveedor).ToList();
+        //    if (pro != null)
+        //    {
+        //        foreach (var i in pro)
+        //        {
+        //            var proveedore = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
+        //            var area = bd.Areas.FirstOrDefault(f => f.Idarea == i.Idarea);
+        //            var proxPag = bd.Proveedoresxformasdepagos.Where(f => f.Idproveedor == i.Idproveedor).ToList();
+        //            var proxEnv = bd.Proveedoresxformadeenvios.Where(f => f.Idproveedor == i.Idproveedor).ToList();
 
-                    FormaDePago pago = null;
-                    List<FormaDePago> listaPagos = new List<FormaDePago>();
-                    FormaDeEnvio envio = null;
-                    List<FormaDeEnvio> listaEnvio = new List<FormaDeEnvio>();
-
-                    if (proxPag.Count != 0 && proxEnv.Count != 0)
-                    {
-                        foreach (var p in proxPag)
-                        {
-                            pago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == p.Idformapago);
-                            listaPagos.Add(pago);
-                        }
-                        foreach (var p in proxEnv)
-                        {
-                            envio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == p.Idformadeenvio);
-                            listaEnvio.Add(envio);
-                        }
-
-                        foreach (var y in listaPagos)
-                        {
-                            var enviasos = "";
-                            foreach (var x in listaEnvio)
-                            {
-                                enviasos = x.Nombre;
-                            }
-                            var dto = new DTOListaProveedores
-                            {
-                                id = proveedore.Idproveedor,
-                                nombre = proveedore.Nombre,
-                                direccion = proveedore.Direccion,
-                                cuit = proveedore.Cuit,
-                                telefono = proveedore.Telefono,
-                                email = proveedore.Email,
-                                area = proveedore.Email,
-                                formaPago = y.Nombre,
-                                formaEnvio = enviasos
+                    
+        //            FormaDePago pago = null;
+        //            List<FormaDePago> listaPagos = new List<FormaDePago>();
+        //            FormaDeEnvio envio = null;
+        //            List<FormaDeEnvio> listaEnvio = new List<FormaDeEnvio>();
 
 
-                            };
-                            lista.Add(dto);
-                        }
 
-                    }
-                }
-                respuestas.Respuesta = lista;
+        //            if (proxPag.Count != 0 && proxEnv.Count != 0)
+        //            {
+        //                foreach (var p in proxPag)
+        //                {
+        //                    pago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == p.Idformapago);
+        //                    listaPagos.Add(pago);
+        //                }
+        //                foreach (var p in proxEnv)
+        //                {
+        //                    envio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == p.Idformadeenvio);
+        //                    listaEnvio.Add(envio);
+        //                }
 
-                return respuestas;
-            }
+        //                foreach (var y in listaPagos)
+        //                {
+        //                    var enviasos = "";
+        //                    foreach (var x in listaEnvio)
+        //                    {
+        //                        enviasos = x.Nombre;
+        //                    }
+        //                    var dto = new DTOListaProveedores
+        //                    {
+        //                        id = proveedore.Idproveedor,
+        //                        nombre = proveedore.Nombre,
+        //                        direccion = proveedore.Direccion,
+        //                        cuit = proveedore.Cuit,
+        //                        telefono = proveedore.Telefono,
+        //                        email = proveedore.Email,
+        //                        area = proveedore.Email,
+        //                        formaPago = y.Nombre,
+        //                        formaEnvio = enviasos
+                                
 
-            respuestas.Respuesta = bd.Productos.Where(x => x.Estado == true).ToList();
-            return respuestas;
-        }
+
+        //                    };
+        //                    lista.Add(dto);
+        //                }
+
+        //            }
+        //        }
+        //        respuestas.Respuesta = lista;
+
+        //        return respuestas;
+        //    }
+
+        //    respuestas.Respuesta = bd.Productos.Where(x => x.Estado == true).ToList();
+        //    return respuestas;
+        //}
 
         [HttpGet]
         [Route("proveedores/{id}")]
