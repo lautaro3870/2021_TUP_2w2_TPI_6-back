@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -14,6 +15,7 @@ namespace back_MSI_SuperMami.Models
         public int Idrol { get; set; }
         public string NombreUsuario { get; set; }
 
-        public virtual Role IdrolNavigation { get; set; }
+        [ForeignKey("Idrol")]
+        public Role rol { get; set; }
     }
 }

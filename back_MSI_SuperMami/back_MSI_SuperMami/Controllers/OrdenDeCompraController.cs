@@ -393,7 +393,7 @@ namespace back_MSI_SuperMami.Controllers
             orden.Idproveedor = comando.proveedor;
             orden.Idformadeenvio = comando.formadeenvio;
             orden.Idformapago = comando.formadepago;
-            orden.fecha_registro = comando.fechaRegistro;
+            orden.FechaRegistro = comando.fechaRegistro;
             //orden.fecha = DateTime.Now;
             orden.Idestado = 3;
 

@@ -1092,7 +1092,6 @@ D:\Usuario\Documents\#TUP - FRC\Cuarto Cuatrimestre 2021\Metodología de sistema
 D:\Usuario\Documents\#TUP - FRC\Cuarto Cuatrimestre 2021\Metodología de sistemas\TRABAJO INTEGRADOR\BACKFINAL\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\staticwebassets\back_MSI_SuperMami.StaticWebAssets.xml
 D:\Usuario\Documents\#TUP - FRC\Cuarto Cuatrimestre 2021\Metodología de sistemas\TRABAJO INTEGRADOR\BACKFINAL\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\scopedcss\bundle\back_MSI_SuperMami.styles.css
 D:\Usuario\Documents\#TUP - FRC\Cuarto Cuatrimestre 2021\Metodología de sistemas\TRABAJO INTEGRADOR\BACKFINAL\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\back_MSI_SuperMami.RazorTargetAssemblyInfo.cache
-D:\Usuario\Documents\#TUP - FRC\Cuarto Cuatrimestre 2021\Metodología de sistemas\TRABAJO INTEGRADOR\BACKFINAL\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\back_MSI_SuperMami.csproj.CopyComplete
 D:\Usuario\Documents\#TUP - FRC\Cuarto Cuatrimestre 2021\Metodología de sistemas\TRABAJO INTEGRADOR\BACKFINAL\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\back_MSI_SuperMami.dll
 D:\Usuario\Documents\#TUP - FRC\Cuarto Cuatrimestre 2021\Metodología de sistemas\TRABAJO INTEGRADOR\BACKFINAL\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\ref\back_MSI_SuperMami.dll
 D:\Usuario\Documents\#TUP - FRC\Cuarto Cuatrimestre 2021\Metodología de sistemas\TRABAJO INTEGRADOR\BACKFINAL\back_MSI_SuperMami\back_MSI_SuperMami\obj\Debug\net5.0\back_MSI_SuperMami.pdb
