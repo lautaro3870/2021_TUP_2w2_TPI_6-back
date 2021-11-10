@@ -217,7 +217,7 @@ namespace back_MSI_SuperMami.Controllers
 
         [HttpGet]
         [Route("formas-pago/proveedor/{id}")]
-        public ActionResult<RespuestaAPI> GetFormasXProveedor(int id)
+        public ActionResult<RespuestaAPI> GetFormasPagoXProveedor(int id)
         {
             var respuestas = new RespuestaAPI();
             respuestas.Ok = true;

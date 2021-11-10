@@ -207,7 +207,7 @@ namespace back_MSI_SuperMami.Controllers
         //Método para obtener las formas de pago que tiene un proveedor pasado como parámetro
 
         [HttpGet]
-        [Route("formas-pago/proveedor/{id}")]
+        [Route("formas-envio/proveedor/{id}")]
         public ActionResult<RespuestaAPI> GetFormasXProveedor(int id)
         {
             var respuestas = new RespuestaAPI();
