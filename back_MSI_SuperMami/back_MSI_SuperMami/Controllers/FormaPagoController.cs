@@ -223,19 +223,31 @@ namespace back_MSI_SuperMami.Controllers
             respuestas.Ok = true;
             var forXpro = bd.Proveedoresxformasdepagos.Where(f => f.Idproveedor == id).ToList();
 
-            List<FormaDePago> lista = new List<FormaDePago>();
+            var lista = new List<ComandoRegistrarFormaPago>();
 
-            if (forXpro.Count != 0)
+            if (forXpro != null)
             {
 
                 foreach (var i in forXpro)
                 {
-                    var formas = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
-                    lista.Add(formas);
+                    var f = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
+
+                    var forma = new ComandoRegistrarFormaPago
+                    {
+                        nombre = f.Nombre,
+                        descripcion = f.Descripcion,
+                        id = f.Idformapago
+                    };
+
+                    lista.Add(forma);
                 }
                 respuestas.Respuesta = lista;
+                return respuestas;
             }
+
+            respuestas.Respuesta = bd.FormaDePagos.Where(x => x.Estado == true).ToList();
             return respuestas;
         }
+
     }
 }

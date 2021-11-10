@@ -17,6 +17,7 @@ namespace back_MSI_SuperMami.Models
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public bool Estado { get; set; }
+        public float? Precio { get; set; }
 
         public virtual ICollection<OrdenesDeCompra> OrdenesDeCompras { get; set; }
         public virtual ICollection<Proveedoresxformadeenvio> Proveedoresxformadeenvios { get; set; }

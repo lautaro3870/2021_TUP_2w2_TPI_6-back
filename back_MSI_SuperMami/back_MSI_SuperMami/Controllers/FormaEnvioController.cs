@@ -204,28 +204,39 @@ namespace back_MSI_SuperMami.Controllers
             return res;
         }
 
-        //Método para obtener las formas de envío que tiene un proveedor pasado como parámetro
+        //Método para obtener las formas de pago que tiene un proveedor pasado como parámetro
 
         [HttpGet]
-        [Route("formas-envio/proveedor/{id}")]
+        [Route("formas-pago/proveedor/{id}")]
         public ActionResult<RespuestaAPI> GetFormasXProveedor(int id)
         {
             var respuestas = new RespuestaAPI();
             respuestas.Ok = true;
             var forXpro = bd.Proveedoresxformadeenvios.Where(f => f.Idproveedor == id).ToList();
 
-            List<FormaDeEnvio> lista = new List<FormaDeEnvio>();
+            var lista = new List<ComandoRegistrarFormaEnvio>();
 
-            if (forXpro.Count != 0)
+            if (forXpro != null)
             {
-                
+
                 foreach (var i in forXpro)
                 {
-                    var formas = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
-                    lista.Add(formas);
+                    var f = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
+
+                    var forma = new ComandoRegistrarFormaEnvio
+                    {
+                        nombre = f.Nombre,
+                        descripcion = f.Descripcion,
+                        id = f.Idformadeenvio
+                    };
+
+                    lista.Add(forma);
                 }
                 respuestas.Respuesta = lista;
+                return respuestas;
             }
+
+            respuestas.Respuesta = bd.FormaDePagos.Where(x => x.Estado == true).ToList();
             return respuestas;
         }
     }
