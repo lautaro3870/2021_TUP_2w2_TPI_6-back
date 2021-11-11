@@ -25,12 +25,54 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         //Productos habilitados
+        //[HttpGet]
+        //[Route("productos")]
+        //public ActionResult<RespuestaAPI> Get()
+        //{
+        //    var respuestas = new RespuestaAPI();
+        //    respuestas.Ok = true;
+        //    respuestas.Respuesta = bd.Productos.Where(x => x.Estado == true).ToList();
+        //    return respuestas;
+        //}
+
         [HttpGet]
         [Route("productos")]
         public ActionResult<RespuestaAPI> Get()
         {
             var respuestas = new RespuestaAPI();
             respuestas.Ok = true;
+            var pro = bd.Productos.ToList();
+
+            var lista = new List<DTOListaProductos>();
+
+            if (pro != null)
+            {
+                foreach (var i in pro)
+                {
+                    var product = bd.Productos.FirstOrDefault(f => f.Idproducto == i.Idproducto);
+                    var marc = bd.Marcas.FirstOrDefault(f => f.Idmarca == i.Idmarca);
+                    var categ = bd.Categorias.FirstOrDefault(f => f.Idcategoria == i.Idcategoria);
+                    var unid = bd.UnidadDeMedida.FirstOrDefault(f => f.Idunidadmedida == i.Idunidadmedida);
+
+
+
+                    var dto = new DTOListaProductos
+                    {
+                        id = product.Idproducto,
+                        nombre = product.Nombre,
+                        descripcion = product.Descripcion,
+                        marca = marc.Nombre,
+                        categoria = categ.Nombre,
+                        unidadMedida=unid.Nombre
+
+                    };
+                    lista.Add(dto);
+                }
+
+                respuestas.Respuesta = lista;
+                return respuestas;
+            }
+
             respuestas.Respuesta = bd.Productos.Where(x => x.Estado == true).ToList();
             return respuestas;
         }

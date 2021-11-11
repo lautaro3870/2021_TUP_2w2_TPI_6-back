@@ -12,7 +12,6 @@ namespace back_MSI_SuperMami.DTOs
         public string descripcion { get; set; }
         public string marca { get; set; }
         public string categoria { get; set; }
-        public string proveedor { get; set; }
         public string unidadMedida { get; set; }
 
         
