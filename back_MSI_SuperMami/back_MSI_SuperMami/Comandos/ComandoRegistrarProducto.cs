@@ -12,7 +12,7 @@ namespace back_MSI_SuperMami.Comandos
         
         public int unidadMedida { get; set; }
         public int categoria { get; set; }
-        public int marca { get; set; }
+        public string marca { get; set; }
 
         public List<Proveedores> Proveedores { get; set; }
 

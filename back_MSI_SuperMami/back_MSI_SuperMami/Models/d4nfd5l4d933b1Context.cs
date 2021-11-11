@@ -23,7 +23,6 @@ namespace back_MSI_SuperMami.Models
         public virtual DbSet<EstadoOrdendecompra> EstadoOrdendecompras { get; set; }
         public virtual DbSet<FormaDeEnvio> FormaDeEnvios { get; set; }
         public virtual DbSet<FormaDePago> FormaDePagos { get; set; }
-        public virtual DbSet<Marca> Marcas { get; set; }
         public virtual DbSet<OrdenesDeCompra> OrdenesDeCompras { get; set; }
         public virtual DbSet<Producto> Productos { get; set; }
         public virtual DbSet<Productosxproveedore> Productosxproveedores { get; set; }
@@ -38,7 +37,7 @@ namespace back_MSI_SuperMami.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseNpgsql("Server=ec2-44-198-29-193.compute-1.amazonaws.com; port=5432; user id = auilxbgtnzocdy; password = 40ffe977a9c5e826fc09e7d1f5cccbab44fe7fed9bb66c227645f91fe15f6f03; database=d4nfd5l4d933b1; pooling = true; SSL Mode=Prefer;Trust Server Certificate=true;");
             }
         }
@@ -196,30 +195,6 @@ namespace back_MSI_SuperMami.Models
                 entity.Property(e => e.Porcentaje).HasColumnName("porcentaje");
             });
 
-            modelBuilder.Entity<Marca>(entity =>
-            {
-                entity.HasKey(e => e.Idmarca)
-                    .HasName("marcas_pk");
-
-                entity.ToTable("marcas");
-
-                entity.Property(e => e.Idmarca)
-                    .HasColumnName("idmarca")
-                    .UseIdentityAlwaysColumn();
-
-                entity.Property(e => e.Descripcion)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("descripcion");
-
-                entity.Property(e => e.Estado).HasColumnName("estado");
-
-                entity.Property(e => e.Nombre)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("nombre");
-            });
-
             modelBuilder.Entity<OrdenesDeCompra>(entity =>
             {
                 entity.HasKey(e => e.Idordendecompra)
@@ -288,11 +263,11 @@ namespace back_MSI_SuperMami.Models
 
                 entity.Property(e => e.Idcategoria).HasColumnName("idcategoria");
 
-                entity.Property(e => e.Marca).HasColumnName("marca");
-
                 entity.Property(e => e.Idunidadmedida).HasColumnName("idunidadmedida");
 
                 entity.Property(e => e.Imagen).HasColumnName("imagen");
+
+                entity.Property(e => e.Marca).HasColumnName("marca");
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
@@ -304,12 +279,6 @@ namespace back_MSI_SuperMami.Models
                     .HasForeignKey(d => d.Idcategoria)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("productos_categorias");
-
-                //entity.HasOne(d => d.IdmarcaNavigation)
-                //    .WithMany(p => p.Productos)
-                //    .HasForeignKey(d => d.Idmarca)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("productos_marcas");
 
                 entity.HasOne(d => d.IdunidadmedidaNavigation)
                     .WithMany(p => p.Productos)
@@ -482,10 +451,7 @@ namespace back_MSI_SuperMami.Models
                     .HasColumnName("idunidadmedida")
                     .UseIdentityAlwaysColumn();
 
-                entity.Property(e => e.Descipcion)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("descipcion");
+                entity.Property(e => e.Descripcion).HasColumnName("descripcion");
 
                 entity.Property(e => e.Estado).HasColumnName("estado");
 

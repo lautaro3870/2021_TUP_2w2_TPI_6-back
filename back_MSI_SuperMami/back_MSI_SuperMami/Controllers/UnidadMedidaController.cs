@@ -101,7 +101,7 @@ namespace back_MSI_SuperMami.Controllers
                     if (p != null)
                     {
                         p.Nombre = comando.nombre;
-                        p.Descipcion = comando.descipcion;
+                        p.Descripcion = comando.descripcion;
 
 
                         bd.UnidadDeMedida.Update(p);
@@ -186,7 +186,7 @@ namespace back_MSI_SuperMami.Controllers
                 res.Error = "No se ingreso el nombre";
                 return res;
             }
-            if (string.IsNullOrEmpty(unidadMedida.descipcion))
+            if (string.IsNullOrEmpty(unidadMedida.descripcion))
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la descripción";
@@ -197,7 +197,7 @@ namespace back_MSI_SuperMami.Controllers
             UnidadDeMedidum  u = new UnidadDeMedidum()
             {
                 Nombre = unidadMedida.nombre,
-                Descipcion = unidadMedida.descipcion,
+                Descripcion = unidadMedida.descripcion,
                 Estado = true
             };
 

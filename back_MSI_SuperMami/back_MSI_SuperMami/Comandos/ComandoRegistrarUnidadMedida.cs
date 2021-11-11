@@ -8,7 +8,7 @@ namespace back_MSI_SuperMami.Comandos
     public class ComandoRegistrarUnidadMedida
     {
         public string nombre { get; set; }
-        public string descipcion { get; set; }
+        public string descripcion { get; set; }
 
     }
 }

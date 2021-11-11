@@ -19,8 +19,8 @@ namespace back_MSI_SuperMami.Models
         public bool Estado { get; set; }
         public int Idunidadmedida { get; set; }
         public int Idcategoria { get; set; }
-        public string Marca { get; set; }
         public string Imagen { get; set; }
+        public string Marca { get; set; }
 
         public virtual Categoria IdcategoriaNavigation { get; set; }
         public virtual UnidadDeMedidum IdunidadmedidaNavigation { get; set; }

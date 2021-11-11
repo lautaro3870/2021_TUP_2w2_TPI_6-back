@@ -50,7 +50,6 @@ namespace back_MSI_SuperMami.Controllers
                 foreach (var i in pro)
                 {
                     var product = bd.Productos.FirstOrDefault(f => f.Idproducto == i.Idproducto);
-                    var marc = bd.Marcas.FirstOrDefault(f => f.Idmarca == i.Idmarca);
                     var categ = bd.Categorias.FirstOrDefault(f => f.Idcategoria == i.Idcategoria);
                     var unid = bd.UnidadDeMedida.FirstOrDefault(f => f.Idunidadmedida == i.Idunidadmedida);
 
@@ -61,7 +60,7 @@ namespace back_MSI_SuperMami.Controllers
                         id = product.Idproducto,
                         nombre = product.Nombre,
                         descripcion = product.Descripcion,
-                        marca = marc.Nombre,
+                        marca = product.Marca,
                         categoria = categ.Nombre,
                         unidadMedida=unid.Nombre
 
@@ -150,13 +149,11 @@ namespace back_MSI_SuperMami.Controllers
                 {
                     var nombre = bd.Productos.FirstOrDefault(f => f.Nombre == x.Nombre);
                     var desc = bd.Productos.FirstOrDefault(f => f.Descripcion == x.Descripcion);
-                    var marca = bd.Marcas.FirstOrDefault(f => f.Idmarca == x.Idmarca);
 
                     var dto = new DTOProducto
                     {
                         nombre = nombre.Nombre,
                         descripcion = desc.Descripcion,
-                        marca = marca.Descripcion
                     };
 
                     lista.Add(dto);
@@ -177,13 +174,11 @@ namespace back_MSI_SuperMami.Controllers
             try
             {
                 var prod = bd.Productos.FirstOrDefault(x => x.Nombre.Equals(nombre));
-                var marca = bd.Marcas.FirstOrDefault(x => x.Idmarca == prod.Idmarca);
 
                 var dto = new DTOProducto
                 {
                     nombre = prod.Nombre,
                     descripcion = prod.Descripcion,
-                    marca = marca.Descripcion
                 };
 
                 respuestas.Ok = true;
@@ -426,7 +421,7 @@ namespace back_MSI_SuperMami.Controllers
                         res.Error = "No se ingreso la categoria";
                         return res;
                     }
-                    if (comando.marca == 0)
+                    if (comando.marca == "")
                     {
                         res.Ok = false;
                         res.Error = "No se ingreso la marca";
@@ -442,7 +437,7 @@ namespace back_MSI_SuperMami.Controllers
                         p.Estado = true;
                         p.Idunidadmedida = comando.unidadMedida;
                         p.Idcategoria = comando.categoria;
-                        p.Idmarca = comando.marca;
+                        p.Marca = comando.marca;
                         id = p.Idproducto;
 
                         bd.Productos.Update(p);
@@ -525,7 +520,7 @@ namespace back_MSI_SuperMami.Controllers
                 res.Error = "No se ingreso la categoria";
                 return res;
             }
-            if (comando.marca == 0)
+            if (comando.marca == "")
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la marca";
@@ -541,7 +536,7 @@ namespace back_MSI_SuperMami.Controllers
             p.Estado = true;
             p.Idunidadmedida = comando.unidadMedida;
             p.Idcategoria = comando.categoria;
-            p.Idmarca = comando.marca;
+            p.Marca = comando.marca;
 
             bd.Productos.Add(p);
             bd.SaveChanges();
