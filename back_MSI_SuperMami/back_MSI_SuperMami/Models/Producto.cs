@@ -19,11 +19,10 @@ namespace back_MSI_SuperMami.Models
         public bool Estado { get; set; }
         public int Idunidadmedida { get; set; }
         public int Idcategoria { get; set; }
-        public int Idmarca { get; set; }
+        public string Marca { get; set; }
         public string Imagen { get; set; }
 
         public virtual Categoria IdcategoriaNavigation { get; set; }
-        public virtual Marca IdmarcaNavigation { get; set; }
         public virtual UnidadDeMedidum IdunidadmedidaNavigation { get; set; }
         public virtual ICollection<DetalleOrden> DetalleOrdens { get; set; }
         public virtual ICollection<Productosxproveedore> Productosxproveedores { get; set; }

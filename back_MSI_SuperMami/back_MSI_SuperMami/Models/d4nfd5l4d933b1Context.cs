@@ -288,7 +288,7 @@ namespace back_MSI_SuperMami.Models
 
                 entity.Property(e => e.Idcategoria).HasColumnName("idcategoria");
 
-                entity.Property(e => e.Idmarca).HasColumnName("idmarca");
+                entity.Property(e => e.Marca).HasColumnName("marca");
 
                 entity.Property(e => e.Idunidadmedida).HasColumnName("idunidadmedida");
 
@@ -305,11 +305,11 @@ namespace back_MSI_SuperMami.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("productos_categorias");
 
-                entity.HasOne(d => d.IdmarcaNavigation)
-                    .WithMany(p => p.Productos)
-                    .HasForeignKey(d => d.Idmarca)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("productos_marcas");
+                //entity.HasOne(d => d.IdmarcaNavigation)
+                //    .WithMany(p => p.Productos)
+                //    .HasForeignKey(d => d.Idmarca)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("productos_marcas");
 
                 entity.HasOne(d => d.IdunidadmedidaNavigation)
                     .WithMany(p => p.Productos)
