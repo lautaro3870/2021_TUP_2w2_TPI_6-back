@@ -299,10 +299,7 @@ namespace back_MSI_SuperMami.Models
                     .UseIdentityAlwaysColumn()
                     .HasIdentityOptions(null, null, null, 289566456L, null, null);
 
-                entity.Property(e => e.Estado)
-                    .IsRequired()
-                    .HasColumnType("bit(1)")
-                    .HasColumnName("estado");
+                entity.Property(e => e.Estado).HasColumnName("estado");
 
                 entity.Property(e => e.Idproducto).HasColumnName("idproducto");
 
