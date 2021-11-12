@@ -443,27 +443,27 @@ namespace back_MSI_SuperMami.Controllers
                         bd.Productos.Update(p);
                         bd.SaveChanges();
 
-                        if(comando.Proveedores != null)
-                        {
-                            var proXprov = bd.Productosxproveedores.Where(f => f.Idproducto == id).ToList();
+                        //if(comando.Proveedores != null)
+                        //{
+                        //    var proXprov = bd.Productosxproveedores.Where(f => f.Idproducto == id).ToList();
 
-                            foreach(var i in proXprov)
-                            {
-                                bd.Productosxproveedores.Remove(i);
-                            }
+                        //    foreach(var i in proXprov)
+                        //    {
+                        //        bd.Productosxproveedores.Remove(i);
+                        //    }
 
-                            foreach (var x in comando.Proveedores)
-                            {
-                                Productosxproveedore pXp = new Productosxproveedore();
-                                pXp.Idproducto = p.Idproducto;
-                                pXp.Idproveedor = x.proveedor;
+                        //    foreach (var x in comando.Proveedores)
+                        //    {
+                        //        Productosxproveedore pXp = new Productosxproveedore();
+                        //        pXp.Idproducto = p.Idproducto;
+                        //        pXp.Idproveedor = x.proveedor;
 
-                                bd.Productosxproveedores.Add(pXp);
-                                bd.SaveChanges();
-                            }
-                            bd.SaveChanges();
+                        //        bd.Productosxproveedores.Add(pXp);
+                        //        bd.SaveChanges();
+                        //    }
+                        //    bd.SaveChanges();
 
-                        }
+                        //}
 
                         res.Ok = true;
                         res.Respuesta = "Producto modificado";
@@ -541,15 +541,15 @@ namespace back_MSI_SuperMami.Controllers
             bd.Productos.Add(p);
             bd.SaveChanges();
 
-            foreach (var x in comando.Proveedores)
-            {
-                Productosxproveedore pXp = new Productosxproveedore();
-                pXp.Idproducto = p.Idproducto;
-                pXp.Idproveedor = x.proveedor;
+            //foreach (var x in comando.Proveedores)
+            //{
+            //    Productosxproveedore pXp = new Productosxproveedore();
+            //    pXp.Idproducto = p.Idproducto;
+            //    pXp.Idproveedor = x.proveedor;
 
-                bd.Productosxproveedores.Add(pXp);
-                bd.SaveChanges();
-            }
+            //    bd.Productosxproveedores.Add(pXp);
+            //    bd.SaveChanges();
+            //}
 
             bd.SaveChanges();
 
