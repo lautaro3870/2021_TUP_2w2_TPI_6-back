@@ -62,7 +62,8 @@ namespace back_MSI_SuperMami.Controllers
                         descripcion = product.Descripcion,
                         marca = product.Marca,
                         categoria = categ.Nombre,
-                        unidadMedida=unid.Nombre
+                        unidadMedida=unid.Nombre,
+                        imagen = product.Imagen
 
                     };
                     lista.Add(dto);
@@ -438,6 +439,7 @@ namespace back_MSI_SuperMami.Controllers
                         p.Idunidadmedida = comando.unidadMedida;
                         p.Idcategoria = comando.categoria;
                         p.Marca = comando.marca;
+                        p.Imagen = comando.imagen;
                         id = p.Idproducto;
 
                         bd.Productos.Update(p);
@@ -537,6 +539,7 @@ namespace back_MSI_SuperMami.Controllers
             p.Idunidadmedida = comando.unidadMedida;
             p.Idcategoria = comando.categoria;
             p.Marca = comando.marca;
+            p.Imagen = comando.imagen;
 
             bd.Productos.Add(p);
             bd.SaveChanges();
