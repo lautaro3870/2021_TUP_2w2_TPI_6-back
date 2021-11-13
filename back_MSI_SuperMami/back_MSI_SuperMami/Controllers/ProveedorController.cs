@@ -56,7 +56,7 @@ namespace back_MSI_SuperMami.Controllers
 
                     var dto = new DTOListaProveedores
                     {
-                        id = proveedore.Idproveedor,
+                        idproveedor = proveedore.Idproveedor,
                         nombre = proveedore.Nombre,
                         direccion = proveedore.Direccion,
                         cuit = proveedore.Cuit,

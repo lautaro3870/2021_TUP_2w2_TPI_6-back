@@ -8,7 +8,7 @@ namespace back_MSI_SuperMami.DTOs
 {
     public class DTOListaProveedores
     {
-        public int id { get; set; }
+        public int idproveedor { get; set; }
 
         public string nombre { get; set; }
         public string direccion { get; set; }
