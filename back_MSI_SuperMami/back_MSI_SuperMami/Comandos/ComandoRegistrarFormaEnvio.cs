@@ -9,7 +9,7 @@ namespace back_MSI_SuperMami.Comandos
     {
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public int id { get; set; }
+        public int formadeenvio { get; set; }
         public float precio { get; set; }
 
     }
