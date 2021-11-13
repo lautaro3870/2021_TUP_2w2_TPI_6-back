@@ -236,7 +236,7 @@ namespace back_MSI_SuperMami.Controllers
                     {
                         nombre = f.Nombre,
                         descripcion = f.Descripcion,
-                        formadepago = f.Idformapago
+                        idformadepago = f.Idformapago
                     };
 
                     lista.Add(forma);

@@ -227,7 +227,7 @@ namespace back_MSI_SuperMami.Controllers
                     {
                         nombre = f.Nombre,
                         descripcion = f.Descripcion,
-                        formadeenvio = f.Idformadeenvio
+                        idformadeenvio = f.Idformadeenvio
                     };
 
                     lista.Add(forma);

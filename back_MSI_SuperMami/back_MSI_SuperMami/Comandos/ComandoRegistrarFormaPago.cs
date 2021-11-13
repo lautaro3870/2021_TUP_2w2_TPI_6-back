@@ -10,7 +10,7 @@ namespace back_MSI_SuperMami.Comandos
         public string nombre { get; set; }
         public string descripcion { get; set; }
 
-        public int formadepago { get; set; }
+        public int idformadepago { get; set; }
 
         public float porcentaje { get; set; }
 
