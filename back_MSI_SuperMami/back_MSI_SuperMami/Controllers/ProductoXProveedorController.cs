@@ -96,6 +96,7 @@ namespace back_MSI_SuperMami.Controllers
                     {
                         var dto = new DTOProductosPrecioProveedor
                         {
+                            idproducto = prod.Idproducto,
                             nombre = prod.Nombre,
                             descripcion = prod.Descripcion,
                             unidadMedida = uni.Nombre,
