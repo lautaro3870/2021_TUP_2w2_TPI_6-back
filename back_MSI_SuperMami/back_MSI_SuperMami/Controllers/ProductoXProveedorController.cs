@@ -33,7 +33,7 @@ namespace back_MSI_SuperMami.Controllers
         //    return respuestas;
         //}
         [HttpGet]
-        [Route("producto-proveedor")]
+        [Route("producto/proveedor")]
         public ActionResult<RespuestaAPI> Get()
         {
             var respuestas = new RespuestaAPI();
@@ -73,8 +73,50 @@ namespace back_MSI_SuperMami.Controllers
         }
 
 
+        [HttpGet]
+        [Route("producto/proveedor/id")]
+        public ActionResult<RespuestaAPI> Get(int id)
+        {
+            var respuestas = new RespuestaAPI();
+            respuestas.Ok = true;
+            var proXpro = bd.Productosxproveedores.Where(f => f.Idproveedor == id).ToList();
+          
+            var lista = new List<DTOProductosPrecioProveedor>();
+
+            if (proXpro != null)
+            {
+                foreach (var i in proXpro)
+                {
+                    var proxProv = bd.Productosxproveedores.FirstOrDefault(f => f.Idproductoproveedor == i.Idproductoproveedor);
+                    var prod = bd.Productos.FirstOrDefault(f => f.Idproducto == i.Idproducto);
+
+                    if (proxProv.Estado == true)
+                    {
+                        var dto = new DTOProductosPrecioProveedor
+                        {
+                            nombre = prod.Nombre,
+                            descripcion = prod.Descripcion,
+                            unidadMedida = prod.Idunidadmedida,
+                            categoria = prod.Idcategoria,
+                            marca = prod.Marca,
+                            imagen = prod.Imagen,
+                            precio = proxProv.Precio
+                        };
+
+                        lista.Add(dto);
+                    }
+                }
+
+                respuestas.Respuesta = lista;
+                return respuestas;
+            }
+
+            respuestas.Respuesta = bd.Productosxproveedores.Where(x => x.Estado == true).ToList();
+            return respuestas;
+        }
+
         [HttpPost]
-        [Route("producto-proveedor")]
+        [Route("producto/proveedor")]
         public RespuestaAPI PostOrden([FromBody] ComandoProductoxProveedor comando)
         {
             var res = new RespuestaAPI();
@@ -119,5 +161,7 @@ namespace back_MSI_SuperMami.Controllers
             res.InfoAdicional = "Asignación entro producto y proveedor insertada correctamente";
             return res;
         }
+
+
     }
 }
