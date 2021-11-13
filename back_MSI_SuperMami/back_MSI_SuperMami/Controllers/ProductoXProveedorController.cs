@@ -74,7 +74,7 @@ namespace back_MSI_SuperMami.Controllers
 
 
         [HttpGet]
-        [Route("producto/proveedor/id")]
+        [Route("producto/proveedor/{id}")]
         public ActionResult<RespuestaAPI> Get(int id)
         {
             var respuestas = new RespuestaAPI();
