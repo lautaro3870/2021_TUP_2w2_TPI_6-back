@@ -89,6 +89,8 @@ namespace back_MSI_SuperMami.Controllers
                 {
                     var proxProv = bd.Productosxproveedores.FirstOrDefault(f => f.Idproductoproveedor == i.Idproductoproveedor);
                     var prod = bd.Productos.FirstOrDefault(f => f.Idproducto == i.Idproducto);
+                    var uni = bd.UnidadDeMedida.FirstOrDefault(f => f.Idunidadmedida == prod.Idunidadmedida);
+                    var cat = bd.Categorias.FirstOrDefault(f => f.Idcategoria == prod.Idcategoria);
 
                     if (proxProv.Estado == true)
                     {
@@ -96,8 +98,8 @@ namespace back_MSI_SuperMami.Controllers
                         {
                             nombre = prod.Nombre,
                             descripcion = prod.Descripcion,
-                            unidadMedida = prod.Idunidadmedida,
-                            categoria = prod.Idcategoria,
+                            unidadMedida = uni.Nombre,
+                            categoria = cat.Nombre,
                             marca = prod.Marca,
                             imagen = prod.Imagen,
                             precio = proxProv.Precio
