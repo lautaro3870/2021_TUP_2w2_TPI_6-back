@@ -381,23 +381,16 @@ namespace back_MSI_SuperMami.Controllers
                 return res;
             }
 
-            if (comando.fechaRegistro.Equals(""))
-            {
-                res.Ok = false;
-                res.Error = "Ingrese una fecha de registro";
-                return res;
-            }
-
             OrdenesDeCompra orden = new OrdenesDeCompra();
 
             orden.Idproveedor = comando.proveedor;
             orden.Idformadeenvio = comando.formadeenvio;
             orden.Idformapago = comando.formadepago;
-            orden.FechaRegistro = comando.fechaRegistro;
+            orden.FechaRegistro = DateTime.Now;
             //orden.fecha = DateTime.Now;
             orden.Idestado = 3;
 
-            int id = orden.Idordendecompra;
+            //int id = orden.Idordendecompra;
 
             bd.OrdenesDeCompras.Add(orden);
             bd.SaveChanges();
