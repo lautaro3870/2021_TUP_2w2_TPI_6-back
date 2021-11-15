@@ -37,45 +37,48 @@ namespace back_MSI_SuperMami.Controllers
         //    return respuestas;
         //}
 
-        //[HttpGet]
-        //[Route("proveedores")]
-        //public ActionResult<RespuestaAPI> Get()
-        //{
-        //    var respuestas = new RespuestaAPI();
-        //    respuestas.Ok = true;
-        //    var pro = bd.Proveedores.ToList();
+        [HttpGet]
+        [Route("proveedores")]
+        public ActionResult<RespuestaAPI> Get()
+        {
+            var respuestas = new RespuestaAPI();
+            respuestas.Ok = true;
+            var pro = bd.Proveedores.ToList();
 
-        //    var lista = new List<DTOListaProveedores>();
+            var lista = new List<DTOListaProveedores>();
 
-        //    if (pro != null)
-        //    {
-        //        foreach (var i in pro)
-        //        {
-        //            var proveedore = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
-        //            var area = bd.Areas.FirstOrDefault(f => f.Idarea == i.Idarea);
+            if (pro != null)
+            {
+                foreach (var i in pro)
+                {
+                    var proveedore = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
+                    var area = bd.Areas.FirstOrDefault(f => f.Idarea == i.Idarea);
+                    if (proveedore.Estado == true)
+                    {
+                        var dto = new DTOListaProveedores
+                        {
+                            idproveedor = proveedore.Idproveedor,
+                            nombre = proveedore.Nombre,
+                            direccion = proveedore.Direccion,
+                            cuit = proveedore.Cuit,
+                            telefono = proveedore.Telefono,
+                            email = proveedore.Email,
+                            area = area.Descripcion
 
+                        };
+                        lista.Add(dto);
+                    }
 
-        //            var dto = new DTOListaProveedores
-        //            {
-        //                idproveedor = proveedore.Idproveedor,
-        //                nombre = proveedore.Nombre,
-        //                direccion = proveedore.Direccion,
-        //                cuit = proveedore.Cuit,
-        //                telefono = proveedore.Telefono,
-        //                email = proveedore.Email,
-        //                area = area.Descripcion
+                        
+                }
 
-        //            };
-        //            lista.Add(dto);
-        //        }
+                respuestas.Respuesta = lista;
+                return respuestas;
+            }
 
-        //        respuestas.Respuesta = lista;
-        //        return respuestas;
-        //    }
-
-        //    respuestas.Respuesta = bd.Proveedores.Where(x => x.Estado == true).ToList();
-        //    return respuestas;
-        //}
+            respuestas.Respuesta = bd.Proveedores.Where(x => x.Estado == true).ToList();
+            return respuestas;
+        }
 
 
 
