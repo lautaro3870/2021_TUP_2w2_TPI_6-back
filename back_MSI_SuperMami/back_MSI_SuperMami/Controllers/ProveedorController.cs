@@ -302,6 +302,50 @@ namespace back_MSI_SuperMami.Controllers
 
         }
 
+        //Dar de alta
+        [HttpPut]
+        [Route("proveedores/alta/{id}")]
+        public ActionResult<RespuestaAPI> ActualizarEstado(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una forma de pago a dar de alta";
+                return res;
+            }
+            else
+            {
+                var pago = bd.Proveedores.Find(id);
+                try
+                {
+                    if (pago != null && pago.Estado == false)
+                    {
+                        pago.Estado = true;
+                        res.Ok = true;
+                        bd.Proveedores.Update(pago);
+                        bd.SaveChanges();
+                        res.Respuesta = "Proveedor dado de alta";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No existe ese proveedor deshabilitado";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra el proveedor solicitado";
+                    return res;
+                }
+
+            }
+        }
+
         //Put
         [HttpPut]
         [Route("proveedores/{id}")]

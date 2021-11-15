@@ -168,6 +168,50 @@ namespace back_MSI_SuperMami.Controllers
             }
         }
 
+        //Dar de alta
+        [HttpPut]
+        [Route("formas-envio/alta/{id}")]
+        public ActionResult<RespuestaAPI> ActualizarEstado(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una forma de envío a dar de alta";
+                return res;
+            }
+            else
+            {
+                var pago = bd.FormaDeEnvios.Find(id);
+                try
+                {
+                    if (pago != null && pago.Estado == false)
+                    {
+                        pago.Estado = true;
+                        res.Ok = true;
+                        bd.FormaDeEnvios.Update(pago);
+                        bd.SaveChanges();
+                        res.Respuesta = "Forma de envío dada de alta";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No existe esa forma de envío deshabilitada";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra la forma de envío solicitada";
+                    return res;
+                }
+
+            }
+        }
+
         //Registrar Nueva Forma de Envío
         [HttpPost]
         [Route("formas-envio")]

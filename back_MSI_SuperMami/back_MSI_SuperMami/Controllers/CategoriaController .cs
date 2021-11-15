@@ -169,6 +169,50 @@ namespace back_MSI_SuperMami.Controllers
             }
         }
 
+        //Dar de alta
+        [HttpPut]
+        [Route("categorias/alta/{id}")]
+        public ActionResult<RespuestaAPI> ActualizarEstado(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una categoría a dar de alta";
+                return res;
+            }
+            else
+            {
+                var cat = bd.Categorias.Find(id);
+                try
+                {
+                    if (cat != null && cat.Estado == false)
+                    {
+                        cat.Estado = true;
+                        res.Ok = true;
+                        bd.Categorias.Update(cat);
+                        bd.SaveChanges();
+                        res.Respuesta = "Categoría dada de alta";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No existe esa categoría deshabilitada";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra la categoría solicitada";
+                    return res;
+                }
+
+            }
+        }
+
         //Registrar Nueva Categoría
         [HttpPost]
         [Route("categorias")]

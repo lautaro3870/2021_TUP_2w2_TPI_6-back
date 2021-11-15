@@ -251,7 +251,7 @@ namespace back_MSI_SuperMami.Controllers
             {
                 try
                 {
-                    var pro = bd.Productos.Where(x => x.Idproducto == id).FirstOrDefault();
+                    var pro = bd.Productos.Find(id);
                     if (pro != null && pro.Estado == true)
                     {
                         pro.Estado = false;
@@ -277,6 +277,50 @@ namespace back_MSI_SuperMami.Controllers
                     res.Error = "No hay Productos habilitados";
                     return res;
                 }
+            }
+        }
+
+        //Dar de alta
+        [HttpPut]
+        [Route("productos/alta/{id}")]
+        public ActionResult<RespuestaAPI> ActualizarEstado(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese un producto a dar de alta";
+                return res;
+            }
+            else
+            {
+                var prod = bd.Productos.Find(id);
+                try
+                {
+                    if (prod != null && prod.Estado == false)
+                    {
+                        prod.Estado = true;
+                        res.Ok = true;
+                        bd.Productos.Update(prod);
+                        bd.SaveChanges();
+                        res.Respuesta = "Producto dado de alta";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No existe ese producto deshabilitado";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra el producto solicitado";
+                    return res;
+                }
+
             }
         }
 

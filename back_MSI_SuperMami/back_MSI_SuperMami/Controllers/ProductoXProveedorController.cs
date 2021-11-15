@@ -165,6 +165,93 @@ namespace back_MSI_SuperMami.Controllers
             return res;
         }
 
+        //dar de baja
+        [HttpDelete]
+        [Route("producto/proveedor/{id}")]
+        public ActionResult<RespuestaAPI> DarDeBaja(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una producto/proveedor a dar de baja";
+                return res;
+            }
+            else
+            {
+                var pago = bd.Productosxproveedores.Find(id);
+                try
+                {
+                    if (pago != null && pago.Estado == true)
+                    {
+                        pago.Estado = false;
+                        res.Ok = true;
+                        bd.Productosxproveedores.Update(pago);
+                        bd.SaveChanges();
+                        res.Respuesta = "Producto/proveedor dada de baja";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No hay producto/proveedor habilitadas";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra producto/proveedor solicitada";
+                    return res;
+                }
+
+            }
+        }
+        //Dar de alta
+        [HttpPut]
+        [Route("producto/proveedor/alta/{id}")]
+        public ActionResult<RespuestaAPI> ActualizarEstado(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese un producto/proveedor a dar de alta";
+                return res;
+            }
+            else
+            {
+                var pago = bd.Productosxproveedores.Find(id);
+                try
+                {
+                    if (pago != null && pago.Estado == false)
+                    {
+                        pago.Estado = true;
+                        res.Ok = true;
+                        bd.Productosxproveedores.Update(pago);
+                        bd.SaveChanges();
+                        res.Respuesta = "producto/proveedor dada de alta";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No existe esa producto/proveedor deshabilitada";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra producto/proveedor solicitada";
+                    return res;
+                }
+
+            }
+        }
+
 
     }
 }

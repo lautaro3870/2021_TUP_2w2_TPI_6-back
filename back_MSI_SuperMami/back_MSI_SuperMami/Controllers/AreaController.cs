@@ -35,6 +35,8 @@ namespace back_MSI_SuperMami.Controllers
             return respusta;
 
         }
+
+
         [HttpGet]
         [Route("areas/{id}")]
         public ActionResult<RespuestaAPI> GetAreas(int id)
@@ -153,6 +155,50 @@ namespace back_MSI_SuperMami.Controllers
 
 
         }
+
+        [HttpPut]
+        [Route("areas/alta/{id}")]
+        public ActionResult<RespuestaAPI> ActualizarEstado(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese un área a dar de alta";
+                return res;
+            }
+            else
+            {
+                var area = bd.Areas.Find(id);
+                try
+                {
+                    if (area != null && area.Estado == false)
+                    {
+                        area.Estado = true;
+                        res.Ok = true;
+                        bd.Areas.Update(area);
+                        bd.SaveChanges();
+                        res.Respuesta = "Área dada de alta";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No existe esa área deshabilitada";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra el área solicitada";
+                    return res;
+                }
+
+            }
+        }
+
         //Modificar area
         [HttpPut]
         [Route("areas/{id}")]
