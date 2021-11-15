@@ -1,4 +1,5 @@
-﻿using back_MSI_SuperMami.Models;
+﻿using back_MSI_SuperMami.Comandos;
+using back_MSI_SuperMami.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,18 @@ namespace back_MSI_SuperMami.DTOs
         public string email { get; set; }
         public string area { get; set; }
 
-        //public string formaPago { get; set; }
-        //public string formaEnvio { get; set; }
+        public List<ComandoRegistrarFormaPago> formaPago { get; set; }
+        public List<ComandoRegistrarFormaEnvio> formaEnvio { get; set; }
+
+        public List<DTOProductosPrecioProveedor> producto { get; set; }
+
+
+
+        //public int idproducto { get; set; }
+
+        //public string producto { get; set; }
+
+        //public double precio { get; set; }
 
 
 

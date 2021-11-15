@@ -387,7 +387,6 @@ namespace back_MSI_SuperMami.Controllers
             orden.Idformadeenvio = comando.formadeenvio;
             orden.Idformapago = comando.formadepago;
             orden.FechaRegistro = DateTime.Now;
-            //orden.fecha = DateTime.Now;
             orden.Idestado = 3;
 
             //int id = orden.Idordendecompra;
