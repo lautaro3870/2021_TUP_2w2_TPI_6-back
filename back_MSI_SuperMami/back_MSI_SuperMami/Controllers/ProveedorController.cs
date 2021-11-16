@@ -121,7 +121,7 @@ namespace back_MSI_SuperMami.Controllers
             respuestas.Ok = true;
             var pro = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == id);
 
-            var dto = new DTOListaProveedores();
+            var dto = new DTOProveedoresId();
 
             if (pro != null)
             {
@@ -132,7 +132,7 @@ namespace back_MSI_SuperMami.Controllers
                 var listaProductos = m.obtenerProductosxProveedor(id);
 
 
-                dto = new DTOListaProveedores
+                dto = new DTOProveedoresId
                 {
                     idproveedor = id,
                     nombre = pro.Nombre,
