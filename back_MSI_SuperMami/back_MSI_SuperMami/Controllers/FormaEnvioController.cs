@@ -35,6 +35,16 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
+        [Route("formas-envio-baja")]
+        public ActionResult<RespuestaAPI> GetFormsBaja()
+        {
+            var respusta = new RespuestaAPI();
+            respusta.Ok = true;
+            respusta.Respuesta = bd.FormaDeEnvios.Where(x => x.Estado == false).OrderBy(x => x.Nombre).ToList();
+            return respusta;
+        }
+
+        [HttpGet]
         [Route("formas-envio/{id}")]
         public ActionResult<RespuestaAPI> GetFormasEnvio(int id)
         {
@@ -267,20 +277,22 @@ namespace back_MSI_SuperMami.Controllers
                 {
                     var f = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
 
-                    var forma = new ComandoRegistrarFormaEnvio
+                    if (f.Estado == true)
                     {
-                        nombre = f.Nombre,
-                        descripcion = f.Descripcion,
-                        idformadeenvio = f.Idformadeenvio
-                    };
+                        var forma = new ComandoRegistrarFormaEnvio
+                        {
+                            nombre = f.Nombre,
+                            descripcion = f.Descripcion,
+                            idformadeenvio = f.Idformadeenvio
+                        };
 
-                    lista.Add(forma);
+                        lista.Add(forma);
+                    }
                 }
                 respuestas.Respuesta = lista.OrderBy(x => x.nombre);
                 return respuestas;
             }
 
-            respuestas.Respuesta = bd.FormaDePagos.Where(x => x.Estado == true).ToList();
             return respuestas;
         }
     }

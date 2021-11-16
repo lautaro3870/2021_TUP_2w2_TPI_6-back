@@ -54,26 +54,70 @@ namespace back_MSI_SuperMami.Controllers
                     var unid = bd.UnidadDeMedida.FirstOrDefault(f => f.Idunidadmedida == i.Idunidadmedida);
 
 
-
-                    var dto = new DTOListaProductos
+                    if (product.Estado == true)
                     {
-                        idproducto = product.Idproducto,
-                        nombre = product.Nombre,
-                        descripcion = product.Descripcion,
-                        marca = product.Marca,
-                        categoria = categ.Nombre,
-                        unidadMedida=unid.Nombre,
-                        imagen = product.Imagen
+                        var dto = new DTOListaProductos
+                        {
+                            idproducto = product.Idproducto,
+                            nombre = product.Nombre,
+                            descripcion = product.Descripcion,
+                            marca = product.Marca,
+                            categoria = categ.Nombre,
+                            unidadMedida = unid.Nombre,
+                            imagen = product.Imagen
 
-                    };
-                    lista.Add(dto);
+                        };
+                        lista.Add(dto);
+                    }
                 }
 
-                respuestas.Respuesta = lista;
+                respuestas.Respuesta = lista.OrderBy(f => f.nombre);
                 return respuestas;
             }
 
-            respuestas.Respuesta = bd.Productos.Where(x => x.Estado == true).ToList();
+            return respuestas;
+        }
+
+        [HttpGet]
+        [Route("productos-baja")]
+        public ActionResult<RespuestaAPI> GetBaja()
+        {
+            var respuestas = new RespuestaAPI();
+            respuestas.Ok = true;
+            var pro = bd.Productos.ToList();
+
+            var lista = new List<DTOListaProductos>();
+
+            if (pro != null)
+            {
+                foreach (var i in pro)
+                {
+                    var product = bd.Productos.FirstOrDefault(f => f.Idproducto == i.Idproducto);
+                    var categ = bd.Categorias.FirstOrDefault(f => f.Idcategoria == i.Idcategoria);
+                    var unid = bd.UnidadDeMedida.FirstOrDefault(f => f.Idunidadmedida == i.Idunidadmedida);
+
+
+                    if (product.Estado == false)
+                    {
+                        var dto = new DTOListaProductos
+                        {
+                            idproducto = product.Idproducto,
+                            nombre = product.Nombre,
+                            descripcion = product.Descripcion,
+                            marca = product.Marca,
+                            categoria = categ.Nombre,
+                            unidadMedida = unid.Nombre,
+                            imagen = product.Imagen
+
+                        };
+                        lista.Add(dto);
+                    }
+                }
+
+                respuestas.Respuesta = lista.OrderBy(f => f.nombre);
+                return respuestas;
+            }
+
             return respuestas;
         }
 
@@ -162,7 +206,7 @@ namespace back_MSI_SuperMami.Controllers
                 }
             }
             respuestas.Ok = true;
-            respuestas.Respuesta = lista;
+            respuestas.Respuesta = lista.OrderBy(f => f.nombre);
             return respuestas;
         }
 
@@ -265,7 +309,7 @@ namespace back_MSI_SuperMami.Controllers
                     else
                     {
                         res.Ok = false;
-                        res.Respuesta = "Producto no encontrado";
+                        res.Respuesta = "Producto dado de baja";
                         return res;
                     }
                     return res;

@@ -11,11 +11,39 @@ namespace back_MSI_SuperMami.Helpers
     public class Metodos
     {
         private readonly d4nfd5l4d933b1Context bd = new d4nfd5l4d933b1Context();
-        public List<ComandoRegistrarFormaPago> obtenerPagos(int id)
+        //public List<ComandoRegistrarFormaPago> obtenerPagos(int id)
+        //{
+        //    var forXpro = bd.Proveedoresxformasdepagos.Where(f => f.Idproveedor == id).ToList();
+
+        //    var lista = new List<ComandoRegistrarFormaPago>();
+
+        //    if (forXpro != null)
+        //    {
+
+        //        foreach (var i in forXpro)
+        //        {
+        //            var f = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
+
+        //            var forma = new ComandoRegistrarFormaPago
+        //            {
+        //                nombre = f.Nombre,
+        //                descripcion = f.Descripcion,
+        //                idformadepago = f.Idformapago
+        //            };
+
+        //            lista.Add(forma);
+        //        }
+        //        return lista;
+        //    }
+
+        //    return lista;
+        //}
+
+        public List<int> obtenerPagos(int id)
         {
             var forXpro = bd.Proveedoresxformasdepagos.Where(f => f.Idproveedor == id).ToList();
 
-            var lista = new List<ComandoRegistrarFormaPago>();
+            List<int> pagos = new List<int>();
 
             if (forXpro != null)
             {
@@ -23,48 +51,60 @@ namespace back_MSI_SuperMami.Helpers
                 foreach (var i in forXpro)
                 {
                     var f = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
+                    pagos.Add(f.Idformapago);
 
-                    var forma = new ComandoRegistrarFormaPago
-                    {
-                        nombre = f.Nombre,
-                        descripcion = f.Descripcion,
-                        idformadepago = f.Idformapago
-                    };
-
-                    lista.Add(forma);
                 }
-                return lista;
+                return pagos;
             }
-
-            return lista;
+            return pagos;
         }
 
-        public List<ComandoRegistrarFormaEnvio> obtenerEnvios(int id)
+        //public List<ComandoRegistrarFormaEnvio> obtenerEnvios(int id)
+        //{
+        //    var envXpro = bd.Proveedoresxformadeenvios.Where(f => f.Idproveedor == id).ToList();
+
+        //    var lista = new List<ComandoRegistrarFormaEnvio>();
+
+        //    if (envXpro != null)
+        //    {
+
+        //        foreach (var i in envXpro)
+        //        {
+        //            var f = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
+
+        //            var forma = new ComandoRegistrarFormaEnvio
+        //            {
+        //                nombre = f.Nombre,
+        //                descripcion = f.Descripcion,
+        //                idformadeenvio = f.Idformadeenvio
+        //            };
+
+        //            lista.Add(forma);
+        //        }
+        //        return lista;
+        //    }
+
+        //    return lista;
+        //}
+
+        public List<int> obtenerEnvios(int id)
         {
-            var envXpro = bd.Proveedoresxformadeenvios.Where(f => f.Idproveedor == id).ToList();
+            var forXpro = bd.Proveedoresxformadeenvios.Where(f => f.Idproveedor == id).ToList();
 
-            var lista = new List<ComandoRegistrarFormaEnvio>();
+            List<int> envios = new List<int>();
 
-            if (envXpro != null)
+            if (forXpro != null)
             {
-
-                foreach (var i in envXpro)
+              
+                foreach (var i in forXpro)
                 {
                     var f = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
+                    envios.Add(f.Idformadeenvio);
 
-                    var forma = new ComandoRegistrarFormaEnvio
-                    {
-                        nombre = f.Nombre,
-                        descripcion = f.Descripcion,
-                        idformadeenvio = f.Idformadeenvio
-                    };
-
-                    lista.Add(forma);
                 }
-                return lista;
+                return envios;
             }
-
-            return lista;
+            return envios;
         }
 
         public List<DTOProductosPrecioProveedor> obtenerProductosxProveedor(int id)

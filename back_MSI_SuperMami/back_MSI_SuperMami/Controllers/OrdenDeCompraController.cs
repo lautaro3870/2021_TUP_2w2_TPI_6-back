@@ -44,8 +44,9 @@ namespace back_MSI_SuperMami.Controllers
             var orden = bd.OrdenesDeCompras.ToList();
 
 
-            var lista = new List<DTOOrdenDeCompraListado>();
-
+            var listaAceptadas = new List<DTOOrdenDeCompraListado>();
+            var listaRechadas = new List<DTOOrdenDeCompraListado>();
+            var listaPendientes = new List<DTOOrdenDeCompraListado>();
             if (orden != null)
             {
                 foreach (var i in orden)
@@ -72,26 +73,58 @@ namespace back_MSI_SuperMami.Controllers
 
                         foreach (var y in listaProductos)
                         {
-                            if (prov.Nombre != "string")
+                            if (o.Idestado == 1)
                             {
-                                var dto = new DTOOrdenDeCompraListado
+                                var aceptadas = new DTOOrdenDeCompraListado
                                 {
                                     proveedor = prov.Nombre,
                                     formaPago = pago.Nombre,
-                                    formaEnvio = envio.Nombre,
-                                    producto = y.Nombre,
-                                    cantidad = detalle2.Cantidad
+                                    formaEnvio = envio.Nombre
                                 };
-                                lista.Add(dto);
+                                listaAceptadas.Add(aceptadas);
                             }
-                            
+                            else
+                            if (o.Idestado == 2)
+                            {
+                                var Rechazadas = new DTOOrdenDeCompraListado
+                                {
+                                    proveedor = prov.Nombre,
+                                    formaPago = pago.Nombre,
+                                    formaEnvio = envio.Nombre
+                                };
+                                listaRechadas.Add(Rechazadas);
+                            }
+                            else
+                            if(o.Idestado == 3)
+                            {
+                                var Pendientes = new DTOOrdenDeCompraListado
+                                {
+                                    proveedor = prov.Nombre,
+                                    formaPago = pago.Nombre,
+                                    formaEnvio = envio.Nombre
+                                };
+                                listaPendientes.Add(Pendientes);
+                            }
+                            else
+                            {
+                                respuesta.Error = "No existe la orden de compra";
+                            }
                         }
                     }
-
+                    
                 }
+                var listaOrdenesPorEstado = new DTOEstadoOrden
+                {
+                    listaAceptadas = listaAceptadas,
+                    listaPendientes = listaPendientes,
+                    listaRechazadas = listaRechadas
+                };
+
+                respuesta.Respuesta = listaOrdenesPorEstado;
+
+                return respuesta;
             }
-            respuesta.Respuesta = lista;
-            
+
             respuesta.Ok = true;
 
             return respuesta;
@@ -147,13 +180,13 @@ namespace back_MSI_SuperMami.Controllers
             var respuesta = new RespuestaAPI();
             respuesta.Respuesta = bd.DetalleOrdens.
                 Where(x => x.Idordendecompra == id).Sum(x => x.Precio * x.Cantidad);
-            
+
             //var a = from p in bd.DetalleOrdens where p.Idordendecompra == id select p;
             return respuesta;
         }
 
         [HttpGet]
-        [Route("ordenes-compra-repote")]
+        [Route("ordenes-compra-reporte")]
         public ActionResult<RespuestaAPI> GetReporte()
         {
             var respuesta = new RespuestaAPI();
@@ -179,7 +212,7 @@ namespace back_MSI_SuperMami.Controllers
                     lista.Add(dto);
 
                 }
-                
+
             }
             respuesta.Respuesta = lista;
             return respuesta;
@@ -198,7 +231,7 @@ namespace back_MSI_SuperMami.Controllers
             var pago = bd.FormaDePagos.FirstOrDefault(x => x.Idformapago == orden.Idformapago);
             var estado = bd.EstadoOrdendecompras.FirstOrDefault(x => x.Idestado == orden.Idestado);
 
-            
+
             var DTO = new DTOOrdenDeCompra
             {
                 Proveedor = prov.Nombre,
@@ -227,9 +260,9 @@ namespace back_MSI_SuperMami.Controllers
 
             var lista = new List<DTOOrdenDeCompra>();
 
-            if(orden != null)
+            if (orden != null)
             {
-                foreach(var x in orden)
+                foreach (var x in orden)
                 {
                     var formadeenvio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == x.Idformadeenvio);
                     var formadepago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == x.Idformapago);
@@ -247,7 +280,7 @@ namespace back_MSI_SuperMami.Controllers
                     lista.Add(DTO);
                 }
             }
-            
+
             respuesta.Respuesta = lista;
 
             return respuesta;
@@ -301,7 +334,7 @@ namespace back_MSI_SuperMami.Controllers
         //    {
         //        try
         //        {
-                    
+
         //            if (comando.proveedor == 0)
         //            {
         //                res.Ok = false;
@@ -322,7 +355,7 @@ namespace back_MSI_SuperMami.Controllers
         //                return res;
         //            }
 
-                   
+
 
         //            var p = bd.OrdenesDeCompras.Where(x => x.Idordendecompra == id).FirstOrDefault();
 
@@ -331,7 +364,7 @@ namespace back_MSI_SuperMami.Controllers
         //                p.Idproveedor = comando.proveedor;
         //                p.Idformadeenvio = comando.formadeenvio;
         //                p.Idformapago = comando.formadepago;
-                        
+
 
         //                bd.OrdenesDeCompras.Update(p);
         //                bd.SaveChanges();
@@ -394,7 +427,7 @@ namespace back_MSI_SuperMami.Controllers
             bd.OrdenesDeCompras.Add(orden);
             bd.SaveChanges();
 
-            foreach(var detalle in comando.Detalle)
+            foreach (var detalle in comando.Detalle)
             {
                 DetalleOrden d = new DetalleOrden();
                 d.Cantidad = detalle.cantidad;
@@ -433,7 +466,7 @@ namespace back_MSI_SuperMami.Controllers
                 {
                     orden = bd.OrdenesDeCompras.FirstOrDefault(x => x.Idordendecompra == id);
 
-                    if(orden != null)
+                    if (orden != null)
                     {
                         orden.Idproveedor = comando.proveedor;
                         orden.Idformadeenvio = comando.formadeenvio;
@@ -447,7 +480,7 @@ namespace back_MSI_SuperMami.Controllers
                         if (comando.Detalle != null)
                         {
                             var detalles = bd.DetalleOrdens.Where(f => f.Idordendecompra == id).ToList();
-                            foreach(var i in detalles)
+                            foreach (var i in detalles)
                             {
                                 bd.DetalleOrdens.Remove(i);
                             }
@@ -623,7 +656,7 @@ namespace back_MSI_SuperMami.Controllers
     }
 
 
-  
+
 
 
 }

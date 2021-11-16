@@ -36,6 +36,17 @@ namespace back_MSI_SuperMami.Controllers
 
         }
 
+        [HttpGet]
+        [Route("areas-baja")]
+        public ActionResult<RespuestaAPI> GetAreasBaja()
+        {
+            var respusta = new RespuestaAPI();
+            respusta.Ok = true;
+            respusta.Respuesta = bd.Areas.Where(x => x.Estado == false).OrderBy(x => x.Nombre).ToList();
+            return respusta;
+
+        }
+
 
         [HttpGet]
         [Route("areas/{id}")]

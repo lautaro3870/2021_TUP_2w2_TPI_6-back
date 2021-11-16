@@ -35,6 +35,16 @@ namespace back_MSI_SuperMami.Controllers
         }
 
         [HttpGet]
+        [Route("formas-pago-baja")]
+        public ActionResult<RespuestaAPI> GetFormasBaja()
+        {
+            var respusta = new RespuestaAPI();
+            respusta.Ok = true;
+            respusta.Respuesta = bd.FormaDePagos.Where(x => x.Estado == false).OrderBy(x => x.Nombre).ToList();
+            return respusta;
+        }
+
+        [HttpGet]
         [Route("formas-pago/{id}")]
         public ActionResult<RespuestaAPI> GetFormasPago(int id)
         {
@@ -275,14 +285,18 @@ namespace back_MSI_SuperMami.Controllers
                 {
                     var f = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
 
-                    var forma = new ComandoRegistrarFormaPago
-                    {
-                        nombre = f.Nombre,
-                        descripcion = f.Descripcion,
-                        idformadepago = f.Idformapago
-                    };
 
-                    lista.Add(forma);
+                    if (f.Estado == true)
+                    {
+                        var forma = new ComandoRegistrarFormaPago
+                        {
+                            nombre = f.Nombre,
+                            descripcion = f.Descripcion,
+                            idformadepago = f.Idformapago
+                        };
+
+                        lista.Add(forma);
+                    }
                 }
                 
                 respuestas.Respuesta = lista.OrderBy(x => x.nombre);
@@ -290,7 +304,6 @@ namespace back_MSI_SuperMami.Controllers
                 return respuestas;
             }
 
-            respuestas.Respuesta = bd.FormaDePagos.Where(x => x.Estado == true).ToList();
             return respuestas;
         }
 

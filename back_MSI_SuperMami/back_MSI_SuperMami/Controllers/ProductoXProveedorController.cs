@@ -51,24 +51,25 @@ namespace back_MSI_SuperMami.Controllers
                     var prod = bd.Productos.FirstOrDefault(f => f.Idproducto == i.Idproducto);
 
 
-
-                    var dto = new DTOProductoProveedor
+                    if (proxProv.Estado == true)
                     {
-                        id = proxProv.Idproductoproveedor,
-                       
-                        proveedor = prov.Nombre,
-                        producto = prod.Nombre,
-                        precio = proxProv.Precio
+                        var dto = new DTOProductoProveedor
+                        {
+                            id = proxProv.Idproductoproveedor,
 
-                    };
-                    lista.Add(dto);
+                            proveedor = prov.Nombre,
+                            producto = prod.Nombre,
+                            precio = proxProv.Precio
+
+                        };
+                        lista.Add(dto);
+                    }
                 }
 
-                respuestas.Respuesta = lista;
+                respuestas.Respuesta = lista.OrderBy(f => f.proveedor); 
                 return respuestas;
             }
 
-            respuestas.Respuesta = bd.Productosxproveedores.Where(x => x.Estado == true).ToList();
             return respuestas;
         }
 
@@ -110,7 +111,7 @@ namespace back_MSI_SuperMami.Controllers
                     }
                 }
 
-                respuestas.Respuesta = lista;
+                respuestas.Respuesta = lista.OrderBy(f => f.nombre); ;
                 return respuestas;
             }
 

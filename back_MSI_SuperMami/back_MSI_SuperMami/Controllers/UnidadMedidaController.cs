@@ -30,7 +30,17 @@ namespace back_MSI_SuperMami.Controllers
         {
             var respusta = new RespuestaAPI();
             respusta.Ok = true;
-            respusta.Respuesta = bd.UnidadDeMedida.Where(x => x.Estado == true).ToList();
+            respusta.Respuesta = bd.UnidadDeMedida.Where(x => x.Estado == true).OrderBy(x => x.Nombre).ToList();
+            return respusta;
+        }
+
+        [HttpGet]
+        [Route("unidad-medidas-baja")]
+        public ActionResult<RespuestaAPI> GetBaja()
+        {
+            var respusta = new RespuestaAPI();
+            respusta.Ok = true;
+            respusta.Respuesta = bd.UnidadDeMedida.Where(x => x.Estado == false).OrderBy(x => x.Nombre).ToList();
             return respusta;
         }
 

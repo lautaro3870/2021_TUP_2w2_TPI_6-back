@@ -18,8 +18,8 @@ namespace back_MSI_SuperMami.DTOs
         public string email { get; set; }
         public string area { get; set; }
 
-        public List<ComandoRegistrarFormaPago> formaPago { get; set; }
-        public List<ComandoRegistrarFormaEnvio> formaEnvio { get; set; }
+        public List<int> formaPago { get; set; }
+        public List<int> formaEnvio { get; set; }
 
         public List<DTOProductosPrecioProveedor> producto { get; set; }
 

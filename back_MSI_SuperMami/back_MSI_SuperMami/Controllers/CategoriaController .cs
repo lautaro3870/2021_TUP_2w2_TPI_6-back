@@ -32,6 +32,17 @@ namespace back_MSI_SuperMami.Controllers
             respusta.Respuesta = bd.Categorias.Where(x => x.Estado == true).OrderBy(x => x.Nombre).ToList();
             return respusta;
         }
+
+        [HttpGet]
+        [Route("categorias-baja")]
+        public ActionResult<RespuestaAPI> GetCategoriasBaja()
+        {
+            var respusta = new RespuestaAPI();
+            respusta.Ok = true;
+            respusta.Respuesta = bd.Categorias.Where(x => x.Estado == false).OrderBy(x => x.Nombre).ToList();
+            return respusta;
+        }
+
         [HttpGet]
         [Route("categorias/{id}")]
         public ActionResult<RespuestaAPI> Get(int id)
