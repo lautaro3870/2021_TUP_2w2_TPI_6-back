@@ -10,8 +10,8 @@ namespace back_MSI_SuperMami.Comandos
         public string nombre { get; set; }
         public string descripcion { get; set; }
         
-        public int unidadMedida { get; set; }
-        public int categoria { get; set; }
+        public int idunidadmedida { get; set; }
+        public int idcategoria { get; set; }
         public string marca { get; set; }
 
         public string imagen { get; set; }

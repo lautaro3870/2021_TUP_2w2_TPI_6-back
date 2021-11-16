@@ -31,7 +31,7 @@ namespace back_MSI_SuperMami.Controllers
         {
             var respusta = new RespuestaAPI();
             respusta.Ok = true;
-            respusta.Respuesta = bd.Areas.Where(x => x.Estado == true).ToList();
+            respusta.Respuesta = bd.Areas.Where(x => x.Estado == true).OrderBy(x => x.Nombre).ToList();
             return respusta;
 
         }

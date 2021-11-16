@@ -573,34 +573,21 @@ namespace back_MSI_SuperMami.Controllers
                 return res;
             }
 
-            Producto p = new Producto();
-
-
-            p.Nombre = comando.nombre;
-            p.Descripcion = comando.descripcion;
-            
-            p.Estado = true;
-            p.Idunidadmedida = comando.unidadMedida;
-            p.Idcategoria = comando.categoria;
-            p.Marca = comando.marca;
-            p.Imagen = comando.imagen;
+            Producto p = new Producto()
+            {
+                Nombre = comando.nombre,
+                Descripcion = comando.descripcion,
+                Estado = true,
+                Idunidadmedida = comando.unidadMedida,
+                Idcategoria = comando.categoria,
+                Marca = comando.marca,
+                Imagen = comando.imagen
+            };
 
             bd.Productos.Add(p);
             bd.SaveChanges();
-
-            //foreach (var x in comando.Proveedores)
-            //{
-            //    Productosxproveedore pXp = new Productosxproveedore();
-            //    pXp.Idproducto = p.Idproducto;
-            //    pXp.Idproveedor = x.proveedor;
-
-            //    bd.Productosxproveedores.Add(pXp);
-            //    bd.SaveChanges();
-            //}
-
-            bd.SaveChanges();
-
             res.Ok = true;
+
             res.InfoAdicional = "Producto insertado correctamente";
             return res;
         }

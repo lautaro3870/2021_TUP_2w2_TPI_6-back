@@ -30,7 +30,7 @@ namespace back_MSI_SuperMami.Controllers
         {
             var respusta = new RespuestaAPI();
             respusta.Ok = true;
-            respusta.Respuesta = bd.FormaDePagos.Where(x => x.Estado == true).ToList();
+            respusta.Respuesta = bd.FormaDePagos.Where(x => x.Estado == true).OrderBy(x => x.Nombre).ToList();
             return respusta;
         }
 
@@ -284,7 +284,9 @@ namespace back_MSI_SuperMami.Controllers
 
                     lista.Add(forma);
                 }
-                respuestas.Respuesta = lista;
+                
+                respuestas.Respuesta = lista.OrderBy(x => x.nombre);
+
                 return respuestas;
             }
 
