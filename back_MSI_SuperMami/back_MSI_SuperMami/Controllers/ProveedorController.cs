@@ -197,141 +197,8 @@ namespace back_MSI_SuperMami.Controllers
 
         }
 
-        //Dar de alta
-        //[HttpPut]
-        //[Route("proveedores/alta/{id}")]
-        //public ActionResult<RespuestaAPI> ActualizarEstado(int id)
-        //{
-        //    var res = new RespuestaAPI();
-        //    if (id == 0)
-        //    {
-        //        res.Ok = false;
-        //        res.Respuesta = "Ingrese una forma de pago a dar de alta";
-        //        return res;
-        //    }
-        //    else
-        //    {
-        //        var pago = bd.Proveedores.Find(id);
-        //        try
-        //        {
-        //            if (pago != null && pago.Estado == false)
-        //            {
-        //                pago.Estado = true;
-        //                res.Ok = true;
-        //                bd.Proveedores.Update(pago);
-        //                bd.SaveChanges();
-        //                res.Respuesta = "Proveedor dado de alta";
-        //                return res;
-        //            }
-        //            else
-        //            {
-        //                res.Ok = false;
-        //                res.Error = "No existe ese proveedor deshabilitado";
-        //            }
-
-        //            return res;
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            res.Ok = false;
-        //            res.Respuesta = "No se encuentra el proveedor solicitado";
-        //            return res;
-        //        }
-
-        //    }
-        //}
-
-        //Put
-        //[HttpPut]
-        //[Route("proveedores/{id}")]
-        //public ActionResult<RespuestaAPI> Put(int id, [FromBody] ComandoRegistrarProveedor comando)
-        //{
-        //    var res = new RespuestaAPI();
-        //    if (id == 0)
-        //    {
-        //        res.Ok = false;
-        //        res.Respuesta = "Ingrese una forma de pago a dar de baja";
-        //        return res;
-        //    }
-        //    else
-        //    {
-        //        try
-        //        {
-        //            if (string.IsNullOrEmpty(comando.nombre))
-        //            {
-        //                res.Ok = false;
-        //                res.Error = "No se ingreso el nombre";
-        //                return res;
-        //            }
-        //            if (string.IsNullOrEmpty(comando.direccion))
-        //            {
-        //                res.Ok = false;
-        //                res.Error = "No se ingreso la Direccion";
-        //                return res;
-        //            }
-        //            if (string.IsNullOrEmpty(comando.cuit))
-        //            {
-        //                res.Ok = false;
-        //                res.Error = "No se ingreso la CUIT";
-        //                return res;
-        //            }
-        //            if (string.IsNullOrEmpty(comando.telefono))
-        //            {
-        //                res.Ok = false;
-        //                res.Error = "No se ingreso el telefono";
-        //                return res;
-        //            }
-
-        //            if (string.IsNullOrEmpty(comando.email))
-        //            {
-        //                res.Ok = false;
-        //                res.Error = "No se ingreso la Email";
-        //                return res;
-        //            }
-        //            if (comando.area == 0)
-        //            {
-        //                res.Ok = false;
-        //                res.Error = "No se ingreso el area";
-        //                return res;
-        //            }
-
-        //            var prov = bd.Proveedores.Where(x => x.Idproveedor == id).FirstOrDefault();
-        //            if (prov != null)
-        //            {
-
-        //                prov.Nombre = comando.nombre;
-        //                prov.Direccion = comando.direccion;
-        //                prov.Estado = true;
-        //                prov.Email = comando.email;
-        //                prov.Cuit = comando.cuit;
-        //                prov.Telefono = comando.telefono;
-        //                prov.Idarea = comando.area;
-
-        //                bd.Update(prov);
-        //                bd.SaveChanges();
-
-        //                res.Ok = true;
-        //                res.Respuesta = "Proveedor modificado";
-        //                return res;
-
-        //            }
-        //            else
-        //            {
-        //                res.Respuesta = "Proveedor no encontrado";
-        //                res.Ok = false;
-        //                return res;
-        //            }
-
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            res.Respuesta = "Error: " + e;
-        //            res.Ok = false;
-        //            return res;
-        //        }
-        //    }
-
-        //}
+       
+       
 
         [HttpPut]
         [Route("proveedores/{id}")]
@@ -454,69 +321,110 @@ namespace back_MSI_SuperMami.Controllers
         }
 
 
+        
+
         [HttpPost]
         [Route("proveedores")]
-        public ActionResult<RespuestaAPI> Post([FromBody] ComandoRegistrarProveedor comando)
+        public RespuestaAPI PostOrden([FromBody] DTOProveedoresPut comando)
         {
             var res = new RespuestaAPI();
+            if (comando.nombre == "")
+            {
+                res.Ok = false;
+                res.Error = "No se ingreso el Nombre del Proveedor";
+                return res;
+            }
+            if (comando.direccion == "")
+            {
+                res.Ok = false;
+                res.Error = "No se ingreso la direccion";
+                return res;
+            }
 
-            if (string.IsNullOrEmpty(comando.nombre))
+            if (comando.cuit == "")
             {
                 res.Ok = false;
-                res.Error = "No se ingreso el nombre";
+                res.Error = "No se ingreso el cuit";
                 return res;
             }
-            if (string.IsNullOrEmpty(comando.direccion))
-            {
-                res.Ok = false;
-                res.Error = "No se ingreso la Direccion";
-                return res;
-            }
-            if (string.IsNullOrEmpty(comando.cuit))
-            {
-                res.Ok = false;
-                res.Error = "No se ingreso la CUIT";
-                return res;
-            }
-            if (string.IsNullOrEmpty(comando.telefono))
+
+            if (comando.telefono == "")
             {
                 res.Ok = false;
                 res.Error = "No se ingreso el telefono";
                 return res;
             }
 
-            if (string.IsNullOrEmpty(comando.email))
+            if (comando.email == "")
             {
                 res.Ok = false;
-                res.Error = "No se ingreso la Email";
-                return res;
-            }
-            if (comando.area == 0)
-            {
-                res.Ok = false;
-                res.Error = "No se ingreso el area";
+                res.Error = "No se ingreso el email";
                 return res;
             }
 
+            if (comando.idarea == 0)
+            {
+                res.Ok = false;
+                res.Error = "No se ingreso el idarea";
+                return res;
+            }
+
+
             Proveedore prov = new Proveedore();
+
             prov.Nombre = comando.nombre;
             prov.Direccion = comando.direccion;
-            prov.Estado = true;
-            prov.Email = comando.email;
             prov.Cuit = comando.cuit;
             prov.Telefono = comando.telefono;
-            prov.Idarea = comando.area;
+            prov.Email = comando.email;
+            prov.Estado = true;
+            prov.Idarea = comando.idarea;
+
+            //int id = orden.Idordendecompra;
 
             bd.Proveedores.Add(prov);
             bd.SaveChanges();
 
-            res.Ok = true;
-            res.Respuesta = "Se ingreso el proveedor correctamente";
-            return res;
+            foreach (var producto in comando.Productos)
+            {
+                Productosxproveedore p = new Productosxproveedore();
+                p.Idproducto = producto.idproducto;
+                p.Precio = producto.precio;
+                p.Estado = true;
+                p.Idproveedor = prov.Idproveedor;
 
+                bd.Productosxproveedores.Add(p);
+                bd.SaveChanges();
+            }
+
+            foreach (var pagos in comando.Pagos)
+            {
+                Proveedoresxformasdepago f = new Proveedoresxformasdepago();
+                f.Idproveedor = prov.Idproveedor;
+                f.Idformapago = pagos.formasPago;
+                bd.Proveedoresxformasdepagos.Add(f);
+                bd.SaveChanges();
+
+            }
+
+            foreach (var entregas in comando.Entregas)
+            {
+                Proveedoresxformadeenvio f = new Proveedoresxformadeenvio();
+                f.Idproveedor = prov.Idproveedor;
+                f.Idformadeenvio = entregas.formasEntrega;
+
+                bd.Proveedoresxformadeenvios.Add(f);
+                bd.SaveChanges();
+
+            }
+
+            bd.SaveChanges();
+
+            res.Ok = true;
+            res.InfoAdicional = "Proveedor insertado correctamente";
+            return res;
         }
 
-       
 
     }
 }
