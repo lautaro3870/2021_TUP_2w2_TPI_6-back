@@ -16,12 +16,12 @@ namespace back_MSI_SuperMami.DTOs
         public string cuit { get; set; }
         public string telefono { get; set; }
         public string email { get; set; }
-        public string area { get; set; }
+        public int idarea { get; set; }
 
-        public List<int> formaPago { get; set; }
-        public List<int> formaEnvio { get; set; }
+        public List<int> formasPago { get; set; }
+        public List<int> formasEntrega { get; set; }
 
-        public List<DTOProductosPrecioProveedor> producto { get; set; }
+        public List<DTOProductosPrecioProveedor> productos { get; set; }
 
 
 

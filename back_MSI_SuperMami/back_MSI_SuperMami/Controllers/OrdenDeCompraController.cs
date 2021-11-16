@@ -35,100 +35,100 @@ namespace back_MSI_SuperMami.Controllers
         //    return respuesta;
         //}
 
-        [HttpGet]
-        [Route("ordenes-compra")]
-        public ActionResult<RespuestaAPI> Get()
-        {
-            var respuesta = new RespuestaAPI();
+        //[HttpGet]
+        //[Route("ordenes-compra")]
+        //public ActionResult<RespuestaAPI> Get()
+        //{
+        //    var respuesta = new RespuestaAPI();
 
-            var orden = bd.OrdenesDeCompras.ToList();
-
-
-            var listaAceptadas = new List<DTOOrdenDeCompraListado>();
-            var listaRechadas = new List<DTOOrdenDeCompraListado>();
-            var listaPendientes = new List<DTOOrdenDeCompraListado>();
-            if (orden != null)
-            {
-                foreach (var i in orden)
-                {
-                    var o = bd.OrdenesDeCompras.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
-                    var prov = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
-                    var envio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
-                    var pago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
-                    var detalle = bd.DetalleOrdens.Where(f => f.Idordendecompra == i.Idordendecompra).ToList();
-
-                    var detalle2 = bd.DetalleOrdens.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
+        //    var orden = bd.OrdenesDeCompras.ToList();
 
 
-                    Producto producto = null;
-                    List<Producto> listaProductos = new List<Producto>();
+        //    var listaAceptadas = new List<DTOOrdenDeCompraListado>();
+        //    var listaRechadas = new List<DTOOrdenDeCompraListado>();
+        //    var listaPendientes = new List<DTOOrdenDeCompraListado>();
+        //    if (orden != null)
+        //    {
+        //        foreach (var i in orden)
+        //        {
+        //            var o = bd.OrdenesDeCompras.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
+        //            var prov = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
+        //            var envio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
+        //            var pago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
+        //            var detalle = bd.DetalleOrdens.Where(f => f.Idordendecompra == i.Idordendecompra).ToList();
 
-                    if (detalle.Count != 0)
-                    {
-                        foreach (var x in detalle)
-                        {
-                            producto = bd.Productos.FirstOrDefault(f => f.Idproducto == x.Idproducto);
-                            listaProductos.Add(producto);
-                        }
+        //            var detalle2 = bd.DetalleOrdens.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
 
-                        foreach (var y in listaProductos)
-                        {
-                            if (o.Idestado == 1)
-                            {
-                                var aceptadas = new DTOOrdenDeCompraListado
-                                {
-                                    proveedor = prov.Nombre,
-                                    formaPago = pago.Nombre,
-                                    formaEnvio = envio.Nombre
-                                };
-                                listaAceptadas.Add(aceptadas);
-                            }
-                            else
-                            if (o.Idestado == 2)
-                            {
-                                var Rechazadas = new DTOOrdenDeCompraListado
-                                {
-                                    proveedor = prov.Nombre,
-                                    formaPago = pago.Nombre,
-                                    formaEnvio = envio.Nombre
-                                };
-                                listaRechadas.Add(Rechazadas);
-                            }
-                            else
-                            if(o.Idestado == 3)
-                            {
-                                var Pendientes = new DTOOrdenDeCompraListado
-                                {
-                                    proveedor = prov.Nombre,
-                                    formaPago = pago.Nombre,
-                                    formaEnvio = envio.Nombre
-                                };
-                                listaPendientes.Add(Pendientes);
-                            }
-                            else
-                            {
-                                respuesta.Error = "No existe la orden de compra";
-                            }
-                        }
-                    }
+
+        //            Producto producto = null;
+        //            List<Producto> listaProductos = new List<Producto>();
+
+        //            if (detalle.Count != 0)
+        //            {
+        //                foreach (var x in detalle)
+        //                {
+        //                    producto = bd.Productos.FirstOrDefault(f => f.Idproducto == x.Idproducto);
+        //                    listaProductos.Add(producto);
+        //                }
+
+        //                foreach (var y in listaProductos)
+        //                {
+        //                    if (o.Idestado == 1)
+        //                    {
+        //                        var aceptadas = new DTOOrdenDeCompraListado
+        //                        {
+        //                            proveedor = prov.Nombre,
+        //                            formaPago = pago.Nombre,
+        //                            formaEnvio = envio.Nombre
+        //                        };
+        //                        listaAceptadas.Add(aceptadas);
+        //                    }
+        //                    else
+        //                    if (o.Idestado == 2)
+        //                    {
+        //                        var Rechazadas = new DTOOrdenDeCompraListado
+        //                        {
+        //                            proveedor = prov.Nombre,
+        //                            formaPago = pago.Nombre,
+        //                            formaEnvio = envio.Nombre
+        //                        };
+        //                        listaRechadas.Add(Rechazadas);
+        //                    }
+        //                    else
+        //                    if(o.Idestado == 3)
+        //                    {
+        //                        var Pendientes = new DTOOrdenDeCompraListado
+        //                        {
+        //                            proveedor = prov.Nombre,
+        //                            formaPago = pago.Nombre,
+        //                            formaEnvio = envio.Nombre
+        //                        };
+        //                        listaPendientes.Add(Pendientes);
+        //                    }
+        //                    else
+        //                    {
+        //                        respuesta.Error = "No existe la orden de compra";
+        //                    }
+        //                }
+        //            }
                     
-                }
-                var listaOrdenesPorEstado = new DTOEstadoOrden
-                {
-                    listaAceptadas = listaAceptadas,
-                    listaPendientes = listaPendientes,
-                    listaRechazadas = listaRechadas
-                };
+        //        }
+        //        var listaOrdenesPorEstado = new DTOEstadoOrden
+        //        {
+        //            listaAceptadas = listaAceptadas,
+        //            listaPendientes = listaPendientes,
+        //            listaRechazadas = listaRechadas
+        //        };
 
-                respuesta.Respuesta = listaOrdenesPorEstado;
+        //        respuesta.Respuesta = listaOrdenesPorEstado;
 
-                return respuesta;
-            }
+        //        return respuesta;
+        //    }
 
-            respuesta.Ok = true;
+        //    respuesta.Ok = true;
 
-            return respuesta;
-        }
+        //    return respuesta;
+        //}
 
         //[HttpGet]
         //[Route("ordenes-compra")]
@@ -171,6 +171,7 @@ namespace back_MSI_SuperMami.Controllers
 
 
         //}
+
 
 
         [HttpGet]

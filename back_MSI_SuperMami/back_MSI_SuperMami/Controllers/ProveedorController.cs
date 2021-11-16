@@ -121,7 +121,7 @@ namespace back_MSI_SuperMami.Controllers
             respuestas.Ok = true;
             var pro = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == id);
 
-            var lista = new List<DTOListaProveedores>();
+            var dto = new DTOListaProveedores();
 
             if (pro != null)
             {
@@ -132,7 +132,7 @@ namespace back_MSI_SuperMami.Controllers
                 var listaProductos = m.obtenerProductosxProveedor(id);
 
 
-                var dto = new DTOListaProveedores
+                dto = new DTOListaProveedores
                 {
                     idproveedor = id,
                     nombre = pro.Nombre,
@@ -140,22 +140,17 @@ namespace back_MSI_SuperMami.Controllers
                     cuit = pro.Cuit,
                     telefono = pro.Telefono,
                     email = pro.Email,
-                    area = area.Descripcion,
-                    formaPago = listaPagos,
-                    formaEnvio = listaEnvios,
-                    producto = listaProductos
+                    idarea = area.Idarea,
+                    formasPago = listaPagos,
+                    formasEntrega = listaEnvios,
+                    productos = listaProductos
 
                 };
-                lista.Add(dto);
 
-
-
-
-
-                respuestas.Respuesta = lista;
+                respuestas.Respuesta = dto;
                 return respuestas;
             }
-            respuestas.Respuesta = lista;
+            respuestas.Respuesta = dto;
             return respuestas;
         }
       
