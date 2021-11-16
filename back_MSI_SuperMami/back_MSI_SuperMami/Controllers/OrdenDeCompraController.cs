@@ -531,8 +531,99 @@ namespace back_MSI_SuperMami.Controllers
 
         //}
 
+        //Modificar Estado a Aceptado
+        [HttpPut]
+        [Route("orden-compra/aceptar/{id}")]
+        public ActionResult<RespuestaAPI> OrdenAceptada(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una orden de compra";
+                return res;
+            }
+            else
+            {
+                var orden = bd.OrdenesDeCompras.Find(id);
+                try
+                {
+                    if (orden != null && orden.Idestado == 3)
+                    {
+                        orden.Idestado = 1;
+                        res.Ok = true;
+                        bd.OrdenesDeCompras.Update(orden);
+                        bd.SaveChanges();
+                        res.Respuesta = "Orden de compra estado modificado a aceptado";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No es una orden de compra pendiente";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra la orden de compra enviada";
+                    return res;
+                }
+
+            }
+
+        }
+
+        //Modificar Estado a Cancelado
+        [HttpPut]
+        [Route("orden-compra/cancelar/{id}")]
+        public ActionResult<RespuestaAPI> OrdenCancelada(int id)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "Ingrese una orden de compra";
+                return res;
+            }
+            else
+            {
+                var orden = bd.OrdenesDeCompras.Find(id);
+                try
+                {
+                    if (orden != null && orden.Idestado == 3)
+                    {
+                        orden.Idestado = 2;
+                        res.Ok = true;
+                        bd.OrdenesDeCompras.Update(orden);
+                        bd.SaveChanges();
+                        res.Respuesta = "Orden de compra estado modificado a cancelado";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No es una orden de compra pendiente";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra la orden de compra enviada";
+                    return res;
+                }
+
+            }
+        }
+
     }
 
+
+  
 
 
 }
