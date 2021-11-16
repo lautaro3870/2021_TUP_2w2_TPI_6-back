@@ -7639,19 +7639,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\DANI\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Back Grupo 6\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
+      "projectUniqueName": "C:\\backsuperm\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
       "projectName": "back_MSI_SuperMami",
-      "projectPath": "C:\\Back Grupo 6\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Back Grupo 6\\back_MSI_SuperMami\\back_MSI_SuperMami\\obj\\",
+      "projectPath": "C:\\backsuperm\\back_MSI_SuperMami\\back_MSI_SuperMami\\back_MSI_SuperMami.csproj",
+      "packagesPath": "C:\\Users\\DANI\\.nuget\\packages\\",
+      "outputPath": "C:\\backsuperm\\back_MSI_SuperMami\\back_MSI_SuperMami\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DANI\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

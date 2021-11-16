@@ -29,5 +29,14 @@ namespace back_MSI_SuperMami.Models
         public virtual ICollection<Productosxproveedore> Productosxproveedores { get; set; }
         public virtual ICollection<Proveedoresxformadeenvio> Proveedoresxformadeenvios { get; set; }
         public virtual ICollection<Proveedoresxformasdepago> Proveedoresxformasdepagos { get; set; }
+
+        public bool Validar()
+        {
+            if (Nombre != null && Direccion != null && Telefono != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

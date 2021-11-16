@@ -26,5 +26,14 @@ namespace back_MSI_SuperMami.Models
         public virtual UnidadDeMedidum IdunidadmedidaNavigation { get; set; }
         public virtual ICollection<DetalleOrden> DetalleOrdens { get; set; }
         public virtual ICollection<Productosxproveedore> Productosxproveedores { get; set; }
+
+        public bool Validar()
+        {
+            if (Nombre != null && Descripcion != null && Marca != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

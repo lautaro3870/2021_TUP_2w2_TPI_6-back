@@ -18,5 +18,14 @@ namespace back_MSI_SuperMami.Models
         public bool Estado { get; set; }
 
         public virtual ICollection<Proveedore> Proveedores { get; set; }
+
+        public bool Validar()
+        {
+            if (Nombre != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
