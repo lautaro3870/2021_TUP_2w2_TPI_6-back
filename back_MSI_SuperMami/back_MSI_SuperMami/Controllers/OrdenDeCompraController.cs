@@ -111,7 +111,7 @@ namespace back_MSI_SuperMami.Controllers
         //                    }
         //                }
         //            }
-                    
+
         //        }
         //        var listaOrdenesPorEstado = new DTOEstadoOrden
         //        {
@@ -135,46 +135,99 @@ namespace back_MSI_SuperMami.Controllers
         //public ActionResult<RespuestaAPI> Get()
         //{
         //    var respuesta = new RespuestaAPI();
-        //    respuesta.Ok = true;
 
         //    var orden = bd.OrdenesDeCompras.ToList();
 
-        //    var lista = new List<DTOOrdenDeCompraListado>();
 
+        //    var lista = new List<DTONuevaListaOrdenes>();
+        //    var lista2 = new List<ListadoDetalles>();
         //    if (orden != null)
         //    {
         //        foreach (var i in orden)
         //        {
+        //            lista2.Clear();
+
         //            var o = bd.OrdenesDeCompras.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
-        //            var prov = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
-        //            var envio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
-        //            var pago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
-        //            var detalle = bd.DetalleOrdens.Where(f => f.Idordendecompra == i.Idordendecompra).ToList();
+                   
+        //            var detalles = bd.DetalleOrdens.Where(y => y.Idordendecompra == i.Idordendecompra).ToList();
 
-        //            var detalle2 = bd.DetalleOrdens.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
-
-        //                    var dto = new DTOOrdenDeCompraListado
+        //            foreach (var x in detalles)
+        //            {
+        //                    var det = new ListadoDetalles 
         //                    {
-        //                        proveedor = prov.Nombre,
-        //                        formaPago = pago.Nombre,
-        //                        formaEnvio = envio.Nombre,
-        //                        //producto = 
-        //                        cantidad = detalle2.Cantidad
+        //                        idproducto = x.Idproducto,
+        //                        cantidad = x.Cantidad,
+        //                        precio = x.Precio
         //                    };
-        //                    lista.Add(dto);
 
+        //                    lista2.Add(det);
+        //            }
+
+        //                var dto = new DTONuevaListaOrdenes
+        //                {
+        //                Idordendecompra = o.Idordendecompra,
+        //                Idproveedor = o.Idproveedor,
+        //                Idformapago = o.Idformapago,
+        //                Idformadeenvio = o.Idformadeenvio,
+        //                Idestado = o.Idestado,
+        //                FechaRegistro = o.FechaRegistro,
+        //                Detalle = lista2
+        //                };
+
+        //            lista.Add(dto);
         //        }
 
+        //        respuesta.Respuesta = lista;
+        //        return respuesta;
         //    }
-        //    respuesta.Respuesta = lista;
         //    return respuesta;
-
-
         //}
 
+                //[HttpGet]
+                //[Route("ordenes-compra")]
+                //public ActionResult<RespuestaAPI> Get()
+                //{
+                //    var respuesta = new RespuestaAPI();
+                //    respuesta.Ok = true;
+
+                //    var orden = bd.OrdenesDeCompras.ToList();
+
+                //    var lista = new List<DTOOrdenDeCompraListado>();
+
+                //    if (orden != null)
+                //    {
+                //        foreach (var i in orden)
+                //        {
+                //            var o = bd.OrdenesDeCompras.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
+                //            var prov = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
+                //            var envio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
+                //            var pago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
+                //            var detalle = bd.DetalleOrdens.Where(f => f.Idordendecompra == i.Idordendecompra).ToList();
+
+                //            var detalle2 = bd.DetalleOrdens.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
+
+                //                    var dto = new DTOOrdenDeCompraListado
+                //                    {
+                //                        proveedor = prov.Nombre,
+                //                        formaPago = pago.Nombre,
+                //                        formaEnvio = envio.Nombre,
+                //                        //producto = 
+                //                        cantidad = detalle2.Cantidad
+                //                    };
+                //                    lista.Add(dto);
+
+                //        }
+
+                //    }
+                //    respuesta.Respuesta = lista;
+                //    return respuesta;
 
 
-        [HttpGet]
+                //}
+
+
+
+                [HttpGet]
         [Route("ordenes-compra-linq/{id}")]
         public ActionResult<RespuestaAPI> GetLinq(int id)
         {
@@ -652,6 +705,52 @@ namespace back_MSI_SuperMami.Controllers
                 }
 
             }
+        }
+
+
+        //Modificar Estado a Aceptado
+        [HttpPut]
+        [Route("orden-compra/estado/{id}")]
+        public ActionResult<RespuestaAPI> modificarEstado(int id, ComandoModificarEstado comando)
+        {
+            var res = new RespuestaAPI();
+            if (id == 0)
+            {
+                res.Ok = false;
+                res.Respuesta = "No enviaste el estado";
+                return res;
+            }
+            else
+            {
+                var orden = bd.OrdenesDeCompras.Find(id);
+                try
+                {
+                    if (orden != null && orden.Idestado == 3)
+                    {
+                        orden.Idestado = comando.idestado;
+                        res.Ok = true;
+                        bd.OrdenesDeCompras.Update(orden);
+                        bd.SaveChanges();
+                        res.Respuesta = "Se modificó el estado de la orden de compra";
+                        return res;
+                    }
+                    else
+                    {
+                        res.Ok = false;
+                        res.Error = "No es una orden de compra pendiente";
+                    }
+
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    res.Ok = false;
+                    res.Respuesta = "No se encuentra la orden de compra enviada";
+                    return res;
+                }
+
+            }
+
         }
 
     }
