@@ -453,14 +453,14 @@ namespace back_MSI_SuperMami.Controllers
                     }
 
                   
-                    if (comando.unidadMedida == 0)
+                    if (comando.idunidadmedida == 0)
                     {
                         res.Ok = false;
                         res.Error = "No se ingreso la unidad de medida";
                         return res;
                     }
 
-                    if (comando.categoria == 0)
+                    if (comando.idcategoria == 0)
                     {
                         res.Ok = false;
                         res.Error = "No se ingreso la categoria";
@@ -480,8 +480,8 @@ namespace back_MSI_SuperMami.Controllers
                         p.Nombre = comando.nombre;
                         p.Descripcion = comando.descripcion;
                         p.Estado = true;
-                        p.Idunidadmedida = comando.unidadMedida;
-                        p.Idcategoria = comando.categoria;
+                        p.Idunidadmedida = comando.idunidadmedida;
+                        p.Idcategoria = comando.idcategoria;
                         p.Marca = comando.marca;
                         p.Imagen = comando.imagen;
                         id = p.Idproducto;
@@ -553,14 +553,14 @@ namespace back_MSI_SuperMami.Controllers
             }
 
            
-            if (comando.unidadMedida == 0)
+            if (comando.idunidadmedida == 0)
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la unidad de medida";
                 return res;
             }
 
-            if (comando.categoria == 0)
+            if (comando.idcategoria == 0)
             {
                 res.Ok = false;
                 res.Error = "No se ingreso la categoria";
@@ -578,8 +578,8 @@ namespace back_MSI_SuperMami.Controllers
                 Nombre = comando.nombre,
                 Descripcion = comando.descripcion,
                 Estado = true,
-                Idunidadmedida = comando.unidadMedida,
-                Idcategoria = comando.categoria,
+                Idunidadmedida = comando.idunidadmedida,
+                Idcategoria = comando.idcategoria,
                 Marca = comando.marca,
                 Imagen = comando.imagen
             };
