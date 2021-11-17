@@ -13,7 +13,7 @@ namespace back_MSI_SuperMami.DTOs
         public String nombre { get; set; }
         //public string nombre { get; set; }
         //public string descripcion { get; set; }
-        //public string marca { get; set; }
+        public string marca { get; set; }
         //public string categoria { get; set; }
         //public string unidadMedida { get; set; }
         //public string imagen { get; set; }

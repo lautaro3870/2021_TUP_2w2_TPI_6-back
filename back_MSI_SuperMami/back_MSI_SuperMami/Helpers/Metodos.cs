@@ -166,6 +166,7 @@ namespace back_MSI_SuperMami.Helpers
                         {
                             idproducto = prod.Idproducto,
                             nombre = prod.Nombre,
+                            marca = prod.Marca,
                             cantidad=detalle.Cantidad,
                             precio = detalle.Precio
                         };
