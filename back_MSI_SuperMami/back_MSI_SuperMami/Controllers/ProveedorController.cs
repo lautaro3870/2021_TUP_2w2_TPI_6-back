@@ -266,6 +266,7 @@ namespace back_MSI_SuperMami.Controllers
 
                                 foreach (var pagos in comando.Pagos)
                                 {
+                                    
                                     Proveedoresxformasdepago f = new Proveedoresxformasdepago();
                                     f.Idproveedor = id;
                                     f.Idformapago = pagos.formasPago;

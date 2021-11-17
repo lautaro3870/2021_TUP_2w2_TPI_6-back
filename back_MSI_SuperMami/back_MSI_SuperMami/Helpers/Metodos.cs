@@ -51,7 +51,10 @@ namespace back_MSI_SuperMami.Helpers
                 foreach (var i in forXpro)
                 {
                     var f = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
-                    pagos.Add(f.Idformapago);
+                    if (f.Estado == true)
+                    {
+                        pagos.Add(f.Idformapago);
+                    }
 
                 }
                 return pagos;
@@ -99,7 +102,10 @@ namespace back_MSI_SuperMami.Helpers
                 foreach (var i in forXpro)
                 {
                     var f = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
-                    envios.Add(f.Idformadeenvio);
+                    if (f.Estado == true)
+                    {
+                        envios.Add(f.Idformadeenvio);
+                    }
 
                 }
                 return envios;
