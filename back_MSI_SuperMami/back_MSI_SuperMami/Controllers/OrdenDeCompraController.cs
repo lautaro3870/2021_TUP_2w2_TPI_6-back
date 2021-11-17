@@ -657,7 +657,7 @@ namespace back_MSI_SuperMami.Controllers
         //Modificar Estado a Aceptado
         [HttpPut]
         [Route("orden-compra/estado/{id}")]
-        public ActionResult<RespuestaAPI> modificarEstado(int id, int idestado)
+        public ActionResult<RespuestaAPI> modificarEstado(int id, [FromBody] int idestado)
         {
             var res = new RespuestaAPI();
             if (id == 0)
