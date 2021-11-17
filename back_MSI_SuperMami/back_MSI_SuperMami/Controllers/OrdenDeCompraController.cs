@@ -139,26 +139,31 @@ namespace back_MSI_SuperMami.Controllers
                 {
 
                     var o = bd.OrdenesDeCompras.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
-
+                    var prov = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
+                    var pagos = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
+                    var entregas = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
                     var detalles = bd.DetalleOrdens.Where(y => y.Idordendecompra == i.Idordendecompra).ToList();
 
                     
                     var listaDetalle = m.obtenerDetallesOrdenes(o.Idordendecompra);
                     var dto = new DTONuevaListaOrdenes
                     {
-                        Idordendecompra = o.Idordendecompra,
-                        Idproveedor = o.Idproveedor,
-                        Idformapago = o.Idformapago,
-                        Idformadeenvio = o.Idformadeenvio,
-                        Idestado = o.Idestado,
-                        FechaRegistro = o.FechaRegistro,
-                        Detalle = listaDetalle
+                        idordendecompra = o.Idordendecompra,
+                        idproveedor = o.Idproveedor,
+                        idformasPago = o.Idformapago,
+                        idformasEntrega = o.Idformadeenvio,
+                        proveedor = prov.Nombre,
+                        formasEntrega = entregas.Nombre,
+                        formasPago = pagos.Nombre,
+                        idestado = o.Idestado,
+                        fechaRegistro = o.FechaRegistro,
+                        detalle = listaDetalle
                     };
 
                     lista.Add(dto);
                 }
 
-                respuesta.Respuesta = lista.OrderByDescending(x=>x.Idestado).OrderBy(x => x.Idordendecompra);
+                respuesta.Respuesta = lista.OrderByDescending(x=>x.idestado).OrderBy(x => x.idordendecompra);
                 return respuesta;
             }
             return respuesta;

@@ -165,6 +165,7 @@ namespace back_MSI_SuperMami.Helpers
                         var dto = new DTODetalle
                         {
                             idproducto = prod.Idproducto,
+                            nombre = prod.Nombre,
                             cantidad=detalle.Cantidad,
                             precio = detalle.Precio
                         };

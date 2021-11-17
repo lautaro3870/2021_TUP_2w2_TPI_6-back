@@ -9,6 +9,8 @@ namespace back_MSI_SuperMami.DTOs
     {
 
         public int idproducto { get; set; }
+
+        public String nombre;
         //public string nombre { get; set; }
         //public string descripcion { get; set; }
         //public string marca { get; set; }
