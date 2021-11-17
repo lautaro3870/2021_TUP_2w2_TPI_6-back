@@ -148,6 +148,37 @@ namespace back_MSI_SuperMami.Helpers
             return lista;
         }
 
+        public List<DTODetalle> obtenerDetallesOrdenes(int id)
+        {
+
+            var det = bd.DetalleOrdens.Where(f => f.Idordendecompra == id).ToList();
+
+            var lista = new List<DTODetalle>();
+
+            if (det != null)
+            {
+                foreach (var i in det)
+                {
+                    var detalle = bd.DetalleOrdens.FirstOrDefault(f => f.Iddetalle == i.Iddetalle);
+                    var prod = bd.Productos.FirstOrDefault(f => f.Idproducto == i.Idproducto);
+                    
+                        var dto = new DTODetalle
+                        {
+                            idproducto = prod.Idproducto,
+                            cantidad=detalle.Cantidad,
+                            precio = detalle.Precio
+                        };
+
+                        lista.Add(dto);
+                    
+                }
+
+                return lista;
+            }
+
+            return lista;
+        }
+
 
     }
 }

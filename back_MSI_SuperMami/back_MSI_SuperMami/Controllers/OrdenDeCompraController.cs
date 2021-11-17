@@ -1,5 +1,6 @@
 ﻿using back_MSI_SuperMami.Comandos;
 using back_MSI_SuperMami.DTOs;
+using back_MSI_SuperMami.Helpers;
 using back_MSI_SuperMami.Models;
 using back_MSI_SuperMami.Respuestas;
 using Microsoft.AspNetCore.Cors;
@@ -25,16 +26,7 @@ namespace back_MSI_SuperMami.Controllers
             _logger = logger;
         }
 
-        //[HttpGet]
-        //[Route("ordenes-compra")]
-        //public ActionResult<RespuestaAPI> Get()
-        //{
-        //    var respuesta = new RespuestaAPI();
-        //    respuesta.Ok = true;
-        //    respuesta.Respuesta = bd.OrdenesDeCompras.Where(x => x.Idestado == 3).ToList();
-        //    return respuesta;
-        //}
-
+        
         //[HttpGet]
         //[Route("ordenes-compra")]
         //public ActionResult<RespuestaAPI> Get()
@@ -130,104 +122,53 @@ namespace back_MSI_SuperMami.Controllers
         //    return respuesta;
         //}
 
-        //[HttpGet]
-        //[Route("ordenes-compra")]
-        //public ActionResult<RespuestaAPI> Get()
-        //{
-        //    var respuesta = new RespuestaAPI();
-
-        //    var orden = bd.OrdenesDeCompras.ToList();
-
-
-        //    var lista = new List<DTONuevaListaOrdenes>();
-        //    var lista2 = new List<ListadoDetalles>();
-        //    if (orden != null)
-        //    {
-        //        foreach (var i in orden)
-        //        {
-        //            lista2.Clear();
-
-        //            var o = bd.OrdenesDeCompras.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
-                   
-        //            var detalles = bd.DetalleOrdens.Where(y => y.Idordendecompra == i.Idordendecompra).ToList();
-
-        //            foreach (var x in detalles)
-        //            {
-        //                    var det = new ListadoDetalles 
-        //                    {
-        //                        idproducto = x.Idproducto,
-        //                        cantidad = x.Cantidad,
-        //                        precio = x.Precio
-        //                    };
-
-        //                    lista2.Add(det);
-        //            }
-
-        //                var dto = new DTONuevaListaOrdenes
-        //                {
-        //                Idordendecompra = o.Idordendecompra,
-        //                Idproveedor = o.Idproveedor,
-        //                Idformapago = o.Idformapago,
-        //                Idformadeenvio = o.Idformadeenvio,
-        //                Idestado = o.Idestado,
-        //                FechaRegistro = o.FechaRegistro,
-        //                Detalle = lista2
-        //                };
-
-        //            lista.Add(dto);
-        //        }
-
-        //        respuesta.Respuesta = lista;
-        //        return respuesta;
-        //    }
-        //    return respuesta;
-        //}
-
-                //[HttpGet]
-                //[Route("ordenes-compra")]
-                //public ActionResult<RespuestaAPI> Get()
-                //{
-                //    var respuesta = new RespuestaAPI();
-                //    respuesta.Ok = true;
-
-                //    var orden = bd.OrdenesDeCompras.ToList();
-
-                //    var lista = new List<DTOOrdenDeCompraListado>();
-
-                //    if (orden != null)
-                //    {
-                //        foreach (var i in orden)
-                //        {
-                //            var o = bd.OrdenesDeCompras.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
-                //            var prov = bd.Proveedores.FirstOrDefault(f => f.Idproveedor == i.Idproveedor);
-                //            var envio = bd.FormaDeEnvios.FirstOrDefault(f => f.Idformadeenvio == i.Idformadeenvio);
-                //            var pago = bd.FormaDePagos.FirstOrDefault(f => f.Idformapago == i.Idformapago);
-                //            var detalle = bd.DetalleOrdens.Where(f => f.Idordendecompra == i.Idordendecompra).ToList();
-
-                //            var detalle2 = bd.DetalleOrdens.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
-
-                //                    var dto = new DTOOrdenDeCompraListado
-                //                    {
-                //                        proveedor = prov.Nombre,
-                //                        formaPago = pago.Nombre,
-                //                        formaEnvio = envio.Nombre,
-                //                        //producto = 
-                //                        cantidad = detalle2.Cantidad
-                //                    };
-                //                    lista.Add(dto);
-
-                //        }
-
-                //    }
-                //    respuesta.Respuesta = lista;
-                //    return respuesta;
+        [HttpGet]
+        [Route("ordenes-compra")]
+        public ActionResult<RespuestaAPI> Get()
+        {
+            var respuesta = new RespuestaAPI();
+            Metodos m = new Metodos();
+            var orden = bd.OrdenesDeCompras.ToList();
 
 
-                //}
+            var lista = new List<DTONuevaListaOrdenes>();
+            
+            if (orden != null)
+            {
+                foreach (var i in orden)
+                {
+
+                    var o = bd.OrdenesDeCompras.FirstOrDefault(f => f.Idordendecompra == i.Idordendecompra);
+
+                    var detalles = bd.DetalleOrdens.Where(y => y.Idordendecompra == i.Idordendecompra).ToList();
+
+                    
+                    var listaDetalle = m.obtenerDetallesOrdenes(o.Idordendecompra);
+                    var dto = new DTONuevaListaOrdenes
+                    {
+                        Idordendecompra = o.Idordendecompra,
+                        Idproveedor = o.Idproveedor,
+                        Idformapago = o.Idformapago,
+                        Idformadeenvio = o.Idformadeenvio,
+                        Idestado = o.Idestado,
+                        FechaRegistro = o.FechaRegistro,
+                        Detalle = listaDetalle
+                    };
+
+                    lista.Add(dto);
+                }
+
+                respuesta.Respuesta = lista.OrderByDescending(x=>x.Idestado).OrderBy(x => x.Idordendecompra);
+                return respuesta;
+            }
+            return respuesta;
+        }
+
+        
 
 
 
-                [HttpGet]
+        [HttpGet]
         [Route("ordenes-compra-linq/{id}")]
         public ActionResult<RespuestaAPI> GetLinq(int id)
         {
@@ -619,99 +560,99 @@ namespace back_MSI_SuperMami.Controllers
         //}
 
         //Modificar Estado a Aceptado
-        [HttpPut]
-        [Route("orden-compra/aceptar/{id}")]
-        public ActionResult<RespuestaAPI> OrdenAceptada(int id)
-        {
-            var res = new RespuestaAPI();
-            if (id == 0)
-            {
-                res.Ok = false;
-                res.Respuesta = "Ingrese una orden de compra";
-                return res;
-            }
-            else
-            {
-                var orden = bd.OrdenesDeCompras.Find(id);
-                try
-                {
-                    if (orden != null && orden.Idestado == 3)
-                    {
-                        orden.Idestado = 1;
-                        res.Ok = true;
-                        bd.OrdenesDeCompras.Update(orden);
-                        bd.SaveChanges();
-                        res.Respuesta = "Orden de compra estado modificado a aceptado";
-                        return res;
-                    }
-                    else
-                    {
-                        res.Ok = false;
-                        res.Error = "No es una orden de compra pendiente";
-                    }
+        //[HttpPut]
+        //[Route("orden-compra/aceptar/{id}")]
+        //public ActionResult<RespuestaAPI> OrdenAceptada(int id)
+        //{
+        //    var res = new RespuestaAPI();
+        //    if (id == 0)
+        //    {
+        //        res.Ok = false;
+        //        res.Respuesta = "Ingrese una orden de compra";
+        //        return res;
+        //    }
+        //    else
+        //    {
+        //        var orden = bd.OrdenesDeCompras.Find(id);
+        //        try
+        //        {
+        //            if (orden != null && orden.Idestado == 3)
+        //            {
+        //                orden.Idestado = 1;
+        //                res.Ok = true;
+        //                bd.OrdenesDeCompras.Update(orden);
+        //                bd.SaveChanges();
+        //                res.Respuesta = "Orden de compra estado modificado a aceptado";
+        //                return res;
+        //            }
+        //            else
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No es una orden de compra pendiente";
+        //            }
 
-                    return res;
-                }
-                catch (Exception e)
-                {
-                    res.Ok = false;
-                    res.Respuesta = "No se encuentra la orden de compra enviada";
-                    return res;
-                }
+        //            return res;
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            res.Ok = false;
+        //            res.Respuesta = "No se encuentra la orden de compra enviada";
+        //            return res;
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
         //Modificar Estado a Cancelado
-        [HttpPut]
-        [Route("orden-compra/cancelar/{id}")]
-        public ActionResult<RespuestaAPI> OrdenCancelada(int id)
-        {
-            var res = new RespuestaAPI();
-            if (id == 0)
-            {
-                res.Ok = false;
-                res.Respuesta = "Ingrese una orden de compra";
-                return res;
-            }
-            else
-            {
-                var orden = bd.OrdenesDeCompras.Find(id);
-                try
-                {
-                    if (orden != null && orden.Idestado == 3)
-                    {
-                        orden.Idestado = 2;
-                        res.Ok = true;
-                        bd.OrdenesDeCompras.Update(orden);
-                        bd.SaveChanges();
-                        res.Respuesta = "Orden de compra estado modificado a cancelado";
-                        return res;
-                    }
-                    else
-                    {
-                        res.Ok = false;
-                        res.Error = "No es una orden de compra pendiente";
-                    }
+        //[HttpPut]
+        //[Route("orden-compra/cancelar/{id}")]
+        //public ActionResult<RespuestaAPI> OrdenCancelada(int id)
+        //{
+        //    var res = new RespuestaAPI();
+        //    if (id == 0)
+        //    {
+        //        res.Ok = false;
+        //        res.Respuesta = "Ingrese una orden de compra";
+        //        return res;
+        //    }
+        //    else
+        //    {
+        //        var orden = bd.OrdenesDeCompras.Find(id);
+        //        try
+        //        {
+        //            if (orden != null && orden.Idestado == 3)
+        //            {
+        //                orden.Idestado = 2;
+        //                res.Ok = true;
+        //                bd.OrdenesDeCompras.Update(orden);
+        //                bd.SaveChanges();
+        //                res.Respuesta = "Orden de compra estado modificado a cancelado";
+        //                return res;
+        //            }
+        //            else
+        //            {
+        //                res.Ok = false;
+        //                res.Error = "No es una orden de compra pendiente";
+        //            }
 
-                    return res;
-                }
-                catch (Exception e)
-                {
-                    res.Ok = false;
-                    res.Respuesta = "No se encuentra la orden de compra enviada";
-                    return res;
-                }
+        //            return res;
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            res.Ok = false;
+        //            res.Respuesta = "No se encuentra la orden de compra enviada";
+        //            return res;
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
 
         //Modificar Estado a Aceptado
         [HttpPut]
         [Route("orden-compra/estado/{id}")]
-        public ActionResult<RespuestaAPI> modificarEstado(int id, ComandoModificarEstado comando)
+        public ActionResult<RespuestaAPI> modificarEstado(int id, int idestado)
         {
             var res = new RespuestaAPI();
             if (id == 0)
@@ -727,11 +668,22 @@ namespace back_MSI_SuperMami.Controllers
                 {
                     if (orden != null && orden.Idestado == 3)
                     {
-                        orden.Idestado = comando.idestado;
-                        res.Ok = true;
-                        bd.OrdenesDeCompras.Update(orden);
-                        bd.SaveChanges();
-                        res.Respuesta = "Se modificó el estado de la orden de compra";
+                        if(idestado==1)
+                        {
+                            orden.Idestado = 1;
+                            res.Ok = true;
+                            bd.OrdenesDeCompras.Update(orden);
+                            bd.SaveChanges();
+                            res.Respuesta = "Se aceptó la orden de compra";
+                        }else if(idestado==2)
+                        {
+                            orden.Idestado = 2;
+                            res.Ok = true;
+                            bd.OrdenesDeCompras.Update(orden);
+                            bd.SaveChanges();
+                            res.Respuesta = "Se rechazó la orden de compra";
+                        }
+                        
                         return res;
                     }
                     else
