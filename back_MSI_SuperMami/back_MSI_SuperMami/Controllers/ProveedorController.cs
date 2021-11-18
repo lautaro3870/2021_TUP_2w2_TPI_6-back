@@ -221,6 +221,7 @@ namespace back_MSI_SuperMami.Controllers
 
                     if (prov != null)
                     {
+                       
                         
                         prov.Nombre = comando.nombre;
                         prov.Direccion = comando.direccion;
@@ -236,6 +237,8 @@ namespace back_MSI_SuperMami.Controllers
 
                         if (comando.Productos != null)
                         {
+                            var formP = bd.FormaDePagos.ToList();
+                            var formE = bd.FormaDeEnvios.ToList();
                             var prod = bd.Productosxproveedores.Where(f => f.Idproveedor == id).ToList();
                             foreach (var i in prod)
                             {
@@ -255,10 +258,9 @@ namespace back_MSI_SuperMami.Controllers
                             }
 
                             if (comando.Pagos != null)
-
                             {
-
                                 var formaspag = bd.Proveedoresxformasdepagos.Where(f => f.Idproveedor == id).ToList();
+
                                 foreach (var i in formaspag)
                                 {
                                     bd.Proveedoresxformasdepagos.Remove(i);
@@ -266,14 +268,19 @@ namespace back_MSI_SuperMami.Controllers
 
                                 foreach (var pagos in comando.Pagos)
                                 {
-                                    
-                                    Proveedoresxformasdepago f = new Proveedoresxformasdepago();
-                                    f.Idproveedor = id;
-                                    f.Idformapago = pagos.formasPago;
-                                    bd.Proveedoresxformasdepagos.Add(f);
-                                    bd.SaveChanges();
-
+                                    foreach (var s in formP)
+                                    {
+                                        if (s.Idformapago == pagos)
+                                        {
+                                            Proveedoresxformasdepago f = new Proveedoresxformasdepago();
+                                            f.Idproveedor = id;
+                                            f.Idformapago = pagos;
+                                            bd.Proveedoresxformasdepagos.Add(f);
+                                            bd.SaveChanges();
+                                        }
+                                    }
                                 }
+
                             }
 
                             if (comando.Entregas != null)
@@ -286,12 +293,19 @@ namespace back_MSI_SuperMami.Controllers
 
                                 foreach (var entregas in comando.Entregas)
                                 {
-                                    Proveedoresxformadeenvio f = new Proveedoresxformadeenvio();
-                                    f.Idproveedor = id;
-                                    f.Idformadeenvio = entregas.formasEntrega;
+                                    foreach (var s in formE)
+                                    {
+                                        if (s.Idformadeenvio == entregas)
+                                        {
+                                            Proveedoresxformadeenvio f = new Proveedoresxformadeenvio();
+                                            f.Idproveedor = id;
+                                            f.Idformadeenvio = entregas;
 
-                                    bd.Proveedoresxformadeenvios.Add(f);
-                                    bd.SaveChanges();
+                                            bd.Proveedoresxformadeenvios.Add(f);
+                                            bd.SaveChanges();
+                                        }
+
+                                    }
 
                                 }
                             }
@@ -301,15 +315,15 @@ namespace back_MSI_SuperMami.Controllers
                     else
                     {
                         res.Ok = false;
-                        res.Respuesta = "Proveedor no encontrado";
+                        res.Respuesta = "Forma de pago o envio inexistente";
                         return res;
                     }
 
                 }
-                catch
+                catch(Exception e)
                 {
                     res.Ok = false;
-                    res.Respuesta = "Proveedor no encontrada";
+                    res.Respuesta = "Fallo metodo";
                     return res;
                 }
             }
@@ -402,7 +416,7 @@ namespace back_MSI_SuperMami.Controllers
             {
                 Proveedoresxformasdepago f = new Proveedoresxformasdepago();
                 f.Idproveedor = prov.Idproveedor;
-                f.Idformapago = pagos.formasPago;
+                f.Idformapago = pagos;
                 bd.Proveedoresxformasdepagos.Add(f);
                 bd.SaveChanges();
 
@@ -412,7 +426,7 @@ namespace back_MSI_SuperMami.Controllers
             {
                 Proveedoresxformadeenvio f = new Proveedoresxformadeenvio();
                 f.Idproveedor = prov.Idproveedor;
-                f.Idformadeenvio = entregas.formasEntrega;
+                f.Idformadeenvio = entregas;
 
                 bd.Proveedoresxformadeenvios.Add(f);
                 bd.SaveChanges();

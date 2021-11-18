@@ -18,9 +18,9 @@ namespace back_MSI_SuperMami.DTOs
 
         public List<Productos> Productos { get; set; }
 
-        public List<Pagos> Pagos { get; set; }
+        public List<int> Pagos { get; set; }
 
-        public List<Entregas> Entregas { get; set; }
+        public List<int> Entregas { get; set; }
 
     }
 
@@ -32,14 +32,19 @@ namespace back_MSI_SuperMami.DTOs
 
     }
 
-    public class Pagos
-    {
-        public int formasPago { get; set; }
-    }
+    //public class Productos
+    //{
+    //    public double[,] arreglo { get; set; }
+    //}
 
-    public class Entregas
-    {
-        public int formasEntrega { get; set; }
-    }
+    //public class Pagos
+    //{
+    //    public int formasPago { get; set; }
+    //}
+
+    //public class Entregas
+    //{
+    //    public int formasEntrega { get; set; }
+    //}
 
 }
