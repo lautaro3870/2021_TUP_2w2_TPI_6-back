@@ -257,7 +257,7 @@ namespace back_MSI_SuperMami.Controllers
                                 bd.SaveChanges();
                             }
 
-                            if (comando.Pagos != null)
+                            if (comando.formasPago != null)
                             {
                                 var formaspag = bd.Proveedoresxformasdepagos.Where(f => f.Idproveedor == id).ToList();
 
@@ -266,7 +266,7 @@ namespace back_MSI_SuperMami.Controllers
                                     bd.Proveedoresxformasdepagos.Remove(i);
                                 }
 
-                                foreach (var pagos in comando.Pagos)
+                                foreach (var pagos in comando.formasPago)
                                 {
                                     foreach (var s in formP)
                                     {
@@ -283,7 +283,7 @@ namespace back_MSI_SuperMami.Controllers
 
                             }
 
-                            if (comando.Entregas != null)
+                            if (comando.formasEntrega != null)
                             {
                                 var formasent = bd.Proveedoresxformadeenvios.Where(f => f.Idproveedor == id).ToList();
                                 foreach (var i in formasent)
@@ -291,7 +291,7 @@ namespace back_MSI_SuperMami.Controllers
                                     bd.Proveedoresxformadeenvios.Remove(i);
                                 }
 
-                                foreach (var entregas in comando.Entregas)
+                                foreach (var entregas in comando.formasEntrega)
                                 {
                                     foreach (var s in formE)
                                     {
@@ -335,7 +335,7 @@ namespace back_MSI_SuperMami.Controllers
             return res;
         }
 
-
+        //Commit
         
 
         [HttpPost]
@@ -412,7 +412,7 @@ namespace back_MSI_SuperMami.Controllers
                 bd.SaveChanges();
             }
 
-            foreach (var pagos in comando.Pagos)
+            foreach (var pagos in comando.formasPago)
             {
                 Proveedoresxformasdepago f = new Proveedoresxformasdepago();
                 f.Idproveedor = prov.Idproveedor;
@@ -422,7 +422,7 @@ namespace back_MSI_SuperMami.Controllers
 
             }
 
-            foreach (var entregas in comando.Entregas)
+            foreach (var entregas in comando.formasEntrega)
             {
                 Proveedoresxformadeenvio f = new Proveedoresxformadeenvio();
                 f.Idproveedor = prov.Idproveedor;

@@ -18,9 +18,9 @@ namespace back_MSI_SuperMami.DTOs
 
         public List<Productos> Productos { get; set; }
 
-        public List<int> Pagos { get; set; }
+        public List<int> formasPago { get; set; }
 
-        public List<int> Entregas { get; set; }
+        public List<int> formasEntrega { get; set; }
 
     }
 
