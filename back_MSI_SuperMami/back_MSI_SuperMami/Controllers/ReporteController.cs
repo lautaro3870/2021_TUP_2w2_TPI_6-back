@@ -55,7 +55,7 @@ namespace back_MSI_SuperMami.Controllers
                         lista.Add(dto);
                     }
                 }
-                respusta.Respuesta = lista;
+                respusta.Respuesta = lista.OrderBy(f => f.precio);
                 return respusta;
 
             }
