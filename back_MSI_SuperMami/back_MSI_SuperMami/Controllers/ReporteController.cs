@@ -64,7 +64,7 @@ namespace back_MSI_SuperMami.Controllers
                 respusta.InfoAdicional = "No se dispone de ningun proveedor para este producto";
             }
 
-            respusta.Respuesta = lista;
+            respusta.Respuesta = lista.OrderBy(f => f.precio);
             return respusta;
         }
 
